@@ -69,7 +69,7 @@ You MUST write all used source document names at the end of the report as refere
     return f"""
 Information: "{context}"
 ---
-Using the above information, answer the following query or task: "{question}" in a detailed report --
+Using the above information, answer the following query or task : "{question}" in a detailed report in Hebrew language --
 The report should focus on the answer to the query, should be well structured, informative, 
 in-depth, and comprehensive, with facts and numbers if available and a total of up to {total_words} words.
 You should strive to write the report as long as you can using all relevant and necessary information provided.
@@ -146,7 +146,7 @@ def generate_outline_report_prompt(
         f'"""{context}""" Using the above information, generate an outline for a research report in Markdown syntax'
         f' for the following question or topic: "{question}". The outline should provide a well-structured framework'
         " for the research report, including the main sections, subsections, and key points to be covered."
-        f" The research report should be detailed, informative, in-depth, and a minimum of {total_words} words."
+        f" The research report should be in Hebrew language and should be detailed, informative, in-depth, and a minimum of {total_words} words."
         " Use appropriate Markdown syntax to format the outline and ensure readability."
     )
 
@@ -172,20 +172,20 @@ examples:
 task: "should I invest in apple stocks?"
 response: 
 {
-    "server": "💰 Finance Agent",
-    "agent_role_prompt: "You are a seasoned finance analyst AI assistant. Your primary goal is to compose comprehensive, astute, impartial, and methodically arranged financial reports based on provided data and trends."
+    "server": "💰 סוכן פיננסים",
+    "agent_role_prompt: "You are a seasoned finance analyst AI assistant. Your primary goal is to compose comprehensive, astute, impartial, and methodically arranged financial reports in Hebrew language based on provided data and trends."
 }
 task: "could reselling sneakers become profitable?"
 response: 
 { 
-    "server":  "📈 Business Analyst Agent",
-    "agent_role_prompt": "You are an experienced AI business analyst assistant. Your main objective is to produce comprehensive, insightful, impartial, and systematically structured business reports based on provided business data, market trends, and strategic analysis."
+    "server":  "📈 אנאליסט עסקי",
+    "agent_role_prompt": "You are an experienced AI business analyst assistant. Your main objective is to produce comprehensive, insightful, impartial, and systematically structured business reports in Hebrew language based on provided business data, market trends, and strategic analysis."
 }
 task: "what are the most interesting sites in Tel Aviv?"
 response:
 {
-    "server:  "🌍 Travel Agent",
-    "agent_role_prompt": "You are a world-travelled AI tour guide assistant. Your main purpose is to draft engaging, insightful, unbiased, and well-structured travel reports on given locations, including history, attractions, and cultural insights."
+    "server:  "🌍 סוכן נסיעות",
+    "agent_role_prompt": "You are a world-travelled AI tour guide assistant. Your main purpose is to draft engaging, insightful, unbiased, and well-structured travel reports in Hebrew language on given locations, including history, attractions, and cultural insights."
 }
 """
 
@@ -198,8 +198,8 @@ def generate_summary_prompt(query, data):
     """
 
     return (
-        f'{data}\n Using the above text, summarize it based on the following task or query: "{query}".\n If the '
-        f"query cannot be answered using the text, YOU MUST summarize the text in short.\n Include all factual "
+        f'{data}\n Using the above text, summarize it in Hebrew language based on the following task or query: "{query}".\n If the '
+        f"query cannot be answered using the text, YOU MUST summarize the text in Hebrew language in short.\n Include all factual "
         f"information such as numbers, stats, quotes, etc if available. "
     )
 
@@ -219,7 +219,7 @@ and research data:
 
 {data}
 
-- Construct a list of subtopics which indicate the headers of a report document to be generated on the task. 
+- Construct in Hebrew language a list of subtopics which indicate the headers of a report document to be generated on the task. 
 - These are a possible list of subtopics : {subtopics}.
 - There should NOT be any duplicate subtopics.
 - Limit the number of subtopics to a maximum of {max_subtopics}
@@ -248,11 +248,11 @@ def generate_subtopic_report_prompt(
 "{context}"
 
 "Main Topic and Subtopic":
-Using the latest information available, construct a detailed report on the subtopic: {current_subtopic} under the main topic: {main_topic}.
+Using the latest information available, construct in Hebrew language a detailed report on the subtopic: {current_subtopic} under the main topic: {main_topic}.
 You must limit the number of subsections to a maximum of {max_subsections}.
 
 "Content Focus":
-- The report should focus on answering the question, be well-structured, informative, in-depth, and include facts and numbers if available.
+- The report in Hebrew language should focus on answering the question, be well-structured, informative, in-depth, and include facts and numbers if available.
 - Use markdown syntax and follow the {report_format.upper()} format.
 
 "IMPORTANT:Content and Sections Uniqueness":
@@ -274,7 +274,7 @@ You must limit the number of subsections to a maximum of {max_subsections}.
     {relevant_written_contents}
 
 "Structure and Formatting":
-- As this sub-report will be part of a larger report, include only the main body divided into suitable subtopics without any introduction or conclusion section.
+- As this sub-report will be part of a larger report, include only the main body divided into suitable subtopics in Hebrew language without any introduction or conclusion section.
 
 - You MUST include markdown hyperlinks to relevant source URLs wherever referenced in the report, for example:
 
@@ -315,10 +315,10 @@ def generate_draft_titles_prompt(
 "{context}"
 
 "Main Topic and Subtopic":
-Using the latest information available, construct a draft section title headers for a detailed report on the subtopic: {current_subtopic} under the main topic: {main_topic}.
+Using the latest information available, construct a draft section title headers in Hebrew language for a detailed report on the subtopic: {current_subtopic} under the main topic: {main_topic}.
 
 "Task":
-1. Create a list of draft section title headers for the subtopic report.
+1. Create a list of draft section title headers in Hebrew language for the subtopic report.
 2. Each header should be concise and relevant to the subtopic.
 3. The header should't be too high level, but detailed enough to cover the main aspects of the subtopic.
 4. Use markdown syntax for the headers, using H3 (###) as H1 and H2 will be used for the larger report's heading.
@@ -340,7 +340,7 @@ Provide the draft headers in a list format using markdown syntax, for example:
 def generate_report_introduction(question: str, research_summary: str = "") -> str:
     return f"""{research_summary}\n 
 Using the above latest information, Prepare a detailed report introduction on the topic -- {question}.
-- The introduction should be succinct, well-structured, informative with markdown syntax.
+- The introduction should be in Hebrew language and be succinct, well-structured, informative with markdown syntax.
 - As this introduction will be part of a larger report, do NOT include any other sections, which are generally present in a report.
 - The introduction should be preceded by an H1 heading with a suitable topic for the entire report.
 - You must include hyperlinks with markdown syntax ([url website](url)) related to the sentences wherever necessary.

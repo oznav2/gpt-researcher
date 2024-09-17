@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 
 <head>
-    <title>GPT Researcher</title>
-    <meta name="description" content="A research assistant powered by GPT-4">
+    <title>עמית מחקר מבוסס בינה מלאכותית</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="עמית מחקר מבוסס בינה מלאכותית">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="./static/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Suez+One:wght@400;700&display&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/site/styles.css" />
     <style>
@@ -42,27 +43,33 @@
 
     <section class="landing">
         <div class="max-w-5xl mx-auto text-center">
+            <div class="logo-heading-container">
+                <img src="/static/logo.png" alt="Logo" class="logo">
+            </div>
             <h1 class="text-4xl font-extrabold mx-auto lg:text-7xl">
-                Say Goodbye to <br>
-                <span
-                    style="background-image:linear-gradient(to right, #9867F0, #ED4E50); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Hours
-                    of Research</span>
+                <span class="block">מנוע מחקר</span>
+                <span class="block gradient-text">מבוסס בינה מלאכותית</span>
             </h1>
-            <p class="max-w-5xl mx-auto text-gray-600 mt-8" style="font-size:20px">
-                Say Hello to GPT Researcher, your AI mate for rapid insights and comprehensive research. GPT Researcher
-                takes care of everything from accurate source gathering to organization of research results - all in one
-                platform designed to make your research process a breeze.
+            <p class="max-w-5xl mx-auto text-gray-600 mt-8 rtl-text" style="font-size:18px">
+                 אמרו שלום למנוע המחקר האוטונומי בשרת של אילן.
+                באמצעות המערכת תגיעו לתובנות ולתוצאות מחקר מקיף בכמעט כל נושא שתבחרו.
+                בסיום התהליך תקבלו תוצאה של מחקר השוואתי ורשימת מקורות מדויקים.
+                <span class="blank-line"></span>
+                <span class="red-text">במקום שסתם תחפשו בגוגל או תסתפקו בתשובות מצ'אט גיפיטי
+                הכלי הזה יפעיל 8 סוכני בינה חכמים שיעבדו בו זמנית לחקר הנושא שביקשתם.</span>
+                <span class="blank-line"></span>
+                והכל חינם ובממשק פשוט שנועד להפוך את תהליך המחקר שלכם לקל נחמד ויעיל.
             </p>
-            <a href="#form" class="btn btn-primary">Get Started</a>
+            <a href="#form" class="btn btn-primary">בואו נתחיל</a>
         </div>
     </section>
 
     <main class="container" id="form">
-        <div class="agent-item"><img src="/static/gptr-logo.png" class="avatar" alt="Auto Agent"></div>
+        <div class="agent-item"><img src="/static/logo.png" class="avatar" alt="Auto Agent"></div>
         <form method="POST" class="mt-3" onsubmit="GPTResearcher.startResearch(); return false;">
             <div class="form-group">
-                <label for="task" class="agent-question">What would you like me to research next?</label>
-                <input id="task" name="task" class="form-control" required></input>
+                <label for="task" class="agent-question">מהו הנושא שתרצה לחקור או לבדוק לעומק?</label>
+                <input id="task" name="task" class="form-control" required placeholder="למשל תקלידו כאן: האם כדאי לי להשקיע במניות של טסלה.."></input>
                 <input type="radio" name="agent" id="autoAgent" value="Auto Agent" checked hidden>
             </div>
             <div class="form-group">
@@ -70,91 +77,71 @@
 
 
                 </div>
-                <button type="button" id="btnShowAuto" class="btn btn-secondary mt-3 btn-show">Auto Agent</button>
+                <button type="button" id="btnShowAuto" class="btn btn-secondary mt-3 btn-show">סוכן אוטומטי</button>
             </div>
             <div class="form-group">
-                <label for="report_type" class="agent-question">What type of report would you like me to
-                    generate?</label>
+                <label for="report_type" class="agent-question">איזה סוג של דוח היית רוצה לקבל עבור המחקר שאבצע עבורך?</label>
                 <select name="report_type" class="form-control" required>
-                    <option value="research_report">Summary - Short and fast (~2 min)</option>
-                    <option value="detailed_report">Detailed - In depth and longer (~5 min)</option>
-                    <option value="resource_report">Resource Report</option>
+                    <option value="research_report">סיכום קצר ותמציתי (2 דקות בערך עד לסיום התהליך)</option>
+                    <option value="detailed_report">מפורט - וכולל מחקר עמוק ורווי פרטים (5 דקות ולפעמים יותר עד לסיום התהליך - סבלנות)</option>
+                    <option value="resource_report">דוח מקורות</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="tone" class="agent-question">In which tone would you like the report to be
-                    generated?</label>
+                <label for="tone" class="agent-question">באיזה סגנון היית רוצה שהמחקר יבוצע?</label>
                 <select name="tone" id="tone" class="form-control" required>
-                    <option value="Objective">Objective - Impartial and unbiased presentation of facts and findings
-                    </option>
-                    <option value="Formal">Formal - Adheres to academic standards with sophisticated language and
-                        structure</option>
-                    <option value="Analytical">Analytical - Critical evaluation and detailed examination of data and
-                        theories</option>
-                    <option value="Persuasive">Persuasive - Convincing the audience of a particular viewpoint or
-                        argument</option>
-                    <option value="Informative">Informative - Providing clear and comprehensive information on a topic
-                    </option>
-                    <option value="Explanatory">Explanatory - Clarifying complex concepts and processes</option>
-                    <option value="Descriptive">Descriptive - Detailed depiction of phenomena, experiments, or case
-                        studies</option>
-                    <option value="Critical">Critical - Judging the validity and relevance of the research and its
-                        conclusions</option>
-                    <option value="Comparative">Comparative - Juxtaposing different theories, data, or methods to
-                        highlight differences and similarities</option>
-                    <option value="Speculative">Speculative - Exploring hypotheses and potential implications or future
-                        research directions</option>
-                    <option value="Reflective">Reflective - Considering the research process and personal insights or
-                        experiences</option>
-                    <option value="Narrative">Narrative - Telling a story to illustrate research findings or
-                        methodologies</option>
-                    <option value="Humorous">Humorous - Light-hearted and engaging, usually to make the content more
-                        relatable</option>
-                    <option value="Optimistic">Optimistic - Highlighting positive findings and potential benefits
-                    </option>
-                    <option value="Pessimistic">Pessimistic - Focusing on limitations, challenges, or negative outcomes
-                    </option>
+                    <option value="Objective">אוביקטיבי - הצגה בלתי משוחדת וחסרת פניות של עובדות וממצאים.</option>
+                    <option value="Formal">פורמלי - הצגה אנליטית של הממצאים באופן מדעי</option>
+                    <option value="Analytical">אנליטי - הערכה ביקורתית ובחינה מעמיקה של נתונים ותיאוריות</option>
+                    <option value="Persuasive">משכנע - שכנוע הקהל בנוגע לנקודת מבט או טיעון מסוים</option>
+                    <option value="Informative">מֵידָעִי - מתן מידע ברור ומקיף על נושא</option>
+                    <option value="Explanatory">הסברתי - הבהרת מושגים ותהליכים מורכבים</option>
+                    <option value="Descriptive">תיאורי - תיאור מפורט של תופעות, ניסויים או מקרים</option>
+                    <option value="Critical">ביקורתי - שיפוט לגבי תקפות ומידת הרלוונטיות של המחקר ושל מסקנותיו</option>
+                    <option value="Comparative">השוואתי - להציב זה לצד זה תיאוריות, נתונים או שיטות שונות כדי להדגיש הבדלים ודמיון</option>
+                    <option value="Speculative">שׁוֹפְרָני - חקר השערות והשלכות פוטנציאליות או כיווני מחקר עתידיים</option>
+                    <option value="Reflective">רפלקטיבי - התבוננות על תהליך המחקר ותובנות או חוויות אישיות</option>
+                    <option value="Narrative">נרטיבי - סיפור כדי להמחיש ממצאי מחקר או מתודולוגיות</option>
+                    <option value="Humorous">הומוריסטי - קליל ומעניין, בדרך כלל כדי להפוך את התוכן ליותר נגיש</option>
+                    <option value="Optimistic">אופטימי - הדגשת ממצאים חיוביים ותועלות פוטנציאליות</option>
+                    <option value="Pessimistic">פסימיסטי - התמקדות במגבלות, באתגרים או בתוצאות שליליות</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="report_source" class="agent-question">What sources would you like me to research
-                    from?</label>
-                <p class="text-left mt-0 pt-0" style="font-size: 0.7rem;">You can now do research on local documents as
-                    well. Please make sure to add the DOC_PATH env variable pointing to your documents folder.</p>
+                <label for="report_source" class="agent-question">באילו מקורות מידע עליי להשתמש כדי לבצע את המחקר שביקשת?</label>
+                <p class="text-right mt-0 pt-0" style="font-size: 0.7rem;">חיפוש במסמכים שנמצאים בתיקיה מקומית אפשרי בתיאום עם בעל השרת</p>
                 <select name="report_source" class="form-control" required>
-                    <option value="web">The Web</option>
-                    <option value="local">My Documents</option>
-                    <option value="hybrid">Hybrid</option>
+                    <option value="web">באינטרנט</option>
+                    <option value="local">במסמכים שנמצאים במחשב שלי</option>
+                    <option value="hybrid">היברידי - חיפוש משולב</option>
                 </select>
             </div>
-            <input type="submit" value="Research" class="btn btn-primary button-padding">
+            <input type="submit" value="חקור" class="btn btn-primary button-padding">
         </form>
 
         <div class="margin-div">
-            <h2>Agent Output</h2>
-            <p class="mt-2 text-left" style="font-size: 0.8rem;">An agent tailored specifically to your task
-                will be generated to provide the most precise and relevant research results.</p>
+            <h2>תהליך המחקר שמתבצע ברקע</h2>
+            <p class="mt-2 text-right" style="font-size: 0.8rem;">בכדי לעמוד במשימה שביקשת, בחלק זה תראו את פעולתם של מערך סוכני הבינה החכמה שהמנוע יקים בכדי לגבש את הדוח בנושא המחקר </p>
             <div id="output"></div>
         </div>
         <div class="margin-div">
-            <h2>Research Report</h2>
+            <h2>דוח תוצאות המחקר הסופי</h2>
             <div id="reportContainer"></div>
             <div id="reportActions">
                 <div class="alert alert-info" role="alert" id="status"></div>
                 <a id="copyToClipboard" onclick="GPTResearcher.copyToClipboard()" class="btn btn-secondary mt-3"
-                    style="margin-right: 10px;">Copy to clipboard (markdown)</a>
+                    style="margin-right: 10px;">העתק ללוח (markdown)</a>
                 <a id="downloadLinkMd" href="#" class="btn btn-secondary mt-3" style="margin-right: 10px;"
-                    target="_blank">Download as Markdown</a>
+                    target="_blank">הורד כקובץ מארקדאון</a>
                 <a id="downloadLink" href="#" class="btn btn-secondary mt-3" style="margin-right: 10px;"
-                    target="_blank">Download as PDF</a>
-                <a id="downloadLinkWord" href="#" class="btn btn-secondary mt-3" target="_blank">Download as Docx</a>
+                    target="_blank">הורד כקובץ PDF</a>
+                <a id="downloadLinkWord" href="#" class="btn btn-secondary mt-3" target="_blank">הורד כקובץ ל Word</a>
             </div>
         </div>
     </main>
 
     <footer>
-        <p>GPT Researcher &copy; 2024 | <a target="_blank" href="https://github.com/assafelovic/gpt-researcher">GitHub
-                Page</a></p>
+        <p>עמית מחקר אוטונומי&copy; 2024 | <a target="_blank" href="https://'www.ilanel.co.il'">אתר ראשי</a></p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>

@@ -24,7 +24,7 @@ const GPTResearcher = (() => {
     updateState('in_progress')
 
     addAgentResponse({
-      output: '🤔 Thinking about research questions for the task...',
+      output: '🤔 מבצע חשיבה עמוקה על נושא...',
     })
 
     listenToSockEvents()
@@ -123,15 +123,15 @@ const GPTResearcher = (() => {
     var status = ''
     switch (state) {
       case 'in_progress':
-        status = 'Research in progress...'
+        status = 'המחקר בנושא המבוקש מתבצע ברקע והוא עדיין לא הושלם...'
         setReportActionsStatus('disabled')
         break
       case 'finished':
-        status = 'Research finished!'
+        status = 'המחקר בנושא שביקשת הסתיים והדוח המבוקש הופק ומוכן להורדה'
         setReportActionsStatus('enabled')
         break
       case 'error':
-        status = 'Research failed!'
+        status = 'המחקר בנושא המבוקש נכשל'
         setReportActionsStatus('disabled')
         break
       case 'initial':

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 const SourceCard = ({ source }: { source: { name: string; url: string } }) => {
   return (

@@ -99,7 +99,7 @@ async def run_agent(task, report_type, report_source, source_urls, tone: Tone, w
     # measure time
     end_time = datetime.datetime.now()
     await websocket.send_json(
-        {"type": "logs", "output": f"\nTotal run time: {end_time - start_time}\n"}
+        {"type": "logs", "output": f"\nזמן הפקת דוח המחקר: {end_time - start_time}\n"}
     )
 
     return report
