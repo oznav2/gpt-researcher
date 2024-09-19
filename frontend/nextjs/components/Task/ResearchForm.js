@@ -28,7 +28,7 @@ export default function ResearchForm({ chatBoxSettings, setChatBoxSettings }) {
     return (
         <form method="POST" className="mt-3 report_settings">
             <div className="form-group">
-                <label htmlFor="report_type" className="agent_question">Report Type </label>
+                <label htmlFor="report_type" className="agent_question">מהו הנושא שתרצה לחקור או לבדוק לעומק?</label>
                 <select name="report_type" value={report_type} onChange={onFormChange} className="form-control" required>
                     <option value="multi_agents">מחקר מרובה סוכני בינה מלאכותית</option>
                     <option value="research_report">סיכום קצר ותמציתי (2 דקות בערך עד לסיום התהליך)</option>

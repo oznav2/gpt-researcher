@@ -5,12 +5,12 @@ import "./globals.css";
 
 const inter = Lexend({ subsets: ["latin"] });
 
-let title = "GPT Researcher";
+let title = "סוכן מחקר אוטונומי";
 let description =
-  "A research assistant vanquishing hallucinations";
-let url = "https://github.com/assafelovic/gpt-researcher";
+  "מחקר מבוסס סוכני בינה חכמה";
+let url = "''www.ilanel.co.il''";
 let ogimage = "/favicon.ico";
-let sitename = "GPT Researcher";
+let sitename = "סוכן מחקר אוטונומי";
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     description,
     url: url,
     siteName: sitename,
-    locale: "en_US",
+    locale: "he_IL",
     type: "website",
   },
   twitter: {
@@ -42,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="he" dir="rtl">
       <head>
         <PlausibleProvider domain="localhost:3000" />
       </head>
