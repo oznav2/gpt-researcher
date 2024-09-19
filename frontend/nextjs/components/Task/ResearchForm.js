@@ -30,17 +30,17 @@ export default function ResearchForm({ chatBoxSettings, setChatBoxSettings }) {
             <div className="form-group">
                 <label htmlFor="report_type" className="agent_question">Report Type </label>
                 <select name="report_type" value={report_type} onChange={onFormChange} className="form-control" required>
-                    <option value="multi_agents">Multi Agents Report</option>
-                    <option value="research_report">Summary - Short and fast (~2 min)</option>
-                    <option value="detailed_report">Detailed - In depth and longer (~5 min)</option>
+                    <option value="multi_agents">מחקר מרובה סוכני בינה מלאכותית</option>
+                    <option value="research_report">סיכום קצר ותמציתי (2 דקות בערך עד לסיום התהליך)</option>
+                    <option value="detailed_report">פורט - וכולל מחקר עמוק ורווי פרטים (5 דקות ולפעמים יותר עד לסיום התהליך - סבלנות)</option>
                 </select>
             </div>
             <div className="form-group">
-                <label htmlFor="report_source" className="agent_question">Report Source </label>
+                <label htmlFor="report_source" className="agent_question">באילו מקורות מידע עליי להשתמש כדי לבצע את המחקר שביקשת?</label>
                 <select name="report_source" value={report_source} onChange={onFormChange} className="form-control" required>
-                    <option value="web">The Internet</option>
-                    <option value="local">My Documents</option>
-                    <option value="hybrid">Hybrid</option>
+                    <option value="web">באינטרנט</option>
+                    <option value="local">במסמכים שלי</option>
+                    <option value="hybrid">היברידי - חיפוש משולב</option>
                 </select>
             </div>
             {report_source === 'local' || report_source === 'hybrid' ? <FileUpload /> : null}

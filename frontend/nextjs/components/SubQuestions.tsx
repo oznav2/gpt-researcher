@@ -19,7 +19,7 @@ const SubQuestions: React.FC<SubQuestionsProps> = ({ metadata, handleClickSugges
       </div>
       <div className="grow text-white">
         <p className="pr-5 font-bold leading-[152%] text-white pb-[30px]">
-          Pondering your question from several angles
+          שוקד על הנושא ומנתח אותו ממספר זוויות
         </p>
         <div className="flex flex-row flex-wrap items-center gap-2.5 pb-[20px]">
           {metadata.map((item, subIndex) => (

@@ -324,7 +324,7 @@ input, select, textarea {
 }
 
 .container {
-    font-size: 12px; /* Set a base font size for the container */
+    font-size: 14px; /* Set a base font size for the container */
     font-weight: normal; /* Reset font weight */
 }
 

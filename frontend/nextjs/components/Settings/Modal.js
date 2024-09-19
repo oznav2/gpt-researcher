@@ -122,7 +122,7 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }) {
         type="button"
         onClick={() => setShowModal(true)}
       >
-        Settings
+        הגדרות המחקר
       </button>
       {showModal ? (
         <>
@@ -133,8 +133,8 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }) {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="relative p-6 flex-auto">
                   <div className="tabs">
-                    <button onClick={() => setActiveTab('search')} className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}>Search Settings</button>
-                    <button onClick={() => setActiveTab('api')} className={`tab-button ${activeTab === 'api' ? 'active' : ''}`}>API Variables</button>
+                    <button onClick={() => setActiveTab('search')} className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}>מנועי חיפוש</button>
+                    <button onClick={() => setActiveTab('api')} className={`tab-button ${activeTab === 'api' ? 'active' : ''}`}>מפתחות</button>
                   </div>
                   {activeTab === 'search' && (
                     <div className="App">
@@ -147,9 +147,9 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }) {
                     <main className="container" id="form">
                       <form method="POST" className="report_settings">
                         <div className="form-group">
-                          <label className="form-group-label">Search Engine</label>
+                          <label className="form-group-label">מנועי חיפוש</label>
                           <select name="RETRIEVER" value={apiVariables.RETRIEVER} onChange={handleInputChange}>
-                            <option value="" disabled>Select Retriever</option>
+                            <option value="" disabled>בחירת מנוע חיפוש</option>
                             <option value="tavily">Tavily</option>
                             <option value="google">Google</option>
                             <option value="searx">Searx</option>
@@ -168,7 +168,7 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }) {
                         </div>
 
                         <div className="form-group">
-                          <label className="form-group-label">DOC_PATH</label>
+                          <label className="form-group-label">נתיב תיקית המסמכים</label>
                           <input type="text" name="DOC_PATH" value={apiVariables.DOC_PATH} onChange={handleInputChange} />
                         </div>
 
@@ -205,7 +205,7 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }) {
                     type="button"
                     onClick={handleSaveChanges}
                   >
-                    Save & Close
+                    שמור וסגור
                   </button>
                 </div>
               </div>

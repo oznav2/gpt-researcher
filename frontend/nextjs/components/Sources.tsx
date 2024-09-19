@@ -11,7 +11,7 @@ export default function Sources({
       <div className="flex items-start gap-4 pb-3 lg:pb-3.5">
         <Image src="/img/sources.svg" alt="footer" width={24} height={24} />
         <h3 className="text-base font-bold uppercase leading-[152.5%] text-white">
-          sources:{" "}
+          מקורות הכי רלוונטים:{" "}
         </h3>
       </div>
       <div className="flex w-full max-w-[890px] flex-wrap content-center items-center gap-[15px]">

@@ -23,7 +23,7 @@ const Hero: FC<THeroProps> = ({
       <div className="flex flex-col items-center justify-center">
         <div className="landing flex flex-col items-center">
             <h1 className="text-4xl font-extrabold text-center lg:text-7xl">
-              Say Goodbye to <br />
+              אמרו שלום ולהתראות <br />
               <span
                 style={{
                   backgroundImage: 'linear-gradient(to right, #9867F0, #ED4E50)',
@@ -31,11 +31,14 @@ const Hero: FC<THeroProps> = ({
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                Hours of Research
+                לאינסוף שעות מבוזבות של חיפוש מידע
               </span>
             </h1>
-            <h2 className="text-xl font-light text-center mb-4 ml-[20vw] mr-[20vw] mb-10 text-gray-300">
-              Say Hello to GPT Researcher, your AI mate for rapid insights and comprehensive research
+            <h2 className="text-xl font-light text-center ml-[20vw] mr-[20vw] mb-10 text-gray-300">
+              הכירו את עמית המחקר בשרת של אילן, כלי מבוסס בינה חכמה שיאפשר לכם לקבל מידע מקיף ותובנות על כמעט כל נושא שתבחרו
+              תדמיינו מנוע חיפוש עם בינה חכמה המורכב מעשרות מומחים, שיש לו את כל הידע האנושי הכתוב בכל נושא, 
+              שפותח עשרות דפי אינטרנט בו זמנית, שקורא עבורכם מאות מסמכים ומקורות באינספור שפות ומכין לכם תשובה מרוכזת, מקיפה, הבדוקה על ידי צוות המומחים הכי רציני שיכולתם לחלום עליו
+              והכל חינם..ותוך דקות
             </h2>
         </div>
         
@@ -86,17 +89,32 @@ type suggestionType = {
 const suggestions: suggestionType[] = [
   {
     id: 1,
-    name: "Stock analysis on ",
+    name: "האם כדאי לי להשקיע במניות של טסלה ",
     icon: "/img/stock2.svg",
   },
   {
     id: 2,
-    name: "Help me plan an adventure to ",
+    name: "הכן לי דוח השוואה בין יעדי חופשה אפשריים בקפריסין",
     icon: "/img/hiker.svg",
   },
   {
     id: 3,
-    name: "What are the latest news on ",
+    name: "תן לי סיכום כותרות החדשות מהשבוע האחרון בישראל ",
+    icon: "/img/news.svg",
+  },
+  {
+    id: 4,
+    name: "האם מצרים עלולה לפתוח במלחמה נגד ישראל",
+    icon: "/img/news.svg",
+  },
+  {
+    id: 5,
+    name: "מהם הצעדים שעל מדינת ישראל לעשות על מנת לשחרר את החטופים בעזה",
+    icon: "/img/news.svg",
+  },
+  {
+    id: 6,
+    name: "ערוך לי השוואה של תפקיד היועץ המשפטי לממשלה בישראל לעומת מדינות אחרות בעולם",
     icon: "/img/news.svg",
   },
 ];
