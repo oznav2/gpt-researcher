@@ -16,6 +16,7 @@ services:
     stdin_open: true
     environment:
       - CHOKIDAR_USEPOLLING=true
+    env_file: .env
     build:
       dockerfile: Dockerfile.dev
       context: frontend/nextjs
@@ -33,6 +34,7 @@ services:
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       TAVILY_API_KEY: ${TAVILY_API_KEY}
       LANGCHAIN_API_KEY: ${LANGCHAIN_API_KEY}
+    env_file: .env
     profiles: ["test"]
     command: >
       /bin/sh -c "

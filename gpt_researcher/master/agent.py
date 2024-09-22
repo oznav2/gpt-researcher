@@ -77,7 +77,7 @@ class GPTResearcher:
         self.headers = headers or {}
         # Ensure tone is an instance of Tone enum
         if isinstance(tone, dict):
-            print(f"סגנון המחקר לא חוקי: {tone}. מגדיר את משימת המחקר לסגנון אובייקטיבי")
+            print(f"Invalid tone format: {tone}. Setting to default Tone.Objective.")
             self.tone = Tone.Objective
         elif isinstance(tone, str):
             self.tone = Tone[tone]
@@ -107,7 +107,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "starting_research",
-                f"🔎 מתחיל בביצוע משימת המחקר... '{self.query}'...",
+                f"🔎 Starting the research task for '{self.query}'...",
                 self.websocket,
             )
 
@@ -137,7 +137,7 @@ class GPTResearcher:
             document_data = await DocumentLoader(self.cfg.doc_path).load()
             docs_context = await self.__get_context_by_search(self.query, document_data)
             web_context = await self.__get_context_by_search(self.query)
-            self.context = f"קונטקסט ממסמכים מקומיים: {docs_context}\n\nקונטקטסט ממידע שנאסף מהאינטרנט: {web_context}"
+            self.context = f"Context from local documents: {docs_context}\n\nContext from web sources: {web_context}"
 
         elif self.report_source == ReportSource.LangChainDocuments.value:
             langchain_documents_data = await LangChainDocumentLoader(
@@ -158,7 +158,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "research_step_finalized",
-                f"משימת החקר הסתיימה בהצלחה.\n💸 עלות משוערת למשימה: ${self.get_costs()}",
+                f"Finalized research step.\n💸 Total Research Costs: ${self.get_costs()}",
                 self.websocket,
             )
 
@@ -184,7 +184,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "task_summary_coming_up",
-                f"✍️ כותב סיכום ממצאי המחקר: {self.query} (אנא התאזר בסבלנות זה עלול לקחת מספר דקות)...",
+                f"✍️ Writing summary for research task: {self.query} (this may take a few minutes)...",
                 self.websocket,
             )
 
@@ -225,7 +225,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "source_urls",
-                f"🗂️ אני אבצע מחקר על בסיס הלינקים הבאים: {new_search_urls}...",
+                f"🗂️ I will conduct my research based on the following urls: {new_search_urls}...",
                 self.websocket,
             )
 
@@ -249,7 +249,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "subqueries",
-                f"🗂️  אני אבצע מחקר על בסיס השאילתה הזו: {sub_queries}...",
+                f"🗂️  I will conduct my research based on the following queries: {sub_queries}...",
                 self.websocket,
                 True,
                 sub_queries,
@@ -281,7 +281,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "subqueries",
-                f"🗂️ אני אבצע מחקר על בסיס השאילתות הבאות: {sub_queries}...",
+                f"🗂️ I will conduct my research based on the following queries: {sub_queries}...",
                 self.websocket,
                 True,
                 sub_queries,
@@ -309,7 +309,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "running_subquery_with_vectorstore_research",
-                f"\n🔍 מבצע מחקר עבור '{sub_query}'...",
+                f"\n🔍 Running research for '{sub_query}'...",
                 self.websocket,
             )
 
@@ -323,7 +323,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "subquery_context_not_found",
-                f"🤷 לא נמצא מידע עבור '{sub_query}'...",
+                f"🤷 No content found for '{sub_query}'...",
                 self.websocket,
             )
         return content
@@ -342,7 +342,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "running_subquery_research",
-                f"\n🔍מבצע מחקר עבור הנושא '{sub_query}'...",
+                f"\n🔍 Running research for '{sub_query}'...",
                 self.websocket,
             )
 
@@ -359,7 +359,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "subquery_context_not_found",
-                f"🤷 לא נמצא מידע עבור '{sub_query}'...",
+                f"🤷 No content found for '{sub_query}'...",
                 self.websocket,
             )
         return content
@@ -379,7 +379,7 @@ class GPTResearcher:
                     await stream_output(
                         "logs",
                         "added_source_url",
-                        f"✅ הלינק הוסף כמקור לשם משימת המחקר: {url}\n",
+                        f"✅ Added source url to research: {url}\n",
                         self.websocket,
                         True,
                         url,
@@ -422,7 +422,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "researching",
-                f"🤔 מחפש מידע רלוונטי ממקורות מגוונים...\n",
+                f"🤔 Researching for relevant information across multiple sources...\n",
                 self.websocket,
             )
 
@@ -438,7 +438,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "fetching_query_content",
-                f"📚 מאחזר מידע רלוונטי : {query}...",
+                f"📚 Getting relevant content based on query: {query}...",
                 self.websocket,
             )  
 
@@ -454,7 +454,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "fetching_query_content",
-                f"📚 מאחזר מידע רלוונטי על בסיס השאילתה: {query}...",
+                f"📚 Getting relevant content based on query: {query}...",
                 self.websocket,
             )
 
@@ -464,7 +464,7 @@ class GPTResearcher:
         )
         # Run Tasks
         return await context_compressor.async_get_context(
-            query=query, max_results=8, cost_callback=self.add_costs
+            query=query, max_results=10, cost_callback=self.add_costs
         )
 
     ########################################################################################
@@ -496,7 +496,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "writing_conclusion",
-                f"🙇️ מסכם את הממצאים והמסקנות: {self.query}...",
+                f"🙇️ Concluding report for research task: {self.query}...",
                 self.websocket,
             )
 
@@ -510,7 +510,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "report_conclusion",
-                f"✍️ כותב מסקנות סופיות: {conclusion}...",
+                f"✍️ Writing final conclusion: {conclusion}...",
                 self.websocket,
             )
 
@@ -530,7 +530,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "generating_conclusion",
-                f"🤔 מכין רשימת תתי נושאים...",
+                f"🤔 Generating subtopics...",
                 self.websocket,
             )
         # Construct Report Introduction from main topic research
@@ -587,7 +587,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "task_summary_coming_up",
-                f"✍️ כותב טיוטא של הכותרות בהתאם לשאילתה: {self.query}...",
+                f"✍️ Writing draft section titles for research task: {self.query}...",
                 self.websocket,
             )
 
@@ -628,7 +628,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "fetching_relevant_written_content",
-                f"🔎 קורא מידע כתוב הרלוונטי לנושא: {query}...",
+                f"🔎 Getting relevant written content based on query: {query}...",
                 self.websocket,
             )
 
