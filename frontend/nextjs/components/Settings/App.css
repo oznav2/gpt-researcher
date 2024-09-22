@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Suez+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;700&display=swap');
 
 @keyframes gradientBG {
   0% {
@@ -43,7 +44,7 @@
 }
 
 .settings body {
-  font-family: 'Suez One', 'Montserrat', sans-serif;
+  font-family: 'Noto Sans Hebrew', 'Libre Baskerville', serif;
   color: #fff;
   line-height: 1.6;
   background-size: 200% 200%;
@@ -162,7 +163,7 @@
 
 .settings #output {
   height: 150px; /* Adjusted height */
-  font-family: 'Suez One', 'Montserrat', sans-serif;
+  font-family: 'Noto Sans Hebrew', 'Libre Baskerville', serif;
   overflow: auto;
   padding: 10px;
   margin-bottom: 10px;
@@ -170,7 +171,7 @@
 }
 
 .settings #reportContainer {
-  font-family: 'Suez One', 'Georgia', 'Times New Roman', Times, "Courier New", serif;
+  font-family: 'Noto Sans Hebrew', 'Libre Baskerville', serif;
   background-color: rgba(255, 255, 255, 0.1);
   border: none;
   color: #fff;

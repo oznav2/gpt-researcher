@@ -22,13 +22,13 @@ export default function AccessReport({ accessData, report }) {
         href={getReportLink('pdf')} 
         className="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         target="_blank">
-        View as PDF
+        צפה כ PDF
       </a>
       <a id="downloadLink" 
         href={getReportLink('docx')} 
         className="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         target="_blank">
-        Download DocX
+        הורד כקובץ וורד
       </a>
     </div>
   );

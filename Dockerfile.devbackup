@@ -1,17 +1,4 @@
-FROM python:3.11.4-slim-bullseye AS python-base
-
-# Install Miniconda
-ENV CONDA_DIR /opt/conda
-RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/* \
-    && wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh \
-    && /bin/bash ~/miniconda.sh -b -p $CONDA_DIR \
-    && rm ~/miniconda.sh
-ENV PATH=$CONDA_DIR/bin:$PATH
-
-# Set PIP_ROOT_USER_ACTION
-ENV PIP_ROOT_USER_ACTION=ignore
-
-FROM python-base AS install-browser
+FROM python:3.11.4-slim-bullseye AS install-browser
 
 RUN apt-get update \
     && apt-get satisfy -y \
@@ -33,21 +20,16 @@ RUN apt-get update \
 
 FROM install-browser AS gpt-researcher-install
 
+ENV PIP_ROOT_USER_ACTION=ignore
+
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
-# Copy the environment.yml file
-COPY ./environment.yml ./environment.yml
+COPY ./requirements.txt ./requirements.txt
+RUN pip install -r requirements.txt
 
-# Create the conda environment
-RUN conda env create -f environment.yml
-
-# Make RUN commands use the new environment
-SHELL ["conda", "run", "-n", "gpt-research", "/bin/bash", "-c"]
-
-# Install additional requirements for multi_agents if needed
-# COPY ./multi_agents/requirements.txt ./multi_agents/requirements.txt
-# RUN pip install -r multi_agents/requirements.txt
+COPY ./multi_agents/requirements.txt ./multi_agents/requirements.txt
+RUN pip install -r multi_agents/requirements.txt
 
 FROM gpt-researcher-install AS gpt-researcher
 
@@ -55,27 +37,28 @@ ARG OPENAI_API_KEY
 ARG TAVILY_API_KEY
 ARG GOOGLE_API_KEY
 ARG GOOGLE_CX_KEY
+
 ARG BING_API_KEY
 ARG SERPAPI_API_KEY
 ARG SERPER_API_KEY
 ARG LANGCHAIN_API_KEY
 ARG SEARCHAPI_API_KEY
+
 ARG ANTHROPIC_API_KEY
-ARG NCBI_API_KEY
-ARG EXA_API_KEY
 
 ENV OPENAI_API_KEY=${OPENAI_API_KEY}
 ENV TAVILY_API_KEY=${TAVILY_API_KEY}
 ENV GOOGLE_API_KEY=${GOOGLE_API_KEY}
 ENV GOOGLE_CX_KEY=${GOOGLE_CX_KEY}
+
 ENV BING_API_KEY=${BING_API_KEY}
 ENV SERPAPI_API_KEY=${SERPAPI_API_KEY}
 ENV SERPER_API_KEY=${SERPER_API_KEY}
 ENV LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
-ENV SEARCHAPI_API_KEY=${SEARCHAPI_API_KEY}
+
+ENV SEARCHAPI_API_KEY=${SEARCHAPI_API_KEY}}
+
 ENV ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
-ENV NCBI_API_KEY=${NCBI_API_KEY}
-ENV EXA_API_KEY=${EXA_API_KEY}
 
 RUN useradd -ms /bin/bash gpt-researcher \
     && chown -R gpt-researcher:gpt-researcher /usr/src/app
@@ -85,6 +68,4 @@ USER gpt-researcher
 COPY --chown=gpt-researcher:gpt-researcher ./ ./
 
 EXPOSE 8000
-
-# Activate conda environment and run the application
-CMD ["conda", "run", "--no-capture-output", "-n", "gpt-research", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

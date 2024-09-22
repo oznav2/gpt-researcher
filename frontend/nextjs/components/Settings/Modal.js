@@ -149,7 +149,7 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }) {
                         <div className="form-group">
                           <label className="form-group-label">מנועי חיפוש</label>
                           <select name="RETRIEVER" value={apiVariables.RETRIEVER} onChange={handleInputChange}>
-                            <option value="" disabled>בחירת מנוע חיפוש</option>
+                            <option value="" disabled>הגדרות הדוח</option>
                             <option value="tavily">Tavily</option>
                             <option value="google">Google</option>
                             <option value="searx">Searx</option>

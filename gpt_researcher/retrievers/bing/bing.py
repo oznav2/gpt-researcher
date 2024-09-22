@@ -52,7 +52,7 @@ class BingSearch():
             "responseFilter" : "Webpages",
             "q": self.query,
             "count": max_results,
-            "setLang": "en-GB",
+            "setLang": "he-IL",
             "textDecorations": False,
             "textFormat": "HTML",
             "safeSearch": "Strict"

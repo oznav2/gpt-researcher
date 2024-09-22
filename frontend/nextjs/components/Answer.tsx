@@ -71,7 +71,7 @@ export default function Answer({ answer }: { answer: string }) {
                 <div className="markdown-content" dangerouslySetInnerHTML={{ __html: htmlContent }} />
                 <style jsx>{`
                 .answer-container {
-                    font-family: Georgia, 'Times New Roman', Times, serif;
+                    font-family: 'Noto Sans Hebrew', 'Libre Baskerville', serif;
                     
                   }
 
@@ -86,19 +86,19 @@ export default function Answer({ answer }: { answer: string }) {
                     }
                     /* Optionally add more specific styling */
                     h1 {
-                      font-size: 2.5em;
+                      font-size: 3.5em;
                       color: white;
                     }
                     h2 {
-                      font-size: 2em;
+                      font-size: 2.5em;
                       color: white;
                     }
                     h3 {
-                      font-size: 1.5em;
+                      font-size: 2em;
                       color: white;
                     }
                     h4 {
-                      font-size: 1.2em;
+                      font-size: 1.7em;
                       color: white;
                     }
                     /* Add more styles as needed */

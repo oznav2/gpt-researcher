@@ -1,0 +1,45 @@
+# Core dependencies
+beautifulsoup4==4.12.3
+colorama==0.4.6
+md2pdf==1.0.1
+python-dotenv==1.0.1
+pyyaml==6.0.2
+uvicorn==0.30.6
+pydantic==2.9.2
+fastapi==0.115.0
+python-multipart==0.0.10
+markdown==3.7
+tiktoken==0.7.0
+requests==2.32.3
+jinja2==3.1.4
+aiofiles==24.1.0
+mistune==3.0.2
+python-docx==1.1.2
+htmldocx==0.0.6
+lxml_html_clean==0.2.2
+websockets==13.1
+unstructured==0.15.13
+json_repair==0.29.3
+json5==0.9.25
+loguru==0.7.2
+
+# LangChain and related packages
+langchain==0.2.16
+langchain_community==0.2.17
+langchain-openai==0.1.25
+langchain-core==0.2.41
+langchain_anthropic==0.2.1
+langgraph==0.2.23
+
+# Other specific packages
+gpt-researcher==0.9.6
+arxiv==2.1.3
+PyMuPDF==1.24.10
+openai==1.47.0
+
+# Additional packages from your environment
+aiohappyeyeballs==2.4.0
+aiohttp==3.10.5
+httpx==0.27.2
+nltk==3.9.1
+pillow==10.4.0

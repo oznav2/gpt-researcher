@@ -107,7 +107,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "starting_research",
-                f"🔎 Starting the research task for '{self.query}'...",
+                f"🔎 מתחיל במשימת המחקר בנושא '{self.query}'...",
                 self.websocket,
             )
 
@@ -137,7 +137,7 @@ class GPTResearcher:
             document_data = await DocumentLoader(self.cfg.doc_path).load()
             docs_context = await self.__get_context_by_search(self.query, document_data)
             web_context = await self.__get_context_by_search(self.query)
-            self.context = f"Context from local documents: {docs_context}\n\nContext from web sources: {web_context}"
+            self.context = f"בהקשר של מסמכים מקומיים: {docs_context}\n\nבהקשר של מקורות באינטרנט: {web_context}"
 
         elif self.report_source == ReportSource.LangChainDocuments.value:
             langchain_documents_data = await LangChainDocumentLoader(
@@ -158,7 +158,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "research_step_finalized",
-                f"Finalized research step.\n💸 Total Research Costs: ${self.get_costs()}",
+                f"מסיים איסוף המידע\n💸 עלות משוערת למשימה: ${self.get_costs()}",
                 self.websocket,
             )
 
@@ -184,7 +184,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "task_summary_coming_up",
-                f"✍️ Writing summary for research task: {self.query} (this may take a few minutes)...",
+                f"✍️ כותב סיכום המחקר בנושא: {self.query} (אנא התאזר בסבלנות)...",
                 self.websocket,
             )
 
@@ -225,7 +225,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "source_urls",
-                f"🗂️ I will conduct my research based on the following urls: {new_search_urls}...",
+                f"🗂️ אבצע את המחקר על בסיס הלינקים הבאים: {new_search_urls}...",
                 self.websocket,
             )
 
@@ -249,7 +249,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "subqueries",
-                f"🗂️  I will conduct my research based on the following queries: {sub_queries}...",
+                f"🗂️  אבצע את המחקר בנושא: {sub_queries}...",
                 self.websocket,
                 True,
                 sub_queries,
@@ -281,7 +281,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "subqueries",
-                f"🗂️ I will conduct my research based on the following queries: {sub_queries}...",
+                f"🗂️ מבצע מחקר משלים בנושאים: {sub_queries}...",
                 self.websocket,
                 True,
                 sub_queries,
@@ -309,7 +309,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "running_subquery_with_vectorstore_research",
-                f"\n🔍 Running research for '{sub_query}'...",
+                f"\n🔍 מבצע מחקר בנושא '{sub_query}'...",
                 self.websocket,
             )
 
@@ -323,7 +323,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "subquery_context_not_found",
-                f"🤷 No content found for '{sub_query}'...",
+                f"🤷 לא נמצא מידע מספיק עבור '{sub_query}'...",
                 self.websocket,
             )
         return content
@@ -359,7 +359,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "subquery_context_not_found",
-                f"🤷 No content found for '{sub_query}'...",
+                f"🤷 לא נמצא מידע עבור '{sub_query}'...",
                 self.websocket,
             )
         return content
@@ -379,7 +379,7 @@ class GPTResearcher:
                     await stream_output(
                         "logs",
                         "added_source_url",
-                        f"✅ Added source url to research: {url}\n",
+                        f"✅ הלינק הוסף כמקור מידע למחקר מהכתובת: {url}\n",
                         self.websocket,
                         True,
                         url,
@@ -422,7 +422,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "researching",
-                f"🤔 Researching for relevant information across multiple sources...\n",
+                f"🤔 מאתר מידע רלוונטי ממקורות מרובים בו זמנית...\n",
                 self.websocket,
             )
 
@@ -438,7 +438,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "fetching_query_content",
-                f"📚 Getting relevant content based on query: {query}...",
+                f"📚 מאתר מידע רלוונטי בנושא: {query}...",
                 self.websocket,
             )  
 
@@ -454,7 +454,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "fetching_query_content",
-                f"📚 Getting relevant content based on query: {query}...",
+                f"📚 מאחזר מידע מהמקור בנושא: {query}...",
                 self.websocket,
             )
 
@@ -496,7 +496,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "writing_conclusion",
-                f"🙇️ Concluding report for research task: {self.query}...",
+                f"🙇️ מבצע סיכום ממצאי המחקר בנושא: {self.query}...",
                 self.websocket,
             )
 
@@ -510,7 +510,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "report_conclusion",
-                f"✍️ Writing final conclusion: {conclusion}...",
+                f"✍️ כותב את מסקנות המחקר: {conclusion}...",
                 self.websocket,
             )
 
@@ -557,7 +557,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "generating_subtopics",
-                f"🤔 Generating subtopics...",
+                f"🤔 מייצר כותרות משנה לדוח...",
                 self.websocket,
             )
 
@@ -587,7 +587,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "task_summary_coming_up",
-                f"✍️ Writing draft section titles for research task: {self.query}...",
+                f"✍️ כותב טיוטה לדוח: {self.query}...",
                 self.websocket,
             )
 
@@ -628,7 +628,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "fetching_relevant_written_content",
-                f"🔎 Getting relevant written content based on query: {query}...",
+                f"🔎 מאחזר מידע רלוונטי מהמקורות הכתובים: {query}...",
                 self.websocket,
             )
 
