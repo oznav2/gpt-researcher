@@ -42,14 +42,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="he" dir="rtl">
+    <html lang="he" dir="rtl" className="dark">
       <head>
         <PlausibleProvider domain="localhost:3000" />
       </head>
       <body
-        className={`${inter.className} flex min-h-screen flex-col justify-between`}
+        className={`${inter.className} min-h-screen flex flex-col justify-between bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
       >
-        {children}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <main className="flex flex-col items-center justify-center min-h-screen">
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );

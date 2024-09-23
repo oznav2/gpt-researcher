@@ -6,15 +6,25 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class', // Add this line
   theme: {
     screens: {
       sm: '640px',
       md: '768px',
       lg: '898px',
-      xl:"1024px"
+      xl: '1024px',
+      // Consider adding a 2xl breakpoint if needed
+      // '2xl': '1536px',
     },
     container: {
       center: true,
+      // Consider adding padding for better responsive behavior
+      padding: {
+        DEFAULT: '1rem',
+        sm: '2rem',
+        lg: '4rem',
+        xl: '5rem',
+      },
     },
     extend: {
       backgroundImage: {

@@ -18,6 +18,10 @@ import { startLanggraphResearch } from '../components/Langgraph/Langgraph';
 import findDifferences from '../helpers/findDifferences';
 import HumanFeedback from "@/components/HumanFeedback";
 
+// Import necessary styles and utilities
+import styles from '@/styles/Home.module.css';
+import { useTheme } from 'next-themes';
+
 export default function Home() {
   const [promptValue, setPromptValue] = useState("");
   const [showResult, setShowResult] = useState(false);
@@ -36,6 +40,7 @@ export default function Home() {
   const [showHumanFeedback, setShowHumanFeedback] = useState(false);
   const [questionForHuman, setQuestionForHuman] = useState(false);
   
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -346,9 +351,11 @@ export default function Home() {
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen dark:bg-gray-900">
+      {/* Header */}
       <Header />
-      <main className="h-full px-4 pb-4 pt-10">
+
+      <main className="flex-grow px-4 pb-4 pt-10 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         {!showResult && (
           <Hero
             promptValue={promptValue}
@@ -358,23 +365,29 @@ export default function Home() {
         )}
 
         {showResult && (
-          <div className="flex h-full min-h-[68vh] w-full grow flex-col justify-between">
-            <div className="container w-full space-y-2">
+          <div className="flex flex-col h-full min-h-[68vh] w-full justify-between">
+            <div className="container w-full space-y-2 mx-auto max-w-7xl">
               <div className="container space-y-2">
+                {/* Render components in order */}
                 {renderComponentsInOrder()}
               </div>
 
+              {/* Human Feedback */}
               {showHumanFeedback && (
-                <HumanFeedback
-                  questionForHuman={questionForHuman}
-                  websocket={socket}
-                  onFeedbackSubmit={handleFeedbackSubmit}
-                />
+                <div className="dark:text-white">
+                  <HumanFeedback
+                    questionForHuman={questionForHuman}
+                    websocket={socket}
+                    onFeedbackSubmit={handleFeedbackSubmit}
+                  />
+                </div>
               )}
 
               <div className="pt-1 sm:pt-2" ref={chatContainerRef}></div>
             </div>
-            <div id="input-area" className="container px-4 lg:px-0">
+
+            {/* Input Area */}
+            <div id="input-area" className="container px-4 lg:px-0 mx-auto max-w-7xl">
               <InputArea
                 promptValue={promptValue}
                 setPromptValue={setPromptValue}
@@ -386,7 +399,9 @@ export default function Home() {
           </div>
         )}
       </main>
+
+      {/* Footer */}
       <Footer setChatBoxSettings={setChatBoxSettings} chatBoxSettings={chatBoxSettings} />
-    </>
+    </div>
   );
 }

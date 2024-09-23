@@ -5,9 +5,8 @@ import { useEffect, useState } from 'react';
 import { remark } from 'remark';
 import html from 'remark-html';
 
-
 export default function Answer({ answer }: { answer: string }) {
-  async function markdownToHtml(markdown) {
+  async function markdownToHtml(markdown: string) {
     try {
       const result = await remark().use(html).process(markdown);
       console.log('Markdown to HTML conversion result:', result.toString());
@@ -25,18 +24,11 @@ export default function Answer({ answer }: { answer: string }) {
   }, [answer]);
   
   return (
-    <div className="container flex h-auto w-full shrink-0 gap-4 bg-gray-800 shadow-md rounded-lg border border-solid border-[#C2C2C2] p-5">
+    <div className="container flex flex-col sm:flex-row h-auto w-full shrink-0 gap-4 bg-gray-800 dark:bg-gray-900 shadow-md rounded-lg border border-solid border-[#C2C2C2] dark:border-gray-700 p-3 sm:p-5">
       <div className="w-full">
         <div className="flex items-center justify-between pb-3">
           {answer && (
             <div className="flex items-center gap-3">
-              {/* <Image
-                src="/img/link.svg"
-                alt="footer"
-                width={20}
-                height={20}
-                className="cursor-pointer"
-              /> */}
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(answer.trim());
@@ -45,68 +37,55 @@ export default function Answer({ answer }: { answer: string }) {
                   });
                 }}
               >
-
                 <Image
                   src="/img/copy-white.svg"
                   alt="footer"
                   width={20}
                   height={20}
-                  className="cursor-pointer text-white"
+                  className="cursor-pointer text-white dark:text-gray-300"
                 />
               </button>
-              {/* <Image
-                src="/img/share.svg"
-                alt="footer"
-                width={20}
-                height={20}
-                className="cursor-pointer"
-              /> */}
             </div>
           )}
         </div>
         <div className="flex flex-wrap content-center items-center gap-[15px]">
-          <div className="w-full whitespace-pre-wrap text-base font-light leading-[152.5%] text-white">
+          <div className="w-full whitespace-pre-wrap text-sm sm:text-base font-light leading-[152.5%] text-gray-900 dark:text-white">
             {answer ? (
               <div className="answer-container">
                 <div className="markdown-content" dangerouslySetInnerHTML={{ __html: htmlContent }} />
                 <style jsx>{`
                 .answer-container {
                     font-family: 'Noto Sans Hebrew', 'Libre Baskerville', serif;
-                    
                   }
 
                   .markdown-content {
-                    /* Reset margins and paddings */
                     margin: 0;
                     padding: 0;
-                    /* Override existing styles for headings */
                     h1, h2, h3, h4, h5, h6 {
-                      font-size: 18px; font-weight: 400; padding: 0;
+                      font-size: 1rem;
+                      font-weight: 400;
+                      padding: 0;
                       line-height: 1.2;
+                      margin-bottom: 0.5em;
                     }
-                    /* Optionally add more specific styling */
                     h1 {
-                      font-size: 3.5em;
-                      color: white;
+                      font-size: 1.5em;
                     }
                     h2 {
-                      font-size: 2.5em;
-                      color: white;
+                      font-size: 1.3em;
                     }
                     h3 {
-                      font-size: 2em;
-                      color: white;
+                      font-size: 1.2em;
                     }
                     h4 {
-                      font-size: 1.7em;
-                      color: white;
+                      font-size: 1.1em;
                     }
-                    /* Add more styles as needed */
-
-                    /* Table of Contents Styling */
+                    p {
+                      margin-bottom: 1em;
+                    }
                     ul {
                       list-style-type: none;
-                      padding-left: 0;
+                      padding-left: 1em;
                       margin-bottom: 1em;
                     }
                     ul > li {
@@ -126,15 +105,21 @@ export default function Answer({ answer }: { answer: string }) {
                     ul > li > ul > li > ul > li {
                       margin-bottom: 0.2em;
                     }
+                    @media (max-width: 640px) {
+                      h1 { font-size: 1.3em; }
+                      h2 { font-size: 1.2em; }
+                      h3 { font-size: 1.1em; }
+                      h4 { font-size: 1em; }
+                    }
                   }
                 `}</style>
               </div>
             ) : (
               <div className="flex w-full flex-col gap-2">
-                <div className="h-6 w-full animate-pulse rounded-md bg-gray-300" />
-                <div className="h-6 w-full animate-pulse rounded-md bg-gray-300" />
-                <div className="h-6 w-full animate-pulse rounded-md bg-gray-300" />
-                <div className="h-6 w-full animate-pulse rounded-md bg-gray-300" />
+                <div className="h-4 sm:h-6 w-full animate-pulse rounded-md bg-gray-300 dark:bg-gray-700" />
+                <div className="h-4 sm:h-6 w-full animate-pulse rounded-md bg-gray-300 dark:bg-gray-700" />
+                <div className="h-4 sm:h-6 w-full animate-pulse rounded-md bg-gray-300 dark:bg-gray-700" />
+                <div className="h-4 sm:h-6 w-full animate-pulse rounded-md bg-gray-300 dark:bg-gray-700" />
               </div>
             )}
           </div>

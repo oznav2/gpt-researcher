@@ -18,23 +18,18 @@ const Hero: FC<THeroProps> = ({
   };
 
   return (
-    <div>
-
+    <div className="px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col items-center justify-center">
         <div className="landing flex flex-col items-center">
-            <h1 className="text-4xl font-extrabold text-center lg:text-7xl">
+            <h1 className="text-3xl sm:text-4xl lg:text-7xl font-extrabold text-center mb-6">
               אמרו שלום ולהתראות <br />
               <span
-                style={{
-                  backgroundImage: 'linear-gradient(to right, #9867F0, #ED4E50)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}
+                className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 dark:from-purple-300 dark:to-pink-400"
               >
                 לאינסוף שעות מבוזבות של חיפוש מידע
               </span>
             </h1>
-            <h2 className="text-xl font-light text-center ml-[20vw] mr-[20vw] mb-10 text-gray-300">
+            <h2 className="text-base sm:text-lg lg:text-xl font-light text-center mx-4 sm:mx-[10vw] lg:mx-[20vw] mb-10 text-gray-700 dark:text-gray-300">
               הכירו את עמית המחקר בשרת של אילן, כלי מבוסס בינה חכמה שיאפשר לכם לקבל מידע מקיף ותובנות על כמעט כל נושא שתבחרו
               תדמיינו מנוע חיפוש עם בינה חכמה המורכב מעשרות מומחים, שיש לו את כל הידע האנושי הכתוב בכל נושא, 
               שפותח עשרות דפי אינטרנט בו זמנית, שקורא עבורכם מאות מסמכים ומקורות באינספור שפות ומכין לכם תשובה מרוכזת, מקיפה, הבדוקה על ידי צוות המומחים הכי רציני שיכולתם לחלום עליו
@@ -42,9 +37,8 @@ const Hero: FC<THeroProps> = ({
             </h2>
         </div>
         
-
         {/* input section */}
-        <div className="w-full max-w-[708px] pb-6 mt-20">
+        <div className="w-full max-w-[708px] pb-6 mt-10 sm:mt-20">
           <InputArea
             promptValue={promptValue}
             setPromptValue={setPromptValue}
@@ -53,10 +47,10 @@ const Hero: FC<THeroProps> = ({
         </div>
 
         {/* Suggestions section */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 pb-[30px] lg:flex-nowrap lg:justify-normal">
+        <div className="flex flex-wrap items-center justify-center gap-2.5 pb-[30px]">
           {suggestions.map((item) => (
             <div
-              className="flex h-[35px] cursor-pointer items-center justify-center gap-[5px] rounded border border-solid border-[#C1C1C1] bg-[#EDEDEA] px-2.5 py-2"
+              className="flex h-[35px] cursor-pointer items-center justify-center gap-[5px] rounded border border-solid border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-2.5 py-2 transition-colors hover:bg-gray-200 dark:hover:bg-gray-700"
               onClick={() => handleClickSuggestion(item?.name)}
               key={item.id}
             >
@@ -65,17 +59,15 @@ const Hero: FC<THeroProps> = ({
                 alt={item.name}
                 width={18}
                 height={16}
-                className="w-[18px]"
+                className="w-[18px] dark:filter dark:invert"
               />
-              <span className="text-sm font-light leading-[normal] text-[#1B1B16]">
+              <span className="text-xs sm:text-sm font-light leading-[normal] text-gray-800 dark:text-gray-200">
                 {item.name}
               </span>
             </div>
           ))}
         </div>
-
       </div>
-  
     </div>
   );
 };

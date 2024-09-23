@@ -30,14 +30,20 @@ interface FooterProps {
 
 const Footer: FC<FooterProps> = ({ setChatBoxSettings, chatBoxSettings }) => {
   return (
-    <div className="container flex min-h-[72px] items-center justify-between border-t border-[#D2D2D2] px-4 pb-3 pt-5 lg:min-h-[72px] lg:px-0 lg:py-5">
+    <div className="container flex flex-col sm:flex-row min-h-[72px] items-center justify-between border-t border-[#D2D2D2] dark:border-gray-700 px-4 pb-3 pt-5 lg:min-h-[72px] lg:px-0 lg:py-5">
       <Modal setChatBoxSettings={setChatBoxSettings} chatBoxSettings={chatBoxSettings} />
-      <div className="text-sm text-gray-500">
-        © {new Date().getFullYear()}השרת של אילן - עמית מחקר אוטונומי
+      <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center sm:text-right mb-3 sm:mb-0">
+        © {new Date().getFullYear()} השרת של אילן - עמית מחקר אוטונומי
       </div>
       <div className="flex items-center gap-3">
         <Link href="https://www.ilanel.co.il" target="_blank">
-          <Image src="/img/github.svg" alt="github" width={30} height={30} />
+          <Image 
+            src="/img/github.svg" 
+            alt="github" 
+            width={30} 
+            height={30} 
+            className="w-6 h-6 sm:w-8 sm:h-8 transition-transform hover:scale-110"
+          />
         </Link>
       </div>
     </div>
