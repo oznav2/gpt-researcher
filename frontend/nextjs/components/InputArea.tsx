@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { FC } from 'react';
+import Image from "next/image";
+import { FC } from "react";
 import TypeAnimation from "./TypeAnimation";
 
 type TInputAreaProps = {
@@ -28,7 +28,7 @@ const InputArea: FC<TInputAreaProps> = ({
     >
       <input
         type="text"
-        placeholder="באיזה נושא נוסף היית רוצה שאבצע מחקר?"
+        placeholder="באיזה נושא תרצה שאבצע מחקר"
         className="focus-visible::outline-0 my-1 w-full pl-5 font-light not-italic leading-[normal] text-[#1B1B16]/30 text-black outline-none focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-xl"
         disabled={disabled}
         value={promptValue}

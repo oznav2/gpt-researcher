@@ -1,14 +1,25 @@
 // multi_agents/gpt_researcher_nextjs/components/Task/Accordion.tsx
 
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, SetStateAction } from 'react';
 
-const plainTextFields = ['task', 'sections', 'headers', 'sources', 'research_data'];
+const plainTextFields: string[] = ['task', 'sections', 'headers', 'sources', 'research_data'];
 
-const Accordion = ({ logs }) => {
+interface Log {
+  header: string;
+  processedData?: any[];
+  text: string;
+}
+
+interface AccordionProps {
+  logs: Log[];
+}
+
+const Accordion: React.FC<AccordionProps> = ({ logs }) => {
   console.log('logs in Accordion', logs);
 
-  const getLogHeaderText = (log) => {
-  const regex = /📃 Source: (https?:\/\/[^\s]+)/;
+  const getLogHeaderText = (log: Log) => {
+    const regex = /📃 Source: (https?:\/\/[^\s]+)/;
   const match = log.text.match(regex);
   let sourceUrl = '';
 
@@ -21,7 +32,7 @@ const Accordion = ({ logs }) => {
     : `📄 Retrieved relevant content from the source: ${sourceUrl}`;
 };
 
-  const renderLogContent = (log) => {
+  const renderLogContent = (log: { header: string; processedData: any[]; text: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) => {
     if (log.header === 'differences') {
       return log.processedData.map((data, index) => (
         <div key={index} className="mb-4">
@@ -90,15 +101,15 @@ const Accordion = ({ logs }) => {
     }
   };
 
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const handleToggle = (index) => {
+  const handleToggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
     <div id="accordion-collapse" data-accordion="collapse" className="mb-4 bg-gray-800 rounded-lg">
-  {logs.map((log, index) => (
+  {logs.map((log: Log, index: number) => (
     <div key={index}>
       <h2 id={`accordion-collapse-heading-${index}`}>
         <button
@@ -133,7 +144,11 @@ const Accordion = ({ logs }) => {
         aria-labelledby={`accordion-collapse-heading-${index}`}
       >
         <div className="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-800 text-white">
-          {renderLogContent(log)}
+          {renderLogContent({
+            header: log.header,
+            processedData: log.processedData || [],
+            text: log.text
+          })}
         </div>
       </div>
     </div>

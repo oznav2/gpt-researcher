@@ -1,4 +1,4 @@
-FROM python:3.11.4-slim-bullseye AS python-base
+FROM python:3.12.6-slim-bullseye AS python-base
 
 # Install Miniconda
 ENV CONDA_DIR /opt/conda

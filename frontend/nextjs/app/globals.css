@@ -94,6 +94,7 @@ body {
   margin: 0px !important;
 }
 
+
 /* RTL-specific adjustments */
 input, select, textarea {
   text-align: right;
