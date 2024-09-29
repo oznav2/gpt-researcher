@@ -44,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl">
       <head>
-        <PlausibleProvider domain="localhost:3000" />
+        <PlausibleProvider domain="localhost:3000,wow.ilanel.co.il" trackOutboundLinks={true} />
       </head>
       <body
         className={`${inter.className} flex min-h-screen flex-col justify-between`}

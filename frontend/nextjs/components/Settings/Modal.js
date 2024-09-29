@@ -133,7 +133,7 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }) {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="relative p-6 flex-auto">
                   <div className="tabs">
-                    <button onClick={() => setActiveTab('search')} className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}>מנועי חיפוש</button>
+                    <button onClick={() => setActiveTab('search')} className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}>הגדרות הדוח</button>
                     <button onClick={() => setActiveTab('api')} className={`tab-button ${activeTab === 'api' ? 'active' : ''}`}>מפתחות</button>
                   </div>
                   {activeTab === 'search' && (

@@ -35,6 +35,7 @@ export default function Home() {
   const heartbeatInterval = useRef(null);
   const [showHumanFeedback, setShowHumanFeedback] = useState(false);
   const [questionForHuman, setQuestionForHuman] = useState(false);
+  const [connectionError, setConnectionError] = useState(false);
   
 
   useEffect(() => {
@@ -57,58 +58,59 @@ export default function Home() {
       'searchapi_api_key': apiVariables.SEARCHAPI_API_KEY,
       'serpapi_api_key': apiVariables.SERPAPI_API_KEY,
       'serper_api_key': apiVariables.SERPER_API_KEY,
-      'searx_url': apiVariables.SEARX_URL
+      'searx_url': apiVariables.SEARX_URL,
+      'langgraph_host_url': apiVariables.LANGGRAPH_HOST_URL
     };
 
     if (!socket) {
-      if (typeof window !== 'undefined') {
-        const { protocol, pathname } = window.location;
-        let { host } = window.location;
-        host = host.includes('localhost') ? 'localhost:8000' : host;
-        const ws_uri = `${protocol === 'https:' ? 'wss:' : 'ws:'}//${host}${pathname}ws`;
+      const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+      const ws_uri = isLocalhost
+        ? 'ws://localhost:8000/ws'
+        : 'wss://gpt.ilanel.co.il/ws';
 
-        const newSocket = new WebSocket(ws_uri);
-        setSocket(newSocket);
+      const newSocket = new WebSocket(ws_uri);
+      setSocket(newSocket);
 
-        newSocket.onmessage = (event) => {
-          const data = JSON.parse(event.data);
-          console.log('websocket data caught in frontend: ', data);
+      newSocket.onopen = () => {
+        console.log('WebSocket connection established');
+        const { task, report_type, report_source, tone } = chatBoxSettings;
+        let data = "start " + JSON.stringify({ task: promptValue, report_type, report_source, tone, headers });
+        newSocket.send(data);
+      };
 
-          if (data.type === 'human_feedback' && data.content === 'request') {
-            console.log('triggered human feedback condition')
-            setQuestionForHuman(data.output)
-            setShowHumanFeedback(true);
-          } else {
-            const contentAndType = `${data.content}-${data.type}`;
-            setOrderedData((prevOrder) => [...prevOrder, { ...data, contentAndType }]);
+      newSocket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        console.log('websocket data caught in frontend: ', data);
 
-            if (data.type === 'report') {
-              setAnswer((prev) => prev + data.output);
-            } else if (data.type === 'path') {
-              setLoading(false);
-              newSocket.close();
-              setSocket(null);
-            }
+        if (data.type === 'human_feedback' && data.content === 'request') {
+          console.log('triggered human feedback condition')
+          setQuestionForHuman(data.output)
+          setShowHumanFeedback(true);
+        } else {
+          const contentAndType = `${data.content}-${data.type}`;
+          setOrderedData((prevOrder) => [...prevOrder, { ...data, contentAndType }]);
+
+          if (data.type === 'report') {
+            setAnswer((prev) => prev + data.output);
+          } else if (data.type === 'path') {
+            setLoading(false);
+            newSocket.close();
+            setSocket(null);
           }
-          
-        };
+        }
+        
+      };
 
-        newSocket.onopen = () => {
-          const { task, report_type, report_source, tone } = chatBoxSettings;
-          let data = "start " + JSON.stringify({ task: promptValue, report_type, report_source, tone, headers });
-          newSocket.send(data);
+      newSocket.onclose = () => {
+        console.log('WebSocket connection closed');
+        clearInterval(heartbeatInterval.current);
+        setSocket(null);
+      };
 
-          // Start sending heartbeat messages every 30 seconds
-          // heartbeatInterval.current = setInterval(() => {
-          //   newSocket.send(JSON.stringify({ type: 'ping' }));
-          // }, 30000);
-        };
-
-        newSocket.onclose = () => {
-          clearInterval(heartbeatInterval.current);
-          setSocket(null);
-        };
-      }
+      newSocket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+        setConnectionError(true);
+      };
     } else {
       const { task, report_type, report_source, tone } = chatBoxSettings;
       let data = "start " + JSON.stringify({ task: promptValue, report_type, report_source, tone, headers });
@@ -387,6 +389,11 @@ export default function Home() {
         )}
       </main>
       <Footer setChatBoxSettings={setChatBoxSettings} chatBoxSettings={chatBoxSettings} />
+      {connectionError && (
+        <div className="error-message">
+          Failed to connect to the server. Please try again later.
+        </div>
+      )}
     </>
   );
 }

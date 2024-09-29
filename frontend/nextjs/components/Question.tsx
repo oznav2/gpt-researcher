@@ -16,7 +16,7 @@ const Question: React.FC<QuestionProps> = ({ question }) => {
           className="size-[24px]"
         />
         <p className="font-bold uppercase leading-[152%] text-white">
-          Question:
+          נושא המחקר:
         </p>
       </div>
       <div className="grow text-white">&quot;{question}&quot;</div>
