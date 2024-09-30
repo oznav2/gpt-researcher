@@ -19,10 +19,9 @@ const Hero: FC<THeroProps> = ({
 
   return (
     <div>
-
       <div className="flex flex-col items-center justify-center">
         <div className="landing flex flex-col items-center">
-            <h1 className="text-4xl font-extrabold text-center lg:text-7xl">
+            <h1 className="text-4xl font-extrabold text-center lg:text-7xl" dir="rtl">
               אמרו שלום ולהתראות <br />
               <span
                 style={{
@@ -34,15 +33,14 @@ const Hero: FC<THeroProps> = ({
                 לאינסוף שעות מבוזבות של חיפוש מידע
               </span>
             </h1>
-            <h2 className="text-xl font-light text-center ml-[20vw] mr-[20vw] mb-10 text-gray-300">
-              הכירו את עמית המחקר בשרת של אילן, כלי מבוסס בינה חכמה שיאפשר לכם לקבל מידע מקיף ותובנות על כמעט כל נושא שתבחרו
+            <h2 className="text-xl font-light text-center mx-[20vw] mb-10 text-gray-300" dir="rtl">
+              הכירו את עמית המחקר בשרת של אילן, כלי מבוסס בינה חכמה שיאפשר לכם לקבל מידע מקיף ותובנות על כמעט כל נושא שתבחרו.
               תדמיינו כלי שפותח ברקע, בו זמנית, מאות שאילתות בכמה מנועי חיפוש במקביל, ובאמצעות צוות בינה חכמה המורכב מעשרות מומחים, 
-             שקוראים עבורכם מאות מסמכים ומקורות באינספור שפות ומכין לכם תשובה מרוכזת, מקיפה, בדוח פשוט ונח לקריאה 
-              והכל חינם..ותוך דקות
+              שקוראים עבורכם מאות מסמכים ומקורות באינספור שפות ומכין לכם תשובה מרוכזת, מקיפה, בדוח פשוט ונח לקריאה 
+              והכל חינם ותוך דקות...
             </h2>
         </div>
         
-
         {/* input section */}
         <div className="w-full max-w-[708px] pb-6 mt-20">
           <InputArea
@@ -53,7 +51,7 @@ const Hero: FC<THeroProps> = ({
         </div>
 
         {/* Suggestions section */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 pb-[30px] lg:flex-nowrap lg:justify-normal">
+        <div className="flex flex-wrap items-center justify-center gap-2.5 pb-[30px] lg:flex-nowrap lg:justify-normal" dir="rtl">
           {suggestions.map((item) => (
             <div
               className="flex h-[35px] cursor-pointer items-center justify-center gap-[5px] rounded border border-solid border-[#C1C1C1] bg-[#EDEDEA] px-2.5 py-2"
