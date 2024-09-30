@@ -44,7 +44,7 @@ const Hero: FC<THeroProps> = ({
         </div>
         
         {/* input section */}
-        <div className="w-full max-w-[708px] pb-6 mt-20">
+        <div className="w-full max-w-[708px] pb-6 mt-10">
           <InputArea
             promptValue={promptValue}
             setPromptValue={setPromptValue}

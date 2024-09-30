@@ -19,7 +19,7 @@ const Question: React.FC<QuestionProps> = ({ question }) => {
           נושא המחקר:
         </p>
       </div>
-      <div className="grow text-white">&quot;{question}&quot;</div>
+      <div className="grow text-amber-600">&quot;{question}&quot;</div>
     </div>
   );
 };
