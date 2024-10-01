@@ -32,75 +32,74 @@ const Accordion: React.FC<AccordionProps> = ({ logs }) => {
     : `📄 Retrieved relevant content from the source: ${sourceUrl}`;
 };
 
-  const renderLogContent = (log: { header: string; processedData: any[]; text: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) => {
-    if (log.header === 'differences') {
-      return log.processedData.map((data, index) => (
-        <div key={index} className="mb-4">
-          <h3 className="font-semibold text-lg text-body-color dark:text-dark-6">{data.field}:</h3>
-          {data.isMarkdown ? (
-            <div className="markdown-content" dangerouslySetInnerHTML={{ __html: data.htmlContent }} />
-          ) : (
-            <p className="text-body-color dark:text-dark-6">{typeof data.htmlContent === 'object' ? JSON.stringify(data.htmlContent) : data.htmlContent}</p>
-          )}
-          <style jsx>{`
-            .markdown-content {
-              margin: 0;
-              padding: 0;
-              h1, h2, h3, h4, h5, h6 {
-                font-size: inherit;
-                font-weight: bold;
-                margin-top: 1em;
-                margin-bottom: 0.2em;
-                line-height: 1.2;
-              }
-              h1 {
-                font-size: 2.5em;
-                color: #333;
-              }
-              h2 {
-                font-size: 2em;
-                color: #555;
-              }
-              h3 {
-                font-size: 1.5em;
-                color: #777;
-              }
-              h4 {
-                font-size: 1.2em;
-                color: #999;
-              }
-              ul {
-                list-style-type: none;
-                padding-left: 0;
-                margin-top: 1em;
-                margin-bottom: 1em;
-              }
-              ul > li {
-                margin-bottom: 0.5em;
-              }
-              ul > li > ul {
-                margin-left: 1em;
-                list-style-type: disc;
-              }
-              ul > li > ul > li {
-                margin-bottom: 0.3em;
-              }
-              ul > li > ul > li > ul {
-                margin-left: 1em;
-                list-style-type: circle;
-              }
-              ul > li > ul > li > ul > li {
-                margin-bottom: 0.2em;
-              }
+const renderLogContent = (log) => {
+  if (log.header === 'differences') {
+    return log.processedData.map((data, index) => (
+      <div key={index} className="mb-4">
+        <h3 className="font-semibold text-lg text-body-color dark:text-dark-6">{data.field}:</h3>
+        {data.isMarkdown ? (
+          <div className="markdown-content" dangerouslySetInnerHTML={{ __html: data.htmlContent }} />
+        ) : (
+          <p className="text-body-color dark:text-dark-6">{typeof data.htmlContent === 'object' ? JSON.stringify(data.htmlContent) : data.htmlContent}</p>
+        )}
+        <style jsx>{`
+          .markdown-content {
+            margin: 0;
+            padding: 0;
+            h1, h2, h3, h4, h5, h6 {
+              font-size: inherit;
+              font-weight: bold;
+              margin-top: 1em;
+              margin-bottom: 0.2em;
+              line-height: 1.2;
             }
-          `}</style>
-        </div>
-      ));
-    } else {
-      return <p className="mb-2 text-body-color dark:text-dark-6">{log.text}</p>;
-    }
-  };
-
+            h1 {
+              font-size: 2.5em;
+              color: #333;
+            }
+            h2 {
+              font-size: 2em;
+              color: #555;
+            }
+            h3 {
+              font-size: 1.5em;
+              color: #777;
+            }
+            h4 {
+              font-size: 1.2em;
+              color: #999;
+            }
+            ul {
+              list-style-type: none;
+              padding-left: 0;
+              margin-top: 1em;
+              margin-bottom: 1em;
+            }
+            ul > li {
+              margin-bottom: 0.5em;
+            }
+            ul > li > ul {
+              margin-left: 1em;
+              list-style-type: disc;
+            }
+            ul > li > ul > li {
+              margin-bottom: 0.3em;
+            }
+            ul > li > ul > li > ul {
+              margin-left: 1em;
+              list-style-type: circle;
+            }
+            ul > li > ul > li > ul > li {
+              margin-bottom: 0.2em;
+            }
+          }
+        `}</style>
+      </div>
+    ));
+  } else {
+    return <p className="mb-2 text-body-color dark:text-dark-6">{log.text}</p>;
+  }
+};
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const handleToggle = (index: number) => {
@@ -114,12 +113,12 @@ const Accordion: React.FC<AccordionProps> = ({ logs }) => {
       <h2 id={`accordion-collapse-heading-${index}`}>
         <button
           type="button"
-          className="flex items-center w-full p-5 font-medium rtl:text-right text-white rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 hover:bg-gray-700 hover:text-white gap-3"
+          className="flex items-center w-full p-5 font-medium text-sm rtl:text-right text-white rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 hover:bg-gray-700 hover:text-white gap-3"
           onClick={() => handleToggle(index)}
           aria-expanded={openIndex === index}
           aria-controls={`accordion-collapse-body-${index}`}
         >
-          <span className="flex-grow text-left">{getLogHeaderText(log)}</span>
+          <span className="flex font-medium text-right">{getLogHeaderText(log)}</span>
           <svg
             data-accordion-icon
             className={`w-3 h-3 ${openIndex === index ? 'rotate-180' : ''} shrink-0`}

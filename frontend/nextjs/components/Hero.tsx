@@ -51,23 +51,23 @@ const Hero: FC<THeroProps> = ({
             handleDisplayResult={handleDisplayResult}
           />
         </div>
-
         {/* Suggestions section */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 pb-[30px] lg:flex-nowrap lg:justify-normal" dir="rtl">
+        <div className="flex flex-wrap items-center justify-center gap-2 pb-6 sm:pb-8 md:pb-10 lg:flex-nowrap lg:justify-normal max-w-[90vw] mx-auto" dir="rtl">
           {suggestions.map((item) => (
             <div
-              className="flex h-[35px] cursor-pointer items-center justify-center gap-[5px] rounded border border-solid border-[#C1C1C1] bg-[#EDEDEA] px-2.5 py-2"
+              className="flex cursor-pointer items-center justify-center gap-2 rounded border border-solid border-[#C1C1C1] bg-[#EDEDEA] px-2 py-1 mb-2 transition-colors hover:bg-[#E0E0DD] text-[10px] sm:text-xs md:text-sm"
               onClick={() => handleClickSuggestion(item?.name)}
               key={item.id}
+              style={{ width: 'fit-content' }}
             >
               <Image
                 src={item.icon}
                 alt={item.name}
-                width={18}
-                height={16}
-                className="w-[18px]"
+                width={12}
+                height={12}
+                className="w-3 h-3 sm:w-4 sm:h-4"
               />
-              <span className="text-sm font-light leading-[normal] text-[#1B1B16]">
+              <span className="font-medium leading-tight text-[#1B1B16] line-clamp-2">
                 {item.name}
               </span>
             </div>

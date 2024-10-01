@@ -22,8 +22,8 @@ const nextConfig = {
     ],
   },
   publicRuntimeConfig: {
-    API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://gpt.ilanel.co.il,http://localhost:8000',
-    SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'http://wow.ilanel.co.il,http://localhost:3000',
+    API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://gpt.ilanel.co.il,http://localhost:8000',
+    SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://wow.ilanel.co.il,http://localhost:3000',
   },
   serverRuntimeConfig: {
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
