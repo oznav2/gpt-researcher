@@ -16,7 +16,7 @@ const getFirstReachableUrl = async (urls) => {
 export const getHost = async ({purpose} = {}) => {
   if (typeof window !== 'undefined') {
     const isLocalhost = window.location.hostname === 'localhost';
-    return isLocalhost ? 'http://localhost:8000' : 'https://gpt.ilanel.co.il';
+    return isLocalhost ? 'http://localhost:8000' : 'http://gpt.ilanel.co.il';
   } else if (purpose == 'langraph-gui') {
     return host.includes('localhost') ? 'http%3A%2F%2F1270.0.0.1%3A8123' : 'https://${host}';
   }

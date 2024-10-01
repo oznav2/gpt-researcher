@@ -194,8 +194,8 @@ async def set_config(config: ConfigRequest):
 # Update CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://wow.ilanel.co.il"],
-    allow_credentials=True,
+    allow_origins=["http://localhost:3000", "https://wow.ilanel.co.il"],
+    allow_credentials=False,  # Set this to False
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -207,16 +207,19 @@ if not os.path.exists(DOC_PATH):
 
 @app.post("/upload/")
 async def upload_file(file: UploadFile = File(...)):
-    file_path = os.path.join(DOC_PATH, file.filename)
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-    print(f"File uploaded to {file_path}")
-
-    # Load documents after upload
-    document_loader = DocumentLoader(DOC_PATH)
-    await document_loader.load()
-
-    return {"filename": file.filename, "path": file_path}
+    try:
+        # Ensure the directory exists
+        os.makedirs(DOC_PATH, exist_ok=True)
+        
+        file_path = os.path.join(DOC_PATH, file.filename)
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        print(f"File uploaded to {file_path}")
+        
+        return {"filename": file.filename, "path": file_path}
+    except Exception as e:
+        print(f"Error uploading file: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
 
 @app.get("/files/")
 async def list_files():

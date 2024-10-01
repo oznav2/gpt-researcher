@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+//import Modal from './Settings/Modal';
 import Modal from '@/components/Settings/Modal';
 import { FC } from 'react';
 
@@ -38,7 +39,7 @@ const Footer: FC<FooterProps> = ({ setChatBoxSettings, chatBoxSettings }) => {
           </div>
           <div className="flex items-center justify-center">
             <Link href="https://www.ilanel.co.il" target="_blank" className="transition-transform hover:scale-110">
-              <Image src="/img/github.svg" alt="github" width={24} height={24} className="sm:w-[30px] sm:h-[30px]" />
+              <Image src="/img/splash-dark.svg" alt="github" width={24} height={24} className="sm:w-[30px] sm:h-[30px]" />
             </Link>
           </div>
         </div>
