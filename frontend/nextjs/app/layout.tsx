@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Lexend } from "next/font/google";
 import PlausibleProvider from "next-plausible";
 import "./globals.css";
@@ -13,6 +13,7 @@ let ogimage = "/favicon.ico";
 let sitename = "AI Researcher";
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   metadataBase: new URL(url),
   title,
   description,
@@ -34,6 +35,13 @@ export const metadata: Metadata = {
     title,
     description,
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: "#FFFFFF",
 };
 
 export default function RootLayout({
