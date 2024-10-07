@@ -26,19 +26,23 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }) {
   });
 
   useEffect(() => {
-    const storedConfig = localStorage.getItem('apiVariables');
-    if (storedConfig) {
-      setApiVariables(JSON.parse(storedConfig));
-    } else {
-      axios.get(`${getHost()}/getConfig`)
-        .then(response => {
+    const fetchConfig = async () => {
+      const storedConfig = localStorage.getItem('apiVariables');
+      if (storedConfig) {
+        setApiVariables(JSON.parse(storedConfig));
+      } else {
+        try {
+          const host = await getHost();
+          const response = await axios.get(`${host}/getConfig`);
           setApiVariables(response.data);
           localStorage.setItem('apiVariables', JSON.stringify(response.data));
-        })
-        .catch(error => {
+        } catch (error) {
           console.error('Error fetching config:', error);
-        });
-    }
+        }
+      }
+    };
+
+    fetchConfig();
   }, [showModal]);
 
   const handleSaveChanges = () => {

@@ -32,6 +32,14 @@ const nextConfig = {
         hostname: 'wow.ilanel.co.il',
       },
       {
+        protocol: 'https',
+        hostname: 'gpt.ilanel.co.il',
+      },
+      {
+        protocol: 'https',
+        hostname: 'wow.ilanel.co.il',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
       },
@@ -66,9 +74,33 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL?.split(',')[0] || 'http://gpt.ilanel.co.il'}/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_API_URL?.split(',')[0] || 'https://gpt.ilanel.co.il'}/:path*`,
       },
     ];
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Permissions-Policy',
+            value: 'browsing-topics=(), private-state-token-issuance=(), private-state-token-redemption=()',
+          },
+        ],
+      },
+    ];
+  },
+  webpack: (config, { dev, isServer }) => {
+    if (!dev && !isServer) {
+      config.resolve.alias['react-dom$'] = 'react-dom/profiling';
+      config.resolve.alias['scheduler/tracing'] = 'scheduler/tracing-profiling';
+      Object.assign(config.resolve.alias, {
+        'react-dom$': 'react-dom/profiling',
+        'scheduler/tracing': 'scheduler/tracing-profiling',
+      });
+    }
+    return config;
   },
 };
 
