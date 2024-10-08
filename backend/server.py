@@ -2,6 +2,7 @@ import json
 import os
 import re
 import time
+import logging
 
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, File, UploadFile, Header, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
@@ -23,6 +24,10 @@ from gpt_researcher.config.config import Config
 from contextlib import asynccontextmanager
 
 config = Config()
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 class ResearchRequest(BaseModel):
     task: str
@@ -194,11 +199,19 @@ async def set_config(config: ConfigRequest):
 # Update CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://wow.ilanel.co.il"],
-    allow_credentials=False,  # Set this to False
+    allow_origins=["http://wow.ilanel.co.il", "https://wow.ilanel.co.il", "http://localhost:3000"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    logger.info(f"Received {request.method} request to {request.url}")
+    logger.info(f"Headers: {request.headers}")
+    response = await call_next(request)
+    logger.info(f"Response status: {response.status_code}")
+    return response
 
 # Define DOC_PATH
 DOC_PATH = os.getenv("DOC_PATH", "./my-docs")
@@ -221,10 +234,25 @@ async def upload_file(file: UploadFile = File(...)):
         print(f"Error uploading file: {str(e)}")
         raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
 
+@app.options("/files/")
+async def options_files(request: Request):
+    logger.info("Handling OPTIONS request for /files/")
+    return JSONResponse(
+        status_code=200,
+        content={"message": "OK"},
+        headers={
+            "Access-Control-Allow-Origin": request.headers.get("Origin", "*"),
+            "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Credentials": "true",
+        },
+    )
+
 @app.get("/files/")
 async def list_files():
+    logger.info("Handling GET request for /files/")
     files = os.listdir(DOC_PATH)
-    print(f"Files in {DOC_PATH}: {files}")
+    logger.info(f"Files in {DOC_PATH}: {files}")
     return {"files": files}
 
 @app.delete("/files/{filename}")
@@ -244,3 +272,27 @@ async def serve_file(filename: str):
     if os.path.exists(file_path):
         return FileResponse(file_path)
     return {"error": "File not found"}, 404
+
+# Error handler for 400 Bad Request
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    logger.error(f"HTTPException for {request.url}: {exc.detail}")
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"message": str(exc.detail)},
+    )
+
+# Catch-all OPTIONS handler
+@app.options("/{full_path:path}")
+async def options_handler(request: Request, full_path: str):
+    logger.info(f"Handling OPTIONS request for /{full_path}")
+    return JSONResponse(
+        status_code=200,
+        content={"message": "OK"},
+        headers={
+            "Access-Control-Allow-Origin": request.headers.get("Origin", "*"),
+            "Access-Control-Allow-Methods": "*",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Credentials": "true",
+        },
+    )
