@@ -22,7 +22,7 @@ const Hero: FC<THeroProps> = ({
       <div className="flex flex-col items-center justify-center">
         <div className="landing flex flex-col items-center">
             <h1 className="text-4xl font-extrabold text-center lg:text-7xl" dir="rtl">
-              אמרו שלום ולהתראות <br />
+             חיפוש מידע שלוקח שעות<br />
               <span
                 style={{
                   backgroundImage: 'linear-gradient(to right, #9867F0, #ED4E50)',
@@ -30,15 +30,14 @@ const Hero: FC<THeroProps> = ({
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                לאינסוף שעות מבוזבות של חיפוש מידע
-              </span>
+                הוא עכשיו עניין של שניות              </span>
             </h1>
             <h2 className="text-base sm:text-lg md:text-xl font-light text-center mx-4 sm:mx-8 md:mx-12 lg:mx-[20vw] mb-6 sm:mb-8 md:mb-10 text-gray-300 leading-relaxed" dir="rtl">
-              הכירו את עמית המחקר בשרת של אילן, כלי מבוסס בינה חכמה שיאפשר לכם לקבל מידע מקיף ותובנות על כמעט כל נושא שתבחרו.
+             כלי בינה מלאכותית למחקר מהיר ומקיף באינטרנט ובמסמכים שתעלו לשרת
               <span className="block mt-2">
-                תדמיינו כלי שפותח ברקע, בו זמנית, מאות שאילתות בכמה מנועי חיפוש במקביל, ובאמצעות צוות בינה חכמה המורכב מעשרות מומחים, 
-                שקוראים עבורכם מאות מסמכים ומקורות באינספור שפות ומכין לכם תשובה מרוכזת, מקיפה, בדוח פשוט ונח לקריאה 
-                והכל חינם ותוך דקות...
+                תדמיינו שעומד לרשותכם צוות מומחי על, שפותח בו זמנית מאות שאילתות באינטרנט באינספור שפות, 
+                ומכין לכם תשובה מרוכזת, מקיפה, של המידע הזה בדוח פשוט ונח לקריאה 
+                והכל במקום סתם לחפש בגוגל, בחינם ותוך דקות...
               </span>
             </h2>
         </div>
