@@ -28,19 +28,19 @@ export default function ResearchForm({ chatBoxSettings, setChatBoxSettings }) {
     return (
         <form method="POST" className="mt-3 report_settings">
             <div className="form-group">
-                <label htmlFor="report_type" className="agent_question">מהו הנושא שתרצה לחקור או לבדוק לעומק?</label>
+                <label htmlFor="report_type" className="agent_question">סוג הדוח המבוקש </label>
                 <select name="report_type" value={report_type} onChange={onFormChange} className="form-control" required>
-                    <option value="multi_agents">מחקר מרובה סוכני בינה מלאכותית</option>
-                    <option value="research_report">סיכום קצר ותמציתי (2 דקות בערך עד לסיום התהליך)</option>
-                    <option value="detailed_report">פורט - וכולל מחקר עמוק ורווי פרטים (5 דקות ולפעמים יותר עד לסיום התהליך - סבלנות)</option>
+                    <option value="multi_agents">דוח מרובה מומחים</option>
+                    <option value="research_report">תקציר (לוקח כ 2 דקות)</option>
+                    <option value="detailed_report">מפורט (לוקח כ 5 דקות)</option>
                 </select>
             </div>
             <div className="form-group">
-                <label htmlFor="report_source" className="agent_question">באילו מקורות מידע עליי להשתמש כדי לבצע את המחקר שביקשת?</label>
+                <label htmlFor="report_source" className="agent_question">מקורות לשימוש במחקר </label>
                 <select name="report_source" value={report_source} onChange={onFormChange} className="form-control" required>
                     <option value="web">באינטרנט</option>
-                    <option value="local">במסמכים שלי</option>
-                    <option value="hybrid">היברידי - חיפוש משולב</option>
+                    <option value="local">במסמכים</option>
+                    <option value="hybrid">משולב</option>
                 </select>
             </div>
             {report_source === 'local' || report_source === 'hybrid' ? <FileUpload /> : null}

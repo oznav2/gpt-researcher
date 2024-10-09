@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { FC } from 'react';
+import Image from "next/image";
+import { FC } from "react";
 import TypeAnimation from "./TypeAnimation";
 
 type TInputAreaProps = {
@@ -19,7 +19,7 @@ const InputArea: FC<TInputAreaProps> = ({
 }) => {
   return (
     <form
-      className="mx-auto flex h-[66px] w-full items-center justify-between rounded-lg border bg-white dark:bg-gray-800 px-3 shadow-[2px_2px_38px_0px_rgba(0,0,0,0.25),0px_-2px_4px_0px_rgba(0,0,0,0.25)_inset,1px_2px_4px_0px_rgba(0,0,0,0.25)_inset] dark:shadow-[2px_2px_38px_0px_rgba(255,255,255,0.1),0px_-2px_4px_0px_rgba(255,255,255,0.1)_inset,1px_2px_4px_0px_rgba(255,255,255,0.1)_inset]"
+      className="mx-auto flex h-[66px] w-full max-w-[90%] sm:max-w-[80%] md:max-w-[80%] lg:max-w-[80%] items-center justify-between rounded-lg border bg-white px-3 shadow-[2px_2px_38px_0px_rgba(0,0,0,0.25),0px_-2px_4px_0px_rgba(0,0,0,0.25)_inset,1px_2px_4px_0px_rgba(0,0,0,0.25)_inset] text-sm sm:text-base md:text-lg"
       onSubmit={(e) => {
         e.preventDefault();
         if (reset) reset();
@@ -28,8 +28,8 @@ const InputArea: FC<TInputAreaProps> = ({
     >
       <input
         type="text"
-        placeholder="באיזה נושא היית רוצה שאבצע מחקר?"
-        className="focus-visible::outline-0 my-1 w-full pl-5 font-light not-italic leading-[normal] text-[#1B1B16]/30 text-black dark:text-white outline-none focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-xl bg-transparent"
+        placeholder="באיזה נושא תרצה שאבצע מחקר"
+        className="focus-visible::outline-0 my-1 w-full pl-5 font-semibold not-italic leading-[125%] text-[#1B1B16]/30 text-black outline-none focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-xl"
         disabled={disabled}
         value={promptValue}
         required

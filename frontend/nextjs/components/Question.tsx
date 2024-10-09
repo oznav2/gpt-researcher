@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 interface QuestionProps {
   question: string;
@@ -19,7 +19,7 @@ const Question: React.FC<QuestionProps> = ({ question }) => {
           נושא המחקר:
         </p>
       </div>
-      <div className="grow text-orange-500 dark:text-orange-400 text-sm sm:text-base break-words">&quot;{question}&quot;</div>
+      <div className="grow text-amber-600">&quot;{question}&quot;</div>
     </div>
   );
 };

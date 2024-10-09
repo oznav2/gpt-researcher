@@ -31,14 +31,21 @@ body {
   align-items: center;
   min-height: 30vh;
   text-align: center;
-  color: var(--text-color);
-  padding: 2rem;
+  color: white;
+  padding: 1rem;
 }
 
 .landing h1 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+  .landing h1 {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+  }
 }
 
 @layer utilities {
@@ -63,12 +70,18 @@ body {
   .loader span {
     display: inline-block;
     vertical-align: middle;
-    width: 7px;
-    height: 7px;
-    /* background: #4b4b4b; */
-    background: var(--loader-color);
+    width: 5px;
+    height: 5px;
+    background: white;
     border-radius: 50%;
     animation: loader 0.6s infinite alternate;
+  }
+
+  @media (min-width: 640px) {
+    .loader span {
+      width: 7px;
+      height: 7px;
+    }
   }
 
   .loader span:nth-of-type(2) {
@@ -115,39 +128,150 @@ input, select, textarea {
   text-align: right;
 }
 
-:root {
-  --bg-gradient-1: #151A2D;
-  --bg-gradient-2: #111827;
-  --text-color: #ffffff;
-  --loader-color: #ffffff;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-gradient-1: #f0f4f8;
-    --bg-gradient-2: #d9e2ec;
-    --text-color: #1f2937;
-    --loader-color: #4b4b4b;
-  }
-}
-
 /* Responsive adjustments */
-@media (max-width: 768px) {
-  body {
-    font-size: 14px;
-  }
+.container {
+  width: 100%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+}
 
-  .landing {
-    min-height: 20vh;
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
   }
 }
 
-@media (max-width: 480px) {
-  body {
-    font-size: 12px;
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.margin-div {
+  margin-top: 2rem;
+}
+
+/* Responsive typography */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+@media (min-width: 640px) {
+  h1 {
+    font-size: 3rem;
   }
 
-  .landing {
-    min-height: 15vh;
+  h2 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive buttons */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.button-container .btn {
+  flex: 1 1 auto;
+  min-width: 120px;
+}
+
+@media (min-width: 640px) {
+  .button-container .btn {
+    flex: 0 1 auto;
+  }
+}
+
+/* Improve form readability on mobile */
+select.form-control {
+  padding-right: 2rem;
+  background-position: right 0.5rem center;
+}
+
+/* Responsive footer */
+footer {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  footer {
+    font-size: 1rem;
   }
 }

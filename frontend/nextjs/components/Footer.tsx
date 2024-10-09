@@ -30,23 +30,21 @@ interface FooterProps {
 
 const Footer: FC<FooterProps> = ({ setChatBoxSettings, chatBoxSettings }) => {
   return (
-    <div className="container flex flex-col sm:flex-row min-h-[72px] items-center justify-between border-t border-[#D2D2D2] dark:border-gray-700 px-4 pb-3 pt-5 lg:min-h-[72px] lg:px-0 lg:py-5">
-      <Modal setChatBoxSettings={setChatBoxSettings} chatBoxSettings={chatBoxSettings} />
-      <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center sm:text-right mb-3 sm:mb-0">
-        © {new Date().getFullYear()} השרת של אילן - עמית מחקר אוטונומי
+    <footer className="border-t border-[#D2D2D2] bg-gradient-to-r from-[#151A2D] to-[#111827] text-white">
+      <div className="container mx-auto px-4 py-3 sm:px-6 sm:py-5 lg:px-8">
+        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <Modal setChatBoxSettings={setChatBoxSettings} chatBoxSettings={chatBoxSettings} />
+          <div className="text-center text-xs sm:text-sm text-gray-300">
+            © {new Date().getFullYear()} השרת של אילן - עמית מחקר אוטונומי
+          </div>
+          <div className="flex items-center justify-center">
+            <Link href="https://www.ilanel.co.il" target="_blank" className="transition-transform hover:scale-110">
+              <Image src="/img/splash-dark.svg" alt="github" width={24} height={24} className="sm:w-[30px] sm:h-[30px]" />
+            </Link>
+          </div>
+        </div>
       </div>
-      <div className="flex items-center gap-3">
-        <Link href="https://www.ilanel.co.il" target="_blank">
-          <Image 
-            src="/img/github.svg" 
-            alt="github" 
-            width={30} 
-            height={30} 
-            className="w-6 h-6 sm:w-8 sm:h-8 transition-transform hover:scale-110"
-          />
-        </Link>
-      </div>
-    </div>
+    </footer>
   );
 };
 

@@ -43,7 +43,7 @@ class EditorAgent:
                                   Research summary report: '{initial_research}'
                                   {f'Human feedback: {human_feedback}. You must plan the sections based on the human feedback.'
             if include_human_feedback and human_feedback and human_feedback != 'no' else ''}
-                                  \nYour task is to generate an outline of sections headers for the research project
+                                  \nYour task is to generate an outline in Hebrew language of sections headers for the research project
                                   based on the research summary report above.
                                   You must generate a maximum of {max_sections} section headers.
                                   You must focus ONLY on related research topics for subheaders and do NOT include introduction, conclusion and references.

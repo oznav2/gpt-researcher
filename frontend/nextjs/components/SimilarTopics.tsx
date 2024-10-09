@@ -29,8 +29,8 @@ const SimilarTopics = ({
             height={24}
             className="block lg:hidden dark:filter dark:invert"
           />
-          <h3 className="text-base font-bold uppercase text-black dark:text-white">
-            נושאים דומים:{" "}
+          <h3 className="text-base font-bold uppercase text-black">
+            נושאים הקשורים:{" "}
           </h3>
         </div>
 

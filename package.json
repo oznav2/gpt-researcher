@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@ducanh2912/next-pwa": "^10.2.1",
+    "@serwist/window": "^9.0.9"
+  }
+}

@@ -4,9 +4,11 @@ import { Toaster, toast } from "react-hot-toast";
 import { useEffect, useState } from 'react';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { Compatible } from "vfile";
+
 
 export default function Answer({ answer }: { answer: string }) {
-  async function markdownToHtml(markdown: string) {
+  async function markdownToHtml(markdown: Compatible | undefined) {
     try {
       const result = await remark().use(html).process(markdown);
       console.log('Markdown to HTML conversion result:', result.toString());
@@ -32,7 +34,7 @@ export default function Answer({ answer }: { answer: string }) {
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(answer.trim());
-                  toast("הדוח הועתק ללוח הזכרון של המחשב", {
+                  toast("הדוח הועתק ללוח", {
                     icon: "✂️",
                   });
                 }}
@@ -56,6 +58,8 @@ export default function Answer({ answer }: { answer: string }) {
                 <style jsx>{`
                 .answer-container {
                     font-family: 'Noto Sans Hebrew', 'Libre Baskerville', serif;
+                    direction: rtl;
+                    text-align: right;
                   }
 
                   .markdown-content {
@@ -69,20 +73,24 @@ export default function Answer({ answer }: { answer: string }) {
                       margin-bottom: 0.5em;
                     }
                     h1 {
-                      font-size: 1.5em;
+                      font-size: 2.5em;
+                      color: white;
                     }
                     h2 {
-                      font-size: 1.3em;
+                      font-size: 2em;
+                      color: white;
                     }
                     h3 {
-                      font-size: 1.2em;
+                      font-size: 1.5em;
+                      color: white;
                     }
                     h4 {
-                      font-size: 1.1em;
+                      font-size: 1.2em;
+                      color: white;
                     }
-                    p {
-                      margin-bottom: 1em;
-                    }
+                    /* Add more styles as needed */
+
+                    /* Table of Contents Styling */
                     ul {
                       list-style-type: none;
                       padding-left: 1em;

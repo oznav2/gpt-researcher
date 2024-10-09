@@ -15,7 +15,7 @@ export default function ChatBox({ chatBoxSettings, setChatBoxSettings }) {
     if (typeof window !== 'undefined') {
       const { protocol, pathname } = window.location;
       let { host } = window.location;
-      host = host.includes('localhost') ? 'localhost:8000' : host;
+      host = host.includes('localhost') ? 'http://localhost:8000' : 'https://gpt.ilanel.co.il';
       const ws_uri = `${protocol === 'https:' ? 'wss:' : 'ws:'}//${host}${pathname}ws`;
       const newSocket = new WebSocket(ws_uri);
       setSocket(newSocket);

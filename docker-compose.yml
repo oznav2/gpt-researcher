@@ -20,6 +20,8 @@ services:
       SERPER_API_KEY: ${SERPER_API_KEY}
       NCBI_API_KEY: ${NCBI_API_KEY}
       EXA_API_KEY: ${EXA_API_KEY}
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
     env_file: .env
     restart: always
     ports:
@@ -42,6 +44,8 @@ services:
        SERPER_API_KEY: ${SERPER_API_KEY}
        NCBI_API_KEY: ${NCBI_API_KEY}
        EXA_API_KEY: ${EXA_API_KEY}
+       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
     env_file: .env
     build:
       dockerfile: Dockerfile.dev

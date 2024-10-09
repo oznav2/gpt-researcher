@@ -17,9 +17,9 @@ const SubQuestions: React.FC<SubQuestionsProps> = ({ metadata, handleClickSugges
           className="size-[20px] sm:size-[24px] dark:filter dark:invert"
         />
       </div>
-      <div className="grow">
-        <p className="pr-2 sm:pr-5 font-bold leading-[152%] text-gray-800 dark:text-gray-200 text-sm sm:text-base pb-3 sm:pb-[30px]">
-          שוקד על הנושא ומנתח אותו ממספר זוויות
+      <div className="grow text-white">
+        <p className="pr-5 font-bold leading-[152%] text-white pb-[30px]">
+          שוקד על הנושא ומנתח את המידע מהמקורות במספר זוויות
         </p>
         <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 pb-4 sm:pb-[20px]">
           {metadata.map((item, subIndex) => (

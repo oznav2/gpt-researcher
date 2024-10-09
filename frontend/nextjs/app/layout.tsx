@@ -1,18 +1,19 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Lexend } from "next/font/google";
 import PlausibleProvider from "next-plausible";
 import "./globals.css";
 
 const inter = Lexend({ subsets: ["latin"] });
 
-let title = "GPT Researcher";
+let title = "עמית מחקר";
 let description =
-  "A research assistant vanquishing hallucinations";
-let url = "https://github.com/assafelovic/gpt-researcher";
+  "עמית מחקר מתקדם";
+let url = "https://github.com/oznav2/gpt-researcher";
 let ogimage = "/favicon.ico";
-let sitename = "GPT Researcher";
+let sitename = "AI Researcher";
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   metadataBase: new URL(url),
   title,
   description,
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     description,
     url: url,
     siteName: sitename,
-    locale: "en_US",
+    locale: "he_IL",
     type: "website",
   },
   twitter: {
@@ -36,6 +37,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: "#FFFFFF",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -44,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl" className="dark">
       <head>
-        <PlausibleProvider domain="localhost:3000" />
+        <PlausibleProvider domain="localhost:3000,wow.ilanel.co.il" trackOutboundLinks={true} />
       </head>
       <body
         className={`${inter.className} flex min-h-screen flex-col justify-between`}

@@ -13,7 +13,7 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }) {
     LANGCHAIN_TRACING_V2: 'true',
     LANGCHAIN_API_KEY: '',
     OPENAI_API_KEY: '',
-    DOC_PATH: '',
+    DOC_PATH: './my-docs',
     RETRIEVER: 'tavily', // Set default retriever to Tavily
     GOOGLE_API_KEY: '',
     GOOGLE_CX_KEY: '',
@@ -26,19 +26,23 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }) {
   });
 
   useEffect(() => {
-    const storedConfig = localStorage.getItem('apiVariables');
-    if (storedConfig) {
-      setApiVariables(JSON.parse(storedConfig));
-    } else {
-      axios.get(`${getHost()}/getConfig`)
-        .then(response => {
+    const fetchConfig = async () => {
+      const storedConfig = localStorage.getItem('apiVariables');
+      if (storedConfig) {
+        setApiVariables(JSON.parse(storedConfig));
+      } else {
+        try {
+          const host = await getHost();
+          const response = await axios.get(`${host}/getConfig`);
           setApiVariables(response.data);
           localStorage.setItem('apiVariables', JSON.stringify(response.data));
-        })
-        .catch(error => {
+        } catch (error) {
           console.error('Error fetching config:', error);
-        });
-    }
+        }
+      }
+    };
+
+    fetchConfig();
   }, [showModal]);
 
   const handleSaveChanges = () => {
@@ -130,10 +134,10 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }) {
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-700 outline-none focus:outline-none">
                 <div className="relative p-6 flex-auto">
                   <div className="tabs">
-                    <button onClick={() => setActiveTab('search')} className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}>מנועי חיפוש</button>
+                    <button onClick={() => setActiveTab('search')} className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}>הגדרות הדוח</button>
                     <button onClick={() => setActiveTab('api')} className={`tab-button ${activeTab === 'api' ? 'active' : ''}`}>מפתחות</button>
                   </div>
                   {activeTab === 'search' && (

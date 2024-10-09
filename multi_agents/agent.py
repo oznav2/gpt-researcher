@@ -1,7 +1,7 @@
 from multi_agents.agents import ChiefEditorAgent
 
 chief_editor = ChiefEditorAgent({
-  "query": "Is AI in a hype cycle?",
+  "query": "האם בינה מלאכותית היא טרנד חולף?",
   "max_sections": 3,
   "follow_guidelines": False,
   "model": "gpt-4o",
