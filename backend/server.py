@@ -116,6 +116,9 @@ async def websocket_endpoint(websocket: WebSocket):
                 elif data.startswith("human_feedback"):
                     feedback_data = json.loads(data[14:])
                     print(f"Received human feedback: {feedback_data}")
+                elif data.startswith("chat"):
+                    json_data = json.loads(data[4:])
+                    await manager.chat(json_data.get("message"), websocket)
                 else:
                     print("Error: not enough parameters provided.")
     except WebSocketDisconnect:
@@ -296,3 +299,13 @@ async def options_handler(request: Request, full_path: str):
             "Access-Control-Allow-Credentials": "true",
         },
     )
+
+# Add this new route handler
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    file_name = "favicon.ico"
+    file_path = os.path.join("frontend", "static", file_name)
+    if os.path.isfile(file_path):
+        return FileResponse(path=file_path)
+    else:
+        return {"message": "Favicon not found"}, 404
