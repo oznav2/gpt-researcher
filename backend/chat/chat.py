@@ -18,13 +18,16 @@ class ChatAgentWithMemory:
         report: str,
         config_path: str,
         headers: dict,
-        vector_store = None
+        websocket: WebSocket,
+        vector_store = None,
+        
     ):
         self.report = report
         self.headers = headers
         self.config = Config(config_path)  # Use the Config class directly
         self.vector_store = vector_store
         self.graph = self.create_agent()
+        self.websocket = websocket
 
     def create_agent(self):
         """Create React Agent Graph"""
@@ -61,7 +64,7 @@ class ChatAgentWithMemory:
         documents = text_splitter.split_text(report)
         return documents
 
-    async def chat(self, message, websocket):
+    async def chat(self, message, websocket: WebSocket):
         """Chat with React Agent"""
         inputs = {"messages": [("user", message)]}
         response = await self.graph.ainvoke(inputs, config=self.chat_config)

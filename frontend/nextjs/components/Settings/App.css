@@ -367,5 +367,6 @@ input, select, textarea {
 /* Ensure LTR for numbers */
 .ltr {
   direction: ltr;
-  unicode-bidi: embed;
+  /* Remove the following line */
+  /* unicode-bidi: embed; */
 }

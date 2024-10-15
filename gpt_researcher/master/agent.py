@@ -324,7 +324,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "subquery_context_not_found",
-                f"🤷 לא נמצא מידע מספיק עבור '{sub_query}'...",
+                f"🤷 לא נמצא מידע רלוונטי במאגר הידע הסרוק מראש במערכת  '{sub_query}'...",
                 self.websocket,
             )
         return content
@@ -360,7 +360,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "subquery_context_not_found",
-                f"🤷 לא נמצא מידע עבור '{sub_query}'...",
+                f"🤷 לא נמצאו מסמכים במאגר שהם ספציפית רלוונטים עבור '{sub_query}'...",
                 self.websocket,
             )
         return content
@@ -423,7 +423,7 @@ class GPTResearcher:
             await stream_output(
                 "logs",
                 "researching",
-                f"🤔 מאתר מידע רלוונטי ממקורות מרובים בו זמנית...\n",
+                f"🤔 קורא לומד ומנתח מקורות שנאספו..\n",
                 self.websocket,
             )
 

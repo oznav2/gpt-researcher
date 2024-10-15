@@ -1,3 +1,4 @@
+# Stage 1: Browser and build tools installation
 FROM python:3.12.6-slim-bullseye AS python-base
 
 # Install Miniconda
@@ -13,27 +14,40 @@ ENV PIP_ROOT_USER_ACTION=ignore
 
 FROM python-base AS install-browser
 
-RUN apt-get update \
-    && apt-get satisfy -y \
-    "chromium, chromium-driver (>= 115.0)" \
-    && chromium --version && chromedriver --version
+# Install Chromium, Chromedriver, Firefox, Geckodriver, and build tools in one layer
+RUN apt-get update && \
+    apt-get satisfy -y "chromium, chromium-driver (>= 115.0)" && \
+    apt-get install -y --no-install-recommends firefox-esr wget build-essential && \
+    wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz && \
+    tar -xvzf geckodriver-v0.33.0-linux64.tar.gz && \
+    chmod +x geckodriver && \
+    mv geckodriver /usr/local/bin/ && \
+    rm geckodriver-v0.33.0-linux64.tar.gz && \
+    chromium --version && chromedriver --version && \
+    rm -rf /var/lib/apt/lists/*  # Clean up apt lists to reduce image size
+# RUN apt-get update \
+#     && apt-get satisfy -y \
+#     "chromium, chromium-driver (>= 115.0)" \
+#     && chromium --version && chromedriver --version
 
-RUN apt-get update \
-    && apt-get install -y --fix-missing firefox-esr wget \
-    && wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz \
-    && tar -xvzf geckodriver* \
-    && chmod +x geckodriver \
-    && mv geckodriver /usr/local/bin/
+# RUN apt-get update \
+#     && apt-get install -y --fix-missing firefox-esr wget \
+#     && wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz \
+#     && tar -xvzf geckodriver* \
+#     && chmod +x geckodriver \
+#     && mv geckodriver /usr/local/bin/ \
+#     && rm geckodriver-v0.33.0-linux64.tar.gz \
 
-# Install build tools
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+
+# # Install build tools
+# RUN apt-get update \
+#     && apt-get install -y --no-install-recommends \
+#     build-essential \
+#     && rm -rf /var/lib/apt/lists/*
 
 FROM install-browser AS gpt-researcher-install
 
-RUN mkdir /usr/src/app
+ENV PIP_ROOT_USER_ACTION=ignore
 WORKDIR /usr/src/app
 
 # Copy the environment.yml file
@@ -85,6 +99,7 @@ RUN useradd -ms /bin/bash gpt-researcher \
     && chown -R gpt-researcher:gpt-researcher /usr/src/app
 
 USER gpt-researcher
+WORKDIR /usr/src/app
 
 COPY --chown=gpt-researcher:gpt-researcher ./ ./
 

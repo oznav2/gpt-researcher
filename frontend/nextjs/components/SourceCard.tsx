@@ -1,15 +1,23 @@
 import Image from 'next/image';
+import { useState } from 'react';
 
 const SourceCard = ({ source }: { source: { name: string; url: string } }) => {
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <div className="flex h-[79px] w-full items-center gap-2.5 rounded border border-solid border-[#C1C1C1] bg-neutral-50 px-1.5 py-1 md:w-auto">
       <div className="">
         <Image
-          src={`https://www.google.com/s2/favicons?domain=${source.url}&sz=128`}
-          alt={source.url}
+          src={imageError ? '/fallback-icon.png' : `https://www.google.com/s2/favicons?domain=${encodeURIComponent(source.url)}&sz=128`}
+          alt={source.name}
           className="p-1"
           width={44}
           height={44}
+          onError={handleImageError}
         />
       </div>
       <div className="flex max-w-[192px] flex-col justify-center gap-[7px]">

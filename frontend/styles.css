@@ -277,7 +277,7 @@ input, select, textarea {
 /* Ensure LTR for numbers */
 .ltr {
     direction: ltr;
-    unicode-bidi: embed;
+    /* Remove unicode-bidi: embed; */
 }
 
 /* Responsive adjustments */

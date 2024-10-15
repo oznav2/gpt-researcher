@@ -17,7 +17,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/gpt-researcher/getting-started/getting-started">
-            Getting Started - 5 min ⏱️
+            מאיפה להתחיל - 5 דקות ⏱️
           </Link>
         </div>
       </div>
@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <Layout
       title={`Documentation`}
-      description="GPT Researcher is the leading autonomous agent designed for comprehensive online research on a variety of tasks.">
+      description="עמית המחקר הוא עמית אוטונומי מבוסס בינה מלאכותית בקוד פתוח המשוייך למחקר משולב ודיווח מפורט של תהליכיו בפעולה.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

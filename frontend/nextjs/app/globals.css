@@ -116,7 +116,8 @@ input, select, textarea {
 /* Ensure LTR for numbers */
 .ltr {
   direction: ltr;
-  unicode-bidi: embed;
+  /* Remove the following line */
+  /* unicode-bidi: embed; */
 }
 
 .rtl {
@@ -125,6 +126,8 @@ input, select, textarea {
   word-wrap: break-word;
   overflow-wrap: break-word;
   text-align: right;
+  /* Remove the following line if it exists */
+  /* unicode-bidi: bidi-override; */
 }
 
 /* Responsive adjustments */

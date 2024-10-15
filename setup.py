@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-LATEST_VERSION = "0.9.6"
+LATEST_VERSION = "0.9.8"
 
 exclude_packages = [
     "selenium",
@@ -22,12 +22,12 @@ with open("requirements.txt", "r") as f:
 setup(
     name="gpt-researcher",
     version=LATEST_VERSION,
-    description="GPT Researcher is an autonomous agent designed for comprehensive online research on a variety of tasks.",
+    description="GPT Researcher is an autonomous agent designed for comprehensive web research on any task",
     package_dir={'gpt_researcher': 'gpt_researcher'},
     packages=find_packages(exclude=exclude_packages),
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/assafelovic/gpt-researcher",
+    url="https://github.com/oznav2/gpt-researcher",
     author="Assaf Elovic",
     author_email="assaf.elovic@gmail.com",
     license="MIT",

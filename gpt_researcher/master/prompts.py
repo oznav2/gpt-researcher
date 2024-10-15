@@ -44,6 +44,7 @@ def generate_report_prompt(
     total_words=1000,
     tone=None,
 ):
+    print(f"context : {context}")
     """Generates the report prompt for the given question and research summary.
     Args: question (str): The question to generate the report prompt for
             research_summary (str): The research summary to generate the report prompt for
@@ -301,6 +302,8 @@ Assume the current date is {datetime.now(timezone.utc).strftime('%B %d, %Y')} if
 - You MUST mention the difference between the existing content and the new content in the report if you are adding the similar or same subsections wherever necessary.
 - The report should have a minimum length of {total_words} words.
 - Use an {tone.value} tone throughout the report.
+
+Do NOT add a conclusion section.
 """
 
 
@@ -347,11 +350,13 @@ Using the above latest information, Prepare a detailed report introduction on th
 Assume that the current date is {datetime.now(timezone.utc).strftime('%B %d, %Y')} if required.
 """
 
-def generate_report_conclusion(report_content: str) -> str:
+def generate_report_conclusion(query: str, report_content: str) -> str:
     prompt = f"""
-    Based on the following research report, please write a concise conclusion that summarizes the main findings and their implications:
-
-    {report_content}
+    Based on the research report below and research task, please write a concise conclusion that summarizes the main findings and their implications:
+    
+    Research task: {query}
+    
+    Research Report: {report_content}
 
     Your conclusion should:
     1. Recap the main points of the research
@@ -359,7 +364,7 @@ def generate_report_conclusion(report_content: str) -> str:
     3. Discuss any implications or next steps
     4. Be approximately 2-3 paragraphs long
     
-    If there is no "## Conclusion" section title written at the end of the report, please add it to the top of your conclusion. 
+    If there is no "## מסקנות" section title written at the end of the report, please add it to the top of your conclusion. 
     You must include hyperlinks with markdown syntax ([url website](url)) related to the sentences wherever necessary.
     
     Write the conclusion:

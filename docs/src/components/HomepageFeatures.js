@@ -5,12 +5,12 @@ import styles from './HomepageFeatures.module.css';
 
 const FeatureList = [
   {
-    title: 'GPT Researcher',
-    Svg: require('../../static/img/gptr-logo.png').default,
+    title: 'עמית מחקר',
+    Svg: require('../../static/img/logo.png').default,
     docLink: './docs/gpt-researcher/getting-started/getting-started',
     description: (
       <>
-        GPT Researcher is an open source autonomous agent designed for comprehensive online research on a variety of tasks.
+        עמית המחקר הוא עמית אוטונומי בקוד פתוח המשוייך למחקר משולב ודיווח מפורט של תהליכיו בפעולה.
       </>
     ),
   },
@@ -25,22 +25,22 @@ const FeatureList = [
     ),
   },*/
   {
-    title: 'Multi-Agent Assistant',
+    title: 'מחקר צוות מומחים',
     Svg: require('../../static/img/multi-agent.png').default,
     docLink: './docs/gpt-researcher/multi_agents/langgraph',
     description: (
       <>
-        Learn how a team of AI agents can work together to conduct research on a given topic, from planning to publication.
+        צפה כיצד צוות של מומחים מבוססי בינה מלאכותית יכולים לעבוד יחד כדי לבצע מחקר על נושא נתון, מתוך תוכנית ועד הוצאת תוצאות.
       </>
     ),
   },
   {
-    title: 'Examples and Demos',
+    title: 'דוגמאות והדגמה',
     Svg: require('../../static/img/examples.png').default,
     docLink: './docs/examples/examples',
     description: (
       <>
-          Check out GPT Researcher in action across multiple frameworks and use cases such as hybrid research and long detailed reports.
+        צפה בפעולת עמית המחקר בפעולה במגוון שימושים ומצבים כולל מחקר משולב ודיווח מפורט בפעולה.
       </>
     ),
   },

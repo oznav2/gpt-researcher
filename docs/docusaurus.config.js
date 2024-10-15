@@ -3,23 +3,23 @@ const math = require('remark-math');
 const katex = require('rehype-katex');
 
 module.exports = {
-  title: 'GPT Researcher',
-  tagline: 'The leading autonomous AI research agent',
+  title: 'עמית מחקר',
+  tagline: 'עמית מחקר מבוסס בינה מלאכותית בקוד פתוח',
   url: 'https://docs.gptr.dev',
   baseUrl: '/',
   onBrokenLinks: 'ignore',
   //deploymentBranch: 'master',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/gptr-logo.png',
+  favicon: 'img/logo.png',
   organizationName: 'assafelovic',
   trailingSlash: false,
   projectName: 'gpt-researcher',
   themeConfig: {
     navbar: {
-      title: 'GPT Researcher',
+      title: 'עמית מחקר',
       logo: {
         alt: 'GPT Researcher',
-        src: 'img/gptr-logo.png',
+        src: 'img/logo.png',
       },
       items: [
         {
@@ -37,12 +37,12 @@ module.exports = {
           label: 'FAQ',
         },
         {
-            href: 'mailto:assaf.elovic@gmail.com',
+            href: 'mailto:ilan.elhayani@gmail.com',
             position: 'left',
             label: 'Contact',
         },
         {
-          href: 'https://github.com/assafelovic/gpt-researcher',
+          href: 'https://github.com/oznav2/gpt-researcher',
           label: 'GitHub',
           position: 'right',
         },

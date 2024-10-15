@@ -11,10 +11,10 @@
 
  module.exports = {
   docsSidebar: [
-    'welcome',
+    'עמוד הבית',
     {
       type: 'category',
-      label: 'Getting Started',
+      label: 'מאיפה להתחיל',
       collapsible: true,
       collapsed: false,
       items: [
@@ -27,7 +27,7 @@
     },
     {
       type: 'category',
-      label: 'GPT Researcher',
+      label: 'עמית מחקר',
       collapsible: true,
       collapsed: true,
       items: [
@@ -42,7 +42,7 @@
     },
     {
       type: 'category',
-      label: 'Frontend',
+      label: 'ממשק משתמש',
       collapsible: true,
       collapsed: true,
       items: [
@@ -52,7 +52,7 @@
     },
     {
       type: 'category',
-      label: 'Custom Context',
+      label: 'קונטקסט מחקר המותאם אישית',
       collapsible: true,
       collapsed: true,
       items: [
@@ -64,7 +64,7 @@
     },
     {
       type: 'category',
-      label: 'LLM Providers',
+      label: 'ספקי LLM',
       collapsible: true,
       collapsed: true,
       items: [
@@ -74,7 +74,7 @@
     },
     {
       type: 'category',
-      label: 'Search Engines',
+      label: 'מנועי חיפוש',
       collapsible: true,
       collapsed: true,
       items: [
