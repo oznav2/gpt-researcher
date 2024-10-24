@@ -58,11 +58,11 @@ async def async_browse(
         await websocket.send_json(
             {
                 "type": "logs",
-                "output": f"🔎 Browsing the {url} for relevant about: {question}...",
+                "output": f"🔎 בודק הלינק {url} עבור מידע רלוונטי לנושא: {question}...",
             }
         )
     else:
-        print(f"🔎 Browsing the {url} for relevant about: {question}...")
+        print(f"🔎 בודק הלינק {url} עבור מידע רלוונטי לנושא: {question}...")
 
     try:
         driver, text = await loop.run_in_executor(
@@ -76,16 +76,16 @@ async def async_browse(
             await websocket.send_json(
                 {
                     "type": "logs",
-                    "output": f"📝 Information gathered from url {url}: {summary_text}",
+                    "output": f"📝 נאסף מידע מהלינק {url}: {summary_text}",
                 }
             )
         else:
-            print(f"📝 Information gathered from url {url}: {summary_text}")
+            print(f"📝 נאסף מידע מהלינק {url}: {summary_text}")
 
-        return f"Information gathered from url {url}: {summary_text}"
+        return f"נאסף מידע מהלינק {url}: {summary_text}"
     except Exception as e:
-        print(f"An error occurred while processing the url {url}: {e}")
-        return f"Error processing the url {url}: {e}"
+        print(f"ארעה שגיאה בעת ניתוח הלינק {url}: {e}")
+        return f"ארעה שגיאה בעת ניתוח הלינק {url}: {e}"
 
 
 def browse_website(url: str, question: str) -> tuple[str, WebDriver]:
@@ -115,7 +115,7 @@ def browse_website(url: str, question: str) -> tuple[str, WebDriver]:
     # write_to_file('research-{0}.txt'.format(url), summary_text + "\nSource Links: {0}\n\n".format(links))
 
     close_browser(driver)
-    return f"Answer gathered from website: {summary_text} \n \n Links: {links}", driver
+    return f"נאסף מידע מהאתר: {summary_text} \n \n הלינקים: {links}", driver
 
 
 def scrape_text_with_selenium(selenium_web_browser: str, user_agent: str, url: str) -> tuple[WebDriver, str]:

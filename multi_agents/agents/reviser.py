@@ -36,7 +36,7 @@ class ReviserAgent:
                 "role": "user",
                 "content": f"""Draft:\n{draft_report}" + "Reviewer's notes:\n{review}\n\n
 You have been tasked by your reviewer with revising the following draft, which was written by a non-expert.
-If you decide to follow the reviewer's notes, please write a new draft in Hebrew language and make sure to address all of the points they raised.
+If you decide to follow the reviewer's notes, please write a new draft and make sure to address all of the points they raised.
 Please keep all other aspects of the draft the same.
 You MUST return nothing but a JSON in the following format:
 {sample_revision_notes}

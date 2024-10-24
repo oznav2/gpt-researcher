@@ -37,7 +37,7 @@ class ResearchAgent:
         source = task.get("source", "web")
 
         if self.websocket and self.stream_output:
-            await self.stream_output("logs", "initial_research", f"Running initial research on the following query: {query}", self.websocket)
+            await self.stream_output("logs", "initial_research", f"מריץ מחקר רקע עבור שאילתה: {query}", self.websocket)
         else:
             print_agent_output(f"Running initial research on the following query: {query}", agent="RESEARCHER")
         return {"task": task, "initial_research": await self.research(query=query, verbose=task.get("verbose"),
@@ -50,7 +50,7 @@ class ResearchAgent:
         source = task.get("source", "web")
         verbose = task.get("verbose")
         if self.websocket and self.stream_output:
-            await self.stream_output("logs", "depth_research", f"Running in depth research on the following report topic: {topic}", self.websocket)
+            await self.stream_output("logs", "depth_research", f"מריץ מחקר עומק עבור נושא הדוח: {topic}", self.websocket)
         else:
             print_agent_output(f"Running in depth research on the following report topic: {topic}", agent="RESEARCHER")
         research_draft = await self.run_subtopic_research(parent_query=parent_query, subtopic=topic,

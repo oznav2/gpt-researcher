@@ -1,5 +1,6 @@
 import asyncio
 import datetime
+import logging
 from typing import Dict, List
 
 from fastapi import WebSocket
@@ -7,7 +8,7 @@ from fastapi import WebSocket
 from backend.report_type import BasicReport, DetailedReport
 from gpt_researcher.utils.enum import ReportType, Tone
 from multi_agents.main import run_research_task
-from gpt_researcher.master.actions import stream_output  # Import stream_output
+from gpt_researcher.actions.utils import stream_output  # Import stream_output
 
 
 class WebSocketManager:
@@ -97,7 +98,7 @@ async def run_agent(task, report_type, report_source, source_urls, tone: Tone, w
     # measure time
     end_time = datetime.datetime.now()
     await websocket.send_json(
-        {"type": "logs", "output": f"\nTotal run time: {end_time - start_time}\n"}
+        {"type": "logs", "output": f"\nזמן ריצה כולל: {end_time - start_time}\n"}
     )
 
     return report

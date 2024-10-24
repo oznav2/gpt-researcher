@@ -18,12 +18,12 @@ const textContent = document.createElement('div');
 Object.assign(textContent.style, {
     textAlign: 'center',
 });
-textContent.textContent = 'עמית המחקר: חוקר דף';
+textContent.textContent = 'Analyzing Page';
 overlay.appendChild(textContent);
 document.body.append(overlay);
 document.body.style.overflow = 'hidden';
 let dotCount = 0;
 setInterval(() => {
-    textContent.textContent = 'עמית המחקר: חוקר דף' + '.'.repeat(dotCount);
+    textContent.textContent = 'Analyzing Page' + '.'.repeat(dotCount);
     dotCount = (dotCount + 1) % 4;
 }, 1000);

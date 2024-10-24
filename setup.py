@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-LATEST_VERSION = "0.9.8"
+LATEST_VERSION = "1.0.1"
 
 exclude_packages = [
     "selenium",
@@ -27,7 +27,7 @@ setup(
     packages=find_packages(exclude=exclude_packages),
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/oznav2/gpt-researcher",
+    url="https://github.com/assafelovic/gpt-researcher",
     author="Assaf Elovic",
     author_email="assaf.elovic@gmail.com",
     license="MIT",

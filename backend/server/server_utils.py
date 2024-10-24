@@ -2,16 +2,44 @@ import json
 import os
 import re
 import time
+import logging
 import shutil
-from typing import Dict, List
+from typing import Dict, List, Any, Tuple, Optional
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from gpt_researcher.document.document import DocumentLoader
 # Add this import
 from backend.utils import write_md_to_pdf, write_md_to_word, write_text_to_md
-from backend.server.websocket_manager import WebSocketManager
-from gpt_researcher.master.actions.utils import stream_output
+# from backend.server.websocket_manager import WebSocketManager
+from gpt_researcher.actions.utils import stream_output
 from multi_agents.main import run_research_task
+
+logger = logging.getLogger(__name__)
+
+def extract_command_data(json_data: Dict) -> Tuple[str, str, Optional[List[str]], Optional[str], Dict, Optional[str]]:
+    """
+    Extract command data from the JSON input.
+    
+    Args:
+        json_data (Dict): The JSON data containing command information.
+    
+    Returns:
+        Tuple containing:
+        - task (str): The research task.
+        - report_type (str): The type of report to generate.
+        - source_urls (Optional[List[str]]): List of source URLs, if provided.
+        - tone (Optional[str]): The tone for the report, if specified.
+        - headers (Dict): Additional headers for the request.
+        - report_source (Optional[str]): The source of the report, if specified.
+    """
+    return (
+        json_data.get("task", ""),
+        json_data.get("report_type", ""),
+        json_data.get("source_urls"),
+        json_data.get("tone"),
+        json_data.get("headers", {}),
+        json_data.get("report_source")
+    )
 
 
 def sanitize_filename(filename: str) -> str:
@@ -20,11 +48,10 @@ def sanitize_filename(filename: str) -> str:
 
 async def handle_start_command(websocket, data: str, manager):
     json_data = json.loads(data[6:])
-    task, report_type, source_urls, tone, headers, report_source = extract_command_data(
-        json_data)
+    task, report_type, source_urls, tone, headers, report_source = extract_command_data(json_data)
 
     if not task or not report_type:
-        print("Error: Missing task or report_type")
+        await websocket.send_json({"error": "Missing task or report_type"})
         return
 
     sanitized_filename = sanitize_filename(f"task_{int(time.time())}_{task}")
@@ -33,8 +60,11 @@ async def handle_start_command(websocket, data: str, manager):
         task, report_type, report_source, source_urls, tone, websocket, headers
     )
     report = str(report)
-    file_paths = await generate_report_files(report, sanitized_filename)
-    await send_file_paths(websocket, file_paths)
+    if report:
+        file_paths = await generate_report_files(report, sanitized_filename)
+        await send_file_paths(websocket, file_paths)
+    else:
+        await websocket.send_json({"error": "Failed to generate report"})
 
 
 async def handle_human_feedback(data: str):
@@ -129,19 +159,6 @@ async def handle_file_upload(file, DOC_PATH: str) -> Dict[str, str]:
         
     return {"filename": file.filename, "path": file_path}
 
-# FROM OLD SERVER 
-# @app.delete("/files/{filename}")
-# async def delete_file(filename: str):
-#     file_path = os.path.join(DOC_PATH, filename)
-#     if os.path.exists(file_path):
-#         os.remove(file_path)
-#         print(f"File deleted: {file_path}")
-#         return {"message": "File deleted successfully"}
-#     else:
-#         print(f"File not found: {file_path}")
-#         return JSONResponse(status_code=404, content={"message": "File not found"})
-
-
 async def handle_file_deletion(filename: str, DOC_PATH: str) -> JSONResponse:
     file_path = os.path.join(DOC_PATH, filename)
     if os.path.exists(file_path):
@@ -152,15 +169,13 @@ async def handle_file_deletion(filename: str, DOC_PATH: str) -> JSONResponse:
         print(f"File not found: {file_path}")
         return JSONResponse(status_code=404, content={"message": "File not found"})
 
-
-async def execute_multi_agents(manager) -> Dict[str, str]:
+async def execute_multi_agents(manager) -> Any:
     websocket = manager.active_connections[0] if manager.active_connections else None
     if websocket:
         report = await run_research_task("Is AI in a hype cycle?", websocket, stream_output)
         return {"report": report}
     else:
         return JSONResponse(status_code=400, content={"message": "No active WebSocket connection"})
-
 
 async def handle_websocket_communication(websocket, manager):
     while True:
@@ -172,13 +187,3 @@ async def handle_websocket_communication(websocket, manager):
         else:
             print("Error: Unknown command or not enough parameters provided.")
 
-
-def extract_command_data(json_data: Dict) -> tuple:
-    return (
-        json_data.get("task"),
-        json_data.get("report_type"),
-        json_data.get("source_urls"),
-        json_data.get("tone"),
-        json_data.get("headers", {}),
-        json_data.get("report_source")
-    )

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from "next/link";
 import { FC } from 'react';
 import InputArea from "./InputArea";
 
@@ -35,9 +36,9 @@ const Hero: FC<THeroProps> = ({
             <h2 className="text-base sm:text-lg md:text-xl font-light text-center mx-4 sm:mx-8 md:mx-12 lg:mx-[20vw] mb-6 sm:mb-8 md:mb-10 text-gray-300 leading-relaxed" dir="rtl">
              כלי בינה מלאכותית למחקר מהיר ומקיף באינטרנט ובמסמכים שתעלו לשרת
               <span className="block mt-2">
-                תדמיינו שעומד לרשותכם צוות מומחי על, שפותח בו זמנית מאות שאילתות באינטרנט באינספור שפות, 
-                ומכין לכם תשובה מרוכזת, מקיפה, של המידע הזה בדוח פשוט ונח לקריאה 
-                והכל במקום סתם לחפש בגוגל, בחינם ותוך דקות...
+                במקום סתם לחפש בגוגל ולקבל לינקים לקריאה נוספת, תדמיינו שעומד לרשותכם צוות מומחי על, שפותח בו זמנית מאות שאילתות באינטרנט באינספור שפות, 
+                ומכין לכם תשובה מרוכזת, מקיפה, של כל המידע שנאסף בתוך דוח מסכם 
+                נח לקריאה...
               </span>
             </h2>
         </div>
@@ -47,14 +48,14 @@ const Hero: FC<THeroProps> = ({
           <InputArea
             promptValue={promptValue}
             setPromptValue={setPromptValue}
-            handleSubmit={handleDisplayResult}
+            handleDisplayResult={handleDisplayResult}
           />
         </div>
         {/* Suggestions section */}
-        <div className="flex flex-wrap items-center justify-center gap-2 pb-6 sm:pb-8 md:pb-10 lg:flex-nowrap lg:justify-normal max-w-[90vw] mx-auto" dir="rtl">
+        <div className="flex flex-wrap items-center justify-center gap-2 pb-4 sm:pb-8 md:pb-10 lg:flex-nowrap lg:justify-normal max-w-[90vw] mx-auto" dir="rtl">
           {suggestions.map((item) => (
             <div
-              className="flex cursor-pointer items-center justify-center gap-2 rounded border border-solid border-[#C1C1C1] bg-[#EDEDEA] px-2 py-1 mb-2 transition-colors hover:bg-[#E0E0DD] text-[10px] sm:text-xs md:text-sm"
+              className="flex h-[55px] cursor-pointer items-center justify-center gap-2 rounded border border-solid border-[#d1cfcd] bg-[#d1cfcd] px-2 py-2 mb-2 transition-colors hover:bg-[#E0E0DD] text-[12px] sm:text-xs md:text-sm"
               onClick={() => handleClickSuggestion(item?.name)}
               key={item.id}
               style={{ width: 'fit-content' }}
@@ -62,11 +63,11 @@ const Hero: FC<THeroProps> = ({
               <Image
                 src={item.icon}
                 alt={item.name}
-                width={12}
-                height={12}
-                className="w-3 h-3 sm:w-4 sm:h-4"
+                width={18}
+                height={16}
+                className="w-[18px]"
               />
-              <span className="font-medium leading-tight text-[#1B1B16] line-clamp-2">
+              <span className="text-base font-medium leading-[normal] text-[#3a3a39]">
                 {item.name}
               </span>
             </div>

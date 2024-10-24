@@ -44,6 +44,7 @@ export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -53,6 +54,7 @@ export default function RootLayout({
     <html lang="he" dir="rtl">
       <head>
         <PlausibleProvider domain="localhost:3000,wow.ilanel.co.il" trackOutboundLinks={true} />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body
         className={`${inter.className} flex min-h-screen flex-col justify-between`}

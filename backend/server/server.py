@@ -10,25 +10,13 @@ from fastapi.responses import JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from backend.server.server_utils import generate_report_files
 from backend.server.websocket_manager import WebSocketManager
 
 import shutil
 from multi_agents.main import run_research_task
 from gpt_researcher.document.document import DocumentLoader
-from gpt_researcher.master.actions import stream_output
-from gpt_researcher.config.config import Config
-
-from contextlib import asynccontextmanager
-
-config = Config()
-
-# Set up logging
-logging.basicConfig(level=logging.WARNING)
-logger = logging.getLogger(__name__)
-
 from backend.server.server_utils import (
     sanitize_filename,
     handle_start_command,
@@ -43,6 +31,16 @@ from backend.server.server_utils import (
     handle_websocket_communication,
     extract_command_data
 )
+
+from gpt_researcher.config.config import Config
+
+from contextlib import asynccontextmanager
+
+config = Config()
+
+# Set up logging
+logging.basicConfig(level=logging.WARNING)
+logger = logging.getLogger(__name__)
 
 # Models
 
@@ -250,39 +248,10 @@ async def run_multi_agents():
 async def set_config(config: ConfigRequest):
     update_environment_variables(config.dict())
     return {"message": "Config updated successfully"}
-
-# FROM OLD SERVER 
-# @app.post("/upload/")
-# async def upload_file(file: UploadFile = File(...)):
-#     try:
-#         # Ensure the directory exists
-#         os.makedirs(DOC_PATH, exist_ok=True)
-        
-#         file_path = os.path.join(DOC_PATH, file.filename)
-#         with open(file_path, "wb") as buffer:
-#             shutil.copyfileobj(file.file, buffer)
-#         print(f"File uploaded to {file_path}")
-        
-#         return {"filename": file.filename, "path": file_path}
-#     except Exception as e:
-#         print(f"Error uploading file: {str(e)}")
-#         raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
     
 @app.post("/upload/")
 async def upload_file(file: UploadFile = File(...)):
     return await handle_file_upload(file, DOC_PATH)
-
-# FROM OLD SERVER 
-# @app.delete("/files/{filename}")
-# async def delete_file(filename: str):
-#     file_path = os.path.join(DOC_PATH, filename)
-#     if os.path.exists(file_path):
-#         os.remove(file_path)
-#         print(f"File deleted: {file_path}")
-#         return {"message": "File deleted successfully"}
-#     else:
-#         print(f"File not found: {file_path}")
-#         return JSONResponse(status_code=404, content={"message": "File not found"})
 
 @app.delete("/files/{filename}")
 async def delete_file(filename: str):

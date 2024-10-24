@@ -9,7 +9,7 @@ from colorama import Fore, Style
 from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import PromptTemplate
 
-from gpt_researcher.master.prompts import generate_subtopics_prompt
+from ..prompts import generate_subtopics_prompt
 from .costs import estimate_llm_cost
 from .validators import Subtopics
 
@@ -35,7 +35,7 @@ async def create_chat_completion(
         messages (list[dict[str, str]]): The messages to send to the chat completion
         model (str, optional): The model to use. Defaults to None.
         temperature (float, optional): The temperature to use. Defaults to 0.4.
-        max_tokens (int, optional): The max tokens to use. Defaults to 4000
+        max_tokens (int, optional): The max tokens to use. Defaults to 4000.
         stream (bool, optional): Whether to stream the response. Defaults to False.
         llm_provider (str, optional): The LLM Provider to use.
         webocket (WebSocket): The websocket used in the currect request,
@@ -48,10 +48,11 @@ async def create_chat_completion(
         raise ValueError("Model cannot be None")
     if max_tokens is not None and max_tokens > 16001:
         raise ValueError(
-            f"Max tokens cannot be more than 16001, but got {max_tokens}")
+            f"Max tokens cannot be more than 16,000, but got {max_tokens}")
 
     # Get the provider from supported providers
-    provider = get_llm(llm_provider, model=model, temperature=temperature, max_tokens=max_tokens, **(llm_kwargs or {}))
+    provider = get_llm(llm_provider, model=model, temperature=temperature,
+                       max_tokens=max_tokens, **(llm_kwargs or {}))
 
     response = ""
     # create response
@@ -71,6 +72,18 @@ async def create_chat_completion(
 
 
 async def construct_subtopics(task: str, data: str, config, subtopics: list = []) -> list:
+    """
+    Construct subtopics based on the given task and data.
+
+    Args:
+        task (str): The main task or topic.
+        data (str): Additional data for context.
+        config: Configuration settings.
+        subtopics (list, optional): Existing subtopics. Defaults to [].
+
+    Returns:
+        list: A list of constructed subtopics.
+    """
     try:
         parser = PydanticOutputParser(pydantic_object=Subtopics)
 
@@ -85,9 +98,14 @@ async def construct_subtopics(task: str, data: str, config, subtopics: list = []
 
         temperature = config.temperature
         # temperature = 0 # Note: temperature throughout the code base is currently set to Zero
-        provider = get_llm(config.llm_provider, model=config.smart_llm_model, temperature=temperature, max_tokens=config.smart_token_limit, **config.llm_kwargs)
+        provider = get_llm(
+            config.smart_llm_provider,
+            model=config.smart_llm_model,
+            temperature=temperature,
+            max_tokens=config.smart_token_limit,
+            **config.llm_kwargs,
+        )
         model = provider.llm
-
 
         chain = prompt | model | parser
 

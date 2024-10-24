@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Suez+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
 
@@ -18,7 +19,7 @@ html {
 }
 
 body {
-    font-family: 'Suez One', 'Montserrat', sans-serif;
+    font-family: 'Noto Sans Hebrew', 'Libre Baskerville', sans-serif;
     color: #fff;
     line-height: 1.6;
     background-size: 200% 200%;
@@ -43,9 +44,9 @@ body {
 }
 
 .landing p {
-    font-size: 1.2rem;
-    font-weight: 300;
-    max-width: 700px;
+    font-size: 2rem;
+    font-weight: 400;
+    max-width: 1000px;
     margin: auto auto 2rem auto;
 }
 
@@ -56,41 +57,13 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     transition: all .3s ease-in-out;
     margin: auto auto 180px auto;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .container:hover {
     transform: scale(1.01);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
-
-.container label,
-.container select,
-.container input,
-.container textarea,
-.container .agent-question,
-.container .form-group,
-.container p {
-    font-size: 1em;
-    font-weight: normal;
-}
-
-.container select,
-.container input[type="text"],
-.container input[type="submit"] {
-    padding: 0.5em;
-}
-
-.container .form-group {
-    margin-bottom: 1em;
-}
-
-.agent_question {
-    font-size: 1.4rem;
-    font-weight: 500;
-    margin-bottom: 0.2rem;
-}
-
 input, select, #output, #reportContainer {
     background-color: rgba(255, 255, 255, 0.1);
     border: none;
@@ -131,8 +104,8 @@ input:hover, input:focus, select:hover, select:focus {
 }
 
 .agent_question {
-    font-size: 1rem;
-    font-weight: normal;
+    font-size: 1.4rem;
+    font-weight: 500;
     margin-bottom: 0.2rem;
 }
 
@@ -147,14 +120,23 @@ footer {
     padding: 10px 0;
 }
 
+footer p {
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
 .margin-div {
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 25px;
 }
 
+.images_div {
+    padding: 0 25px 0 25px;
+}
+
 .agent_response {
-    background-color: #747d8c;
+    background-color: #111827;
     margin: 10px;
     padding: 10px;
     border-radius: 12px;
@@ -170,8 +152,8 @@ footer {
 }
 
 #reportContainer {
-    font-family: 'Suez One', 'Georgia', 'Times New Roman', Times, "Courier New", serif;
-    font-size: 14px !important;
+    font-family: 'Noto Sans Hebrew', 'Libre Baskerville', 'Times New Roman', Times, "Courier New", serif;
+    font-size: 18px !important;
     background-color: rgba(255, 255, 255, 0.1);
     border: none;
     color: #fff;
@@ -311,92 +293,65 @@ input, select, textarea {
     height: auto;
 }
 
-.form-control {
-    width: 100%;
-    padding: 0.5em;
-    margin-bottom: 0.5em;
+/* Add these styles at the end of the file */
+#selectedImagesContainer {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #fff;  /* Ensure text is visible */
 }
 
-.agent-question {
-    font-size: 1rem;
-    font-weight: normal;
-    margin-bottom: 0.2rem;
+#selectedImagesContainer h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #fff;  /* Ensure header is visible */
 }
 
-.container {
-    font-size: 14px; /* Set a base font size for the container */
-    font-weight: normal; /* Reset font weight */
+.image-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-.container label,
-.container select,
-.container input,
-.container textarea,
-.container .agent-question,
-.container .form-group,
-.container p {
-    font-size: 1em; /* Use relative font sizing */
-    font-weight: normal;
+.image-dialog img {
+  max-width: 90%;
+  max-height: 80%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.container select,
-.container input[type="text"],
-.container input[type="submit"] {
-    padding: 0.5em;
+.image-dialog button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
-.container .form-group {
-    margin-bottom: 1em;
+.image-dialog button:hover {
+  background-color: #0056b3;
 }
 
-.agent_question {
-    font-size: 1.4rem;
-    font-weight: 500;
-    margin-bottom: 0.2rem;
-}
-* Add or update these styles in your existing CSS file */
-.container {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    font-weight: normal;
+#selectedImagesContainer img {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.container label,
-.container select,
-.container input,
-.container textarea,
-.container .agent-question,
-.container .form-group,
-.container p {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1em;
-    font-weight: normal;
-}
-
-.container select,
-.container input[type="text"],
-.container input[type="submit"] {
-    font-family: 'Montserrat', sans-serif;
-    padding: 0.5em;
-}
-
-.container .form-group {
-    margin-bottom: 1em;
-}
-
-.agent_question {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 500;
-    margin-bottom: 0.2rem;
-}
-
-/* Ensure buttons within the container use Montserrat */
-.container .btn {
-    font-family: 'Montserrat', sans-serif;
-}
-
-/* Override any specific elements that might need adjusting */
-#output, #reportContainer {
-    font-family: 'Montserrat', sans-serif;
+#selectedImagesContainer img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

@@ -1,8 +1,8 @@
 import importlib
 from typing import Any
 from colorama import Fore, Style, init
-
 import os
+
 class GenericLLMProvider:
 
     def __init__(self, llm):
@@ -23,6 +23,10 @@ class GenericLLMProvider:
         elif provider == "azure_openai":
             _check_pkg("langchain_openai")
             from langchain_openai import AzureChatOpenAI
+
+            if "model" in kwargs:
+                model_name = kwargs.get("model", None)
+                kwargs = {"azure_deployment": model_name, **kwargs}
 
             llm = AzureChatOpenAI(**kwargs)
         elif provider == "cohere":
@@ -48,7 +52,7 @@ class GenericLLMProvider:
         elif provider == "ollama":
             _check_pkg("langchain_community")
             from langchain_community.chat_models import ChatOllama
-
+            
             llm = ChatOllama(base_url=os.environ["OLLAMA_BASE_URL"], **kwargs)
         elif provider == "together":
             _check_pkg("langchain_together")

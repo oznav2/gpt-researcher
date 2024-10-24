@@ -1,6 +1,6 @@
 from fastapi import WebSocket
 
-from gpt_researcher.master.agent import GPTResearcher
+from gpt_researcher.agent import GPTResearcher
 from gpt_researcher.utils.enum import Tone
 
 class BasicReport:

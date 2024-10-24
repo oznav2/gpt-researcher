@@ -2,6 +2,10 @@ import { Client } from "@langchain/langgraph-sdk";
 import { task } from '../../config/task';
 
 export async function startLanggraphResearch(newQuestion, report_source, langgraphHostUrl) {
+    // Retrieve apiVariables from localStorage
+    const storedConfig = localStorage.getItem('apiVariables');
+    const apiVariables = storedConfig ? JSON.parse(storedConfig) : {};  
+  
     // Update the task query with the new question
     task.task.query = newQuestion;
     task.task.source = report_source;
@@ -9,12 +13,20 @@ export async function startLanggraphResearch(newQuestion, report_source, langgra
     
     // Add your Langgraph Cloud Authentication token here
     const authToken = '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';
+    //const authToken = apiVariables.LANGCHAIN_API_KEY;
+    console.log('authToken: ', authToken);
+    const openaiApiKey = apiVariables.OPENAI_API_KEY;
+    
+    if (!openaiApiKey) {
+        throw new Error("OPENAI_API_KEY is not set in apiVariables");
+    }
 
     const client = new Client({
         apiUrl: host,
         defaultHeaders: {
             'Content-Type': 'application/json',
-            'X-Api-Key': authToken
+            'X-Api-Key': authToken,
+            'Authorization': `Bearer ${openaiApiKey}`
         }
     });
   

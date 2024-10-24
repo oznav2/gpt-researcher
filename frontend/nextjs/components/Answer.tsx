@@ -4,11 +4,10 @@ import { Toaster, toast } from "react-hot-toast";
 import { useEffect, useState } from 'react';
 import { remark } from 'remark';
 import html from 'remark-html';
-import { Compatible } from "vfile";
 
 
 export default function Answer({ answer }: { answer: string }) {
-  async function markdownToHtml(markdown: Compatible | undefined) {
+  async function markdownToHtml(markdown: string) {
     try {
       const result = await remark().use(html).process(markdown);
       console.log('Markdown to HTML conversion result:', result.toString());
@@ -39,9 +38,10 @@ export default function Answer({ answer }: { answer: string }) {
                 className="cursor-pointer"
               /> */}
               <button
+                aria-label="העתק לזכרון"
                 onClick={() => {
                   navigator.clipboard.writeText(answer.trim());
-                  toast("הדוח הועתק ללוח", {
+                  toast("הדוח הועתק לזכרון", {
                     icon: "✂️",
                   });
                 }}
@@ -83,24 +83,24 @@ export default function Answer({ answer }: { answer: string }) {
                     padding: 0;
                     /* Override existing styles for headings */
                     h1, h2, h3, h4, h5, h6 {
-                      font-size: 18px; font-weight: 400; padding: 0;
+                      font-size: 18px; font-weight: 300; padding: 0;
                       line-height: 1.2;
                     }
                     /* Optionally add more specific styling */
                     h1 {
                       font-size: 2.5em;
-                      color: white;
+                      color: orange;
                     }
                     h2 {
-                      font-size: 2em;
+                      font-size: 2.5em;
                       color: white;
                     }
                     h3 {
-                      font-size: 1.5em;
+                      font-size: 2.5em;
                       color: white;
                     }
                     h4 {
-                      font-size: 1.2em;
+                      font-size: 2em;
                       color: white;
                     }
                     /* Add more styles as needed */

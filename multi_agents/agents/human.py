@@ -22,7 +22,7 @@ class HumanAgent:
                     await self.stream_output(
                         "human_feedback",
                         "request",
-                        f"Any feedback on this plan of topics to research? {layout}? If not, please reply with 'no'.",
+                        f"האם יש לך משוב על התכנית של המחקר? {layout}? אם לא, תגיד 'לא'.",
                         self.websocket,
                     )
                     response = await self.websocket.receive_text()
@@ -40,7 +40,7 @@ class HumanAgent:
             # Otherwise, prompt the user for feedback in the console
             else:
                 user_feedback = input(
-                    f"Any feedback on this plan? {layout}? If not, please reply with 'no'.\n>> "
+                    f"האם יש לך משוב על התכנית של המחקר? {layout}? אם לא, תגיד 'לא'.\n>> "
                 )
 
         if user_feedback and "no" in user_feedback.strip().lower():

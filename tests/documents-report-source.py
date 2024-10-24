@@ -1,7 +1,7 @@
 import os
 import asyncio
 import pytest
-from gpt_researcher.master.agent import GPTResearcher  # Ensure this path is correct
+from gpt_researcher import GPTResearcher  # Ensure this path is correct
 from dotenv import load_dotenv
 load_dotenv()
 

@@ -18,6 +18,28 @@ import { startLanggraphResearch } from '../components/Langgraph/Langgraph';
 import findDifferences from '../helpers/findDifferences';
 import HumanFeedback from "@/components/HumanFeedback";
 
+interface BaseData {
+  type: string;
+}
+
+interface BasicData extends BaseData {
+  type: 'basic';
+  content: string;
+}
+
+interface LanggraphButtonData extends BaseData {
+  type: 'langgraphButton';
+  link: string;
+}
+
+interface DifferencesData extends BaseData {
+  type: 'differences';
+  content: string;
+  output: string;
+}
+
+type Data = BasicData | LanggraphButtonData | DifferencesData;
+
 export default function Home() {
   const [promptValue, setPromptValue] = useState("");
   const [showResult, setShowResult] = useState(false);
@@ -29,14 +51,13 @@ export default function Home() {
   const [question, setQuestion] = useState("");
   const [sources, setSources] = useState<{ name: string; url: string }[]>([]);
   const [similarQuestions, setSimilarQuestions] = useState<string[]>([]);
-
-  const [socket, setSocket] = useState(null);
-  const [orderedData, setOrderedData] = useState([]);
-  const heartbeatInterval = useRef(null);
+  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [orderedData, setOrderedData] = useState<any[]>([]);
+  const heartbeatInterval = useRef<number | null>(null);
   const [showHumanFeedback, setShowHumanFeedback] = useState(false);
   const [questionForHuman, setQuestionForHuman] = useState(false);
-  const [connectionError, setConnectionError] = useState(false);
-  
+  const [hasOutput, setHasOutput] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -44,7 +65,12 @@ export default function Home() {
     }
   }, [orderedData]);
 
-  const startResearch = (chatBoxSettings) => {
+  const startResearch = (chatBoxSettings: {
+    task?: string;
+    report_type: string;
+    report_source: string;
+    tone: string;
+  }) => {
     const storedConfig = localStorage.getItem('apiVariables');
     const apiVariables = storedConfig ? JSON.parse(storedConfig) : {};
     const headers = {
@@ -58,61 +84,58 @@ export default function Home() {
       'searchapi_api_key': apiVariables.SEARCHAPI_API_KEY,
       'serpapi_api_key': apiVariables.SERPAPI_API_KEY,
       'serper_api_key': apiVariables.SERPER_API_KEY,
-      'searx_url': apiVariables.SEARX_URL,
-      'langgraph_host_url': apiVariables.LANGGRAPH_HOST_URL
+      'searx_url': apiVariables.SEARX_URL
     };
 
     if (!socket) {
-      const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost';
-      const ws_uri = isLocalhost
-        ? 'ws://localhost:8000/ws'
-        : 'wss://gpt.ilanel.co.il/ws';
+      if (typeof window !== 'undefined') {
+        const { protocol, pathname } = window.location;
+        let { host } = window.location;
+        host = host.includes('localhost') ? 'localhost:8000' : host;
+        const ws_uri = `${protocol === 'https:' ? 'wss:' : 'ws:'}//${host}${pathname}ws`;
 
-      const newSocket = new WebSocket(ws_uri);
-      setSocket(newSocket);
+        const newSocket = new WebSocket(ws_uri);
+        setSocket(newSocket as WebSocket);
 
-      newSocket.onopen = () => {
-        console.log('WebSocket connection established');
-        const { task, report_type, report_source, tone } = chatBoxSettings;
-        let data = "start " + JSON.stringify({ task: promptValue, report_type, report_source, tone, headers });
-        newSocket.send(data);
-      };
+        newSocket.onmessage = (event) => {
+          const data = JSON.parse(event.data);
+          console.log('websocket data caught in frontend: ', data);
 
-      newSocket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        console.log('websocket data caught in frontend: ', data);
+          if (data.type === 'human_feedback' && data.content === 'request') {
+            console.log('triggered human feedback condition')
+            setQuestionForHuman(data.output)
+            setShowHumanFeedback(true);
+          } else {
+            const contentAndType = `${data.content}-${data.type}`;
+            setOrderedData((prevOrder) => [...prevOrder, { ...data, contentAndType }]);
 
-        if (data.type === 'human_feedback' && data.content === 'request') {
-          console.log('triggered human feedback condition')
-          setQuestionForHuman(data.output)
-          setShowHumanFeedback(true);
-        } else {
-          const contentAndType = `${data.content}-${data.type}`;
-          setOrderedData((prevOrder) => [...prevOrder, { ...data, contentAndType }]);
-
-          if (data.type === 'report') {
-            setAnswer((prev) => prev + data.output);
-          } else if (data.type === 'path') {
-            setLoading(false);
-              // newSocket.close(); We do not want to close the connection since we are chatting
-              // setSocket(null);
-          } else if (data.type === 'chat'){
+            if (data.type === 'report') {
+              setAnswer((prev:any) => prev + data.output);
+            } else if (data.type === 'path') {
               setLoading(false);
+              newSocket.close();
+              setSocket(null);
+            }
           }
-        }
-        
-      };
+          
+        };
 
-      newSocket.onclose = () => {
-        console.log('WebSocket connection closed');
-        clearInterval(heartbeatInterval.current);
-        setSocket(null);
-      };
+        newSocket.onopen = () => {
+          const { task, report_type, report_source, tone } = chatBoxSettings;
+          let data = "start " + JSON.stringify({ task: promptValue, report_type, report_source, tone, headers });
+          newSocket.send(data);
 
-      newSocket.onerror = (error) => {
-        console.error('WebSocket error:', error);
-        setConnectionError(true);
-      };
+          // Start sending heartbeat messages every 30 seconds
+          // heartbeatInterval.current = setInterval(() => {
+          //   newSocket.send(JSON.stringify({ type: 'ping' }));
+          // }, 30000);
+        };
+
+        newSocket.onclose = () => {
+          clearInterval(heartbeatInterval.current as number);
+          setSocket(null);
+        };
+      }
     } else {
       const { task, report_type, report_source, tone } = chatBoxSettings;
       let data = "start " + JSON.stringify({ task: promptValue, report_type, report_source, tone, headers });
@@ -129,25 +152,16 @@ export default function Home() {
     setShowHumanFeedback(false);
   };
 
-  const handleChat = async (message : string) =>{
-    if(socket){
-      setShowResult(true);
-      setQuestion(message);
-      setLoading(true);
-      setPromptValue("");
-      setAnswer(""); // Reset answer for new query
-      setOrderedData((prevOrder) => [...prevOrder, { type: 'question', content: message }]);
-      const data : string =  "chat" + JSON.stringify({"message": message});
-      socket.send(data)
-    } 
-  }
+  const handleDisplayResult = async (newQuestion?: string) => {
+    setIsTransitioning(true);
+    newQuestion = newQuestion || promptValue;
 
-  const handleDisplayResult = async (newQuestion: string) => {
     setShowResult(true);
     setLoading(true);
     setQuestion(newQuestion);
     setPromptValue("");
     setAnswer(""); // Reset answer for new query
+    setHasOutput(false); // Reset hasOutput
 
     // Add the new question to orderedData
     setOrderedData((prevOrder) => [...prevOrder, { type: 'question', content: newQuestion }]);
@@ -160,7 +174,6 @@ export default function Home() {
     const langgraphHostUrl = apiVariables.LANGGRAPH_HOST_URL;
 
     if (report_type === 'multi_agents' && langgraphHostUrl) {
-
       let { streamResponse, host, thread_id } = await startLanggraphResearch(newQuestion, report_source, langgraphHostUrl);
 
       const langsmithGuiLink = `https://smith.langchain.com/studio/thread/${thread_id}?baseUrl=${host}`;
@@ -176,20 +189,22 @@ export default function Home() {
         if (chunk.data.report != null && chunk.data.report != "Full report content here") {
           setOrderedData((prevOrder) => [...prevOrder, { ...chunk.data, output: chunk.data.report, type: 'report' }]);
           setLoading(false);
+          setHasOutput(true); // Set hasOutput to true when the first output is generated
         } else if (previousChunk) {
           const differences = findDifferences(previousChunk, chunk);
           setOrderedData((prevOrder) => [...prevOrder, { type: 'differences', content: 'differences', output: JSON.stringify(differences) }]);
+          setHasOutput(true); // Set hasOutput to true when the first output is generated
         }
         previousChunk = chunk;
       }
     } else {
       startResearch(chatBoxSettings);
-
-      // await Promise.all([
-      //   handleSourcesAndAnswer(newQuestion),
-      //   handleSimilarQuestions(newQuestion),
-      // ]);
+      setHasOutput(true); // Set hasOutput to true when the research starts
     }
+    // Wait for the transition to complete
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 500); // Adjust this value to match your transition duration
   };
 
   const reset = () => {
@@ -209,16 +224,17 @@ export default function Home() {
     }
   };
 
-  const preprocessOrderedData = (data) => {
-    const groupedData = [];
-    let currentAccordionGroup = null;
-    let currentSourceGroup = null;
-    let currentReportGroup = null;
-    let finalReportGroup = null;
+  const preprocessOrderedData = (data:any) => {
+
+    const groupedData: any[] = [];
+    let currentAccordionGroup: any = null;
+    let currentSourceGroup: any = null;
+    let currentReportGroup: any = null;
+    let finalReportGroup: any = null;
     let sourceBlockEncountered = false;
     let lastSubqueriesIndex = -1;
   
-    data.forEach((item, index) => {
+    data.forEach((item: any, index: any) => {
       const { type, content, metadata, output, link } = item;
   
       if (type === 'report') {
@@ -237,10 +253,7 @@ export default function Home() {
         groupedData.push({ type: 'langgraphButton', link });
       } else if (type === 'question') {
         groupedData.push({ type: 'question', content });
-      } else if (type == 'chat'){
-        groupedData.push({ type: 'chat', content: content });
-      }
-      else {
+      } else {
         if (currentReportGroup) {
           currentReportGroup = null;
         }
@@ -276,7 +289,14 @@ export default function Home() {
             }
             sourceBlockEncountered = true;
           }
-          const hostname = new URL(metadata).hostname.replace('www.', '');
+          let hostname = '';
+          try {
+            if (typeof metadata === 'string') {
+              hostname = new URL(metadata).hostname.replace('www.', '');
+            }
+          } catch (error) {
+            console.error('Error parsing metadata URL:', error);
+          }
           currentSourceGroup.items.push({ name: hostname, url: metadata });
         } else if (type !== 'path' && content !== '') {
           if (sourceBlockEncountered) {
@@ -310,9 +330,10 @@ export default function Home() {
     return groupedData.map((data, index) => {
       if (data.type === 'accordionBlock') {
         const uniqueKey = `accordionBlock-${index}`;
-        const logs = data.items.map((item, subIndex) => ({
+        const logs = data.items.map((item:any, subIndex:any) => ({
           header: item.content,
           text: item.output,
+          metadata: item.metadata,
           key: `${item.type}-${item.content}-${subIndex}`,
         }));
 
@@ -320,7 +341,7 @@ export default function Home() {
 
       } else if (data.type === 'sourceBlock') {
         const uniqueKey = `sourceBlock-${index}`;
-        return <Sources key={uniqueKey} sources={data.items} isLoading={false} />;
+        return <Sources key={uniqueKey} sources={data.items}/>;
       } else if (data.type === 'reportBlock') {
         const uniqueKey = `reportBlock-${index}`;
         return <Answer key={uniqueKey} answer={data.content} />;
@@ -342,9 +363,6 @@ export default function Home() {
       } else if (data.type === 'question') {
         const uniqueKey = `question-${index}`;
         return <Question key={uniqueKey} question={data.content} />;
-      } else if (data.type === 'chat'){
-        const uniqueKey = `chat-${index}`;
-        return <Answer key={uniqueKey} answer={data.content} />;
       } else {
         const { type, content, metadata, output } = data;
         const uniqueKey = `${type}-${content}-${index}`;
@@ -399,8 +417,7 @@ export default function Home() {
               <InputArea
                 promptValue={promptValue}
                 setPromptValue={setPromptValue}
-                handleSubmit={handleChat}
-                handleSecondary={handleDisplayResult}
+                handleDisplayResult={handleDisplayResult}
                 disabled={loading}
                 reset={reset}
               />
@@ -409,11 +426,6 @@ export default function Home() {
         )}
       </main>
       <Footer setChatBoxSettings={setChatBoxSettings} chatBoxSettings={chatBoxSettings} />
-      {connectionError && (
-        <div className="error-message">
-          Failed to connect to the server. Please try again later.
-        </div>
-      )}
     </>
   );
 }

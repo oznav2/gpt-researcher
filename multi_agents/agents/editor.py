@@ -102,7 +102,7 @@ class EditorAgent:
             else ''
         )
 
-        return f"""Today's date is {today}
+        return f"""תאריך היום הוא {today}
                    Research summary report: '{initial_research}'
                    {feedback_instruction}
                    \nYour task is to generate an outline of sections headers for the research project
@@ -115,7 +115,7 @@ class EditorAgent:
                    sections: ['section header 1', 'section header 2', 'section header 3' ...]}}'."""
 
     def _initialize_agents(self) -> Dict[str, any]:
-        """Initialize the research, reviewer, and reviser agents."""
+        """Initialize the research, reviewer, and reviser skills."""
         return {
             "research": ResearchAgent(self.websocket, self.stream_output, self.headers),
             "reviewer": ReviewerAgent(self.websocket, self.stream_output, self.headers),
@@ -148,12 +148,12 @@ class EditorAgent:
             asyncio.create_task(self.stream_output(
                 "logs",
                 "parallel_research",
-                f"Running parallel research for the following queries: {queries}",
+                f"מבצע מחקר במקביל על השאילותות הבאות: {queries}",
                 self.websocket,
             ))
         else:
             print_agent_output(
-                f"Running the following research tasks in parallel: {queries}...",
+                f"מבצע מספר משימות מחקר במקביל בנושא: {queries}...",
                 agent="EDITOR",
             )
 

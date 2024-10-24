@@ -56,7 +56,7 @@ class PublisherAgent:
         task = research_state.get("task")
         publish_formats = task.get("publish_formats")
         if self.websocket and self.stream_output:
-            await self.stream_output("logs", "publishing", f"Publishing final research report based on retrieved data...", self.websocket)
+            await self.stream_output("logs", "publishing", f"מפיק דוח סופי בהתבסס על הנתונים שעובדו בתהליך...", self.websocket)
         else:
             print_agent_output(output="Publishing final research report based on retrieved data...", agent="PUBLISHER")
         final_research_report = await self.publish_research_report(research_state, publish_formats)
