@@ -13,14 +13,10 @@ class ReviewerAgent:
         self.headers = headers or {}
 
     async def review_draft(self, draft_state: dict):
-        """
-        Review a draft article
-        :param draft_state:
-        :return:
-        """
         task = draft_state.get("task")
-        guidelines = "- ".join(guideline for guideline in task.get("guidelines"))
+        guidelines = "- ".join(guideline for guideline in task.get("guidelines", []))
         revision_notes = draft_state.get("revision_notes")
+        draft = draft_state.get("draft")
 
         revise_prompt = f"""The reviser has already revised the draft based on your previous review notes with the following feedback:
 {revision_notes}\n
@@ -34,7 +30,7 @@ If not all of the guideline criteria are met, you should send appropriate revisi
 If the draft meets all the guidelines, please return None.
 {revise_prompt if revision_notes else ""}
 
-Guidelines: {guidelines}\nDraft: {draft_state.get("draft")}\n
+Guidelines: {guidelines}\nDraft: {draft}\n
 """
         prompt = [
             {"role": "system", "content": TEMPLATE},
@@ -44,36 +40,28 @@ Guidelines: {guidelines}\nDraft: {draft_state.get("draft")}\n
         response = await call_model(prompt, model=task.get("model"))
 
         if task.get("verbose"):
-            if self.websocket and self.stream_output:
-                await self.stream_output(
-                    "logs",
-                    "review_feedback",
-                    f"Review feedback is: {response}...",
-                    self.websocket,
-                )
-            else:
-                print_agent_output(
-                    f"Review feedback is: {response}...", agent="REVIEWER"
-                )
+            await self.log_review_feedback(response)
 
-        if "None" in response:
-            return None
-        return response
+        return None if "None" in response else response
+
+    async def log_review_feedback(self, response):
+        message = f"Review feedback is: {response}..."
+        if self.websocket and self.stream_output:
+            await self.stream_output("logs", "review_feedback", message, self.websocket)
+        else:
+            print_agent_output(message, agent="REVIEWER")
 
     async def run(self, draft_state: dict):
         task = draft_state.get("task")
-        guidelines = task.get("guidelines")
         to_follow_guidelines = task.get("follow_guidelines")
         review = None
+
         if to_follow_guidelines:
-            print_agent_output(f"Reviewing draft...", agent="REVIEWER")
-
+            print_agent_output("Reviewing draft...", agent="REVIEWER")
             if task.get("verbose"):
-                print_agent_output(
-                    f"Following guidelines {guidelines}...", agent="REVIEWER"
-                )
-
+                print_agent_output(f"Following guidelines {task.get('guidelines')}...", agent="REVIEWER")
             review = await self.review_draft(draft_state)
         else:
-            print_agent_output(f"Ignoring guidelines...", agent="REVIEWER")
+            print_agent_output("Ignoring guidelines...", agent="REVIEWER")
+
         return {"review": review}

@@ -1,10 +1,10 @@
-from typing import TypedDict, List, Annotated
+from typing import TypedDict, Optional
 import operator
 
 
 class DraftState(TypedDict):
     task: dict
     topic: str
-    draft: dict
-    review: str
-    revision_notes: str
+    draft: Optional[dict]
+    review: Optional[str]
+    revision_notes: Optional[str]

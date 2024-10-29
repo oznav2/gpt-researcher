@@ -42,12 +42,9 @@ class Config:
             self.retrievers = ["tavily"]
             
     def _set_llm_attributes(self) -> None:
-        _fast_llm_provider, _fast_llm_model = self.parse_llm(self.fast_llm)
-        _smart_llm_provider, _smart_llm_model = self.parse_llm(self.smart_llm)
-        self.fast_llm_provider = self.llm_provider or _fast_llm_provider
-        self.fast_llm_model = self.fast_llm_model or _fast_llm_model
-        self.smart_llm_provider = self.llm_provider or _smart_llm_provider
-        self.smart_llm_model = self.smart_llm_model or _smart_llm_model
+        self.fast_llm_provider, self.fast_llm_model = self.parse_llm(self.fast_llm)
+        self.smart_llm_provider, self.smart_llm_model = self.parse_llm(self.smart_llm)
+        self.strategic_llm_provider, self.strategic_llm_model = self.parse_llm(self.strategic_llm)
             
     def _handle_deprecated_attributes(self) -> None:
         """Handle deprecated attributes."""
@@ -101,15 +98,17 @@ class Config:
         # self.load_config_file()
 
     @classmethod
-    def load_config(cls, config_name: str) -> Dict[str, Any]:
+    def load_config(cls, config_path: str | None) -> Dict[str, Any]:
         """Load a configuration by name."""
-        if config_name == "default":
+        if config_path is None:
             return DEFAULT_CONFIG
 
-        config_path = os.path.join(cls.CONFIG_DIR, f"{config_name}.json")
+        # config_path = os.path.join(cls.CONFIG_DIR, config_path)
         if not os.path.exists(config_path):
-            print(
-                f"Warning: Configuration '{config_name}' not found. Using default configuration.")
+            if config_path:
+                print(f"Warning: Configuration not found at '{config_path}'. Using default configuration.")
+                if not config_path.endswith(".json"):
+                    print(f"Do you mean '{config_path}.json'?")
             return DEFAULT_CONFIG
 
         with open(config_path, "r") as f:
@@ -119,6 +118,7 @@ class Config:
         merged_config = DEFAULT_CONFIG.copy()
         merged_config.update(custom_config)
         return merged_config
+
 
     @classmethod
     def list_available_configs(cls) -> List[str]:

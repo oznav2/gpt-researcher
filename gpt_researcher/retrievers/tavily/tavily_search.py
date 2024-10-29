@@ -5,7 +5,10 @@ import os
 from typing import Literal, Sequence, Optional
 import requests
 import json
+from dotenv import load_dotenv
 
+load_dotenv()
+tavily_api_key = os.getenv("TAVILY_API_KEY")
 
 class TavilySearch():
     """

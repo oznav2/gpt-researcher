@@ -17,6 +17,13 @@ html {
   scroll-behavior: smooth;
 }
 
+main {
+  .log-message {
+    word-wrap: break-word; /* For handling long URLs or text */
+    overflow-wrap: break-word;
+    overflow-x: hidden;
+  }
+}
 body {
   font-family: 'Noto Sans Hebrew', 'Libre Baskerville', serif;
   line-height: 1.6;

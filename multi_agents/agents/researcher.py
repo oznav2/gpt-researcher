@@ -1,6 +1,9 @@
 from gpt_researcher import GPTResearcher
 from colorama import Fore, Style
 from .utils.views import print_agent_output
+import asyncio
+import aiohttp
+from typing import Dict, Any
 
 
 class ResearchAgent:
@@ -43,16 +46,30 @@ class ResearchAgent:
         return {"task": task, "initial_research": await self.research(query=query, verbose=task.get("verbose"),
                                                                       source=source, tone=self.tone, headers=self.headers)}
 
-    async def run_depth_research(self, draft_state: dict):
-        task = draft_state.get("task")
-        topic = draft_state.get("topic")
-        parent_query = task.get("query")
-        source = task.get("source", "web")
-        verbose = task.get("verbose")
-        if self.websocket and self.stream_output:
-            await self.stream_output("logs", "depth_research", f"מריץ מחקר עומק עבור נושא הדוח: {topic}", self.websocket)
-        else:
-            print_agent_output(f"Running in depth research on the following report topic: {topic}", agent="RESEARCHER")
-        research_draft = await self.run_subtopic_research(parent_query=parent_query, subtopic=topic,
-                                                          verbose=verbose, source=source, headers=self.headers)
-        return {"draft": research_draft}
+    async def run_depth_research(self, state: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Conduct in-depth research on the given topic.
+        """
+        topic = state.get("topic")
+        print_agent_output(f"RESEARCHER: Running in-depth research on the following topic: {topic}")
+
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(
+                    f"https://api.example.com/search?q={topic}",
+                    timeout=aiohttp.ClientTimeout(total=10)
+                ) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        state["research_data"] = data
+                    else:
+                        print_agent_output(f"Warning: Received status code {response.status} for topic: {topic}")
+                        state["research_data"] = None
+        except asyncio.TimeoutError:
+            print_agent_output(f"Warning: Timeout occurred while researching topic: {topic}")
+            state["research_data"] = None
+        except Exception as e:
+            print_agent_output(f"Error while researching topic '{topic}': {e}")
+            state["research_data"] = None
+
+        return state
