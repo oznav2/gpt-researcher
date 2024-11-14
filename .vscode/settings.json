@@ -1,0 +1,44 @@
+{
+    "python.defaultInterpreterPath": "/home/ilan/anaconda3/envs/gpt-research/bin/python",
+    "python.analysis.extraPaths": [
+        "/home/ilan/anaconda3/envs/gpt-research/lib/python3.12/site-packages"
+    ],
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.indexing": true,
+    "python.languageServer": "Pylance",
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingImports": "warning",
+        "reportMissingModuleSource": "none",
+        "reportAttributeAccessIssue": "information",
+        "reportUnknownMemberType": "information",
+        "reportUnknownVariableType": "information",
+        "reportUnknownArgumentType": "information",
+        "reportGeneralTypeIssues": "information"
+    },
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.variableTypes": true,
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "python.analysis.useLibraryCodeForTypes": true,
+    "python.analysis.importFormat": "absolute",
+    "window.openFoldersInNewWindow": "on",
+    "window.restoreWindows": "all",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "/bin/bash",
+            "icon": "terminal-bash"
+        }
+    },
+    "workbench.startupEditor": "none",
+    "files.exclude": {
+        "**/.git": true,
+        "**/__pycache__": true,
+        "**/*.pyc": true
+    },
+    "terminal.integrated.cwd": "/home/ilan/gpt-researcher",
+    "terminal.integrated.initialWorkingDirectory": "/home/ilan/gpt-researcher"
+}

@@ -1,35 +1,73 @@
-# dependencies
-beautifulsoup4
-colorama
-md2pdf
-python-dotenv
-pyyaml
+# Core Dependencies
+beautifulsoup4==4.12.3
+colorama==0.4.6
+python-dotenv==1.0.1
+pyyaml==6.0.2
 uvicorn
-pydantic
+pydantic==2.9.2
 fastapi
-python-multipart
-markdown
-langchain
-langchain_community
-langchain-openai
-langgraph
-tiktoken
-gpt-researcher
-arxiv
-PyMuPDF
-requests
-jinja2
-aiofiles
-mistune
-python-docx
-htmldocx
-lxml_html_clean
-websockets
-unstructured
-json_repair
-json5
-loguru
+jinja2==3.1.4
+aiofiles==24.1.0
+mistune==3.0.2
+loguru==0.7.2
+weasyprint
 
-# uncomment for testing
+# Web and API
+websockets==13.1
+python-multipart==0.0.10
+httpx==0.27.2
+aiohttp==3.10.5
+
+# Document Processing
+markdown==3.7
+md2pdf==1.0.1
+tiktoken==0.7.0
+htmldocx==0.0.6
+lxml_html_clean==0.2.2
+unstructured==0.15.13
+PyMuPDF==1.24.10
+pillow==10.4.0
+
+# JSON Handling
+json_repair==0.29.3
+json5==0.9.25
+
+# LangChain and AI
+langchain
+langchain-community
+langchain-openai
+langchain-core
+langgraph
+langgraph-cli
+gpt-researcher
+openai==1.47.0
+
+# LangChain Providers
+langchain_anthropic
+langchain_cohere
+langchain_google_vertexai
+langchain_google_genai
+langchain_fireworks
+langchain_together
+langchain_mistralai
+langchain_huggingface
+langchain_groq
+langchain_aws
+
+# Research and Search
+arxiv==2.1.3
+duckduckgo-search
+selenium
+browser_cookie3
+nltk==3.9.1
+
+# Network
+aiohappyeyeballs==2.4.0
+
+# Development Tools (commented by default)
+# black
+# pylint
+# ipython
 # pytest
-# pytest-asyncio
+# tqdm
+# requests
