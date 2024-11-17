@@ -4,7 +4,6 @@ import json
 from typing import Dict, Optional
 
 from ..actions.utils import stream_output
-#from ..actions.query_processing import get_sub_queries
 from ..actions.query_processing import plan_research_outline, get_search_results
 from ..document import DocumentLoader, LangChainDocumentLoader
 from ..utils.enum import ReportSource, ReportType, Tone
@@ -22,16 +21,12 @@ class ResearchConductor:
         """
         # Reset visited_urls and source_urls at the start of each research task
         self.researcher.visited_urls.clear()
-        # Due to deprecation of report_type in favor of report_source,
-        # we need to clear source_urls if report_source is not static
-        if self.researcher.report_source != "static" and self.researcher.report_type != "sources":
-            self.researcher.source_urls = []
 
         if self.researcher.verbose:
             await stream_output(
                 "logs",
                 "starting_research",
-                f"🔎 מתחיל מחקר עבור '{self.researcher.query}'...",
+                f"🔎 Starting the research task for '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -40,7 +35,19 @@ class ResearchConductor:
 
         # If specified, the researcher will use the given urls as the context for the research.
         if self.researcher.source_urls:
-            self.researcher.context = await self.__get_context_by_urls(self.researcher.source_urls)
+            self.context = await self.__get_context_by_urls(self.researcher.source_urls)
+            if self.context and len(self.context) == 0 and self.verbose:
+                # Could not find any relevant resources in source_urls to answer the query or sub-query. Will answer using model's inherent knowledge
+                await stream_output(
+                    "logs",
+                    "answering_from_memory",
+                    f"🧐 I was unable to find relevant context in the provided sources...",
+                    self.websocket,
+                )
+            # If complement_source_urls parameter is set, more resources can be gathered to create additional context using default web search
+            if self.researcher.complement_source_urls:
+                additional_research = await self.__get_context_by_search(self.researcher.query)
+                self.context += ' '.join(additional_research)
 
         elif self.researcher.report_source == ReportSource.Local.value:
             document_data = await DocumentLoader(self.researcher.cfg.doc_path).load()
@@ -78,7 +85,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "research_step_finalized",
-                f"שלב סיום המחקר.\n💸 עלות משוערת: ${self.researcher.get_costs()}",
+                f"Finalized research step.\n💸 Total Research Costs: ${self.researcher.get_costs()}",
                 self.researcher.websocket,
             )
 
@@ -93,7 +100,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "source_urls",
-                f"🗂️ אבצע מחקר בהתבסס על האתרים הבאים: {new_search_urls}...",
+                f"🗂️ I will conduct my research based on the following urls: {new_search_urls}...",
                 self.researcher.websocket,
             )
 
@@ -112,7 +119,6 @@ class ResearchConductor:
         """
         context = []
         # Generate Sub-Queries including original query
-        #sub_queries = await self.get_sub_queries(query)
         sub_queries = await self.plan_research(query)
         # If this is not part of a sub researcher, add original query to research for better results
         if self.researcher.report_type != "subtopic_report":
@@ -122,7 +128,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "subqueries",
-                f"🗂️ אבצע את המחקר בהתבסס על הנושאים הבאים: {sub_queries}...",
+                f"🗂️  I will conduct my research based on the following queries: {sub_queries}...",
                 self.researcher.websocket,
                 True,
                 sub_queries,
@@ -145,8 +151,8 @@ class ResearchConductor:
         """
         context = []
         # Generate Sub-Queries including original query
-        #sub_queries = await self.get_sub_queries(query)
-        sub_queries = await self.plan_research(query)# If this is not part of a sub researcher, add original query to research for better results
+        sub_queries = await self.plan_research(query)
+        # If this is not part of a sub researcher, add original query to research for better results
         if self.researcher.report_type != "subtopic_report":
             sub_queries.append(query)
 
@@ -154,7 +160,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "subqueries",
-                f"🗂️ אבצע את המחקר גם בהתבסס על הנושאים הבאים: {sub_queries}...",
+                f"🗂️ I will conduct my research based on the following queries: {sub_queries}...",
                 self.researcher.websocket,
                 True,
                 sub_queries,
@@ -182,7 +188,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "running_subquery_with_vectorstore_research",
-                f"\n🔍 מבצע מחקר בנושא '{sub_query}'...",
+                f"\n🔍 Running research for '{sub_query}'...",
                 self.researcher.websocket,
             )
 
@@ -196,7 +202,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "subquery_context_not_found",
-                f"🤷 לא נמצא מידע רלוונטי לנושא המחקר בשאילתות המשנה'{sub_query}'...",
+                f"🤷 No content found for '{sub_query}'...",
                 self.researcher.websocket,
             )
         return content
@@ -215,7 +221,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "running_subquery_research",
-                f"\n🔍 מבצע מחקר עבור '{sub_query}'...",
+                f"\n🔍 Running research for '{sub_query}'...",
                 self.researcher.websocket,
             )
 
@@ -232,7 +238,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "subquery_context_not_found",
-                f"🤷 לא נמצא מידע רלוונטי לנושא המחקר בשאילתות המשנה'{sub_query}'...",
+                f"🤷 No content found for '{sub_query}'...",
                 self.researcher.websocket,
             )
         return content
@@ -252,7 +258,7 @@ class ResearchConductor:
                     await stream_output(
                         "logs",
                         "added_source_url",
-                        f"✅ מבצע ניתוח של הטקסט מהלינק: {url}\n",
+                        f"✅ Added source url to research: {url}\n",
                         self.researcher.websocket,
                         True,
                         url,
@@ -295,7 +301,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "researching",
-                f"🤔 מחקר עבור מידע רלוונטי בכמה מקורות...\n",
+                f"🤔 Researching for relevant information across multiple sources...\n",
                 self.researcher.websocket,
             )
 
@@ -311,17 +317,19 @@ class ResearchConductor:
         await stream_output(
             "logs",
             "planning_research",
-            f"🌐 גולש באינטרנט ובכדי ללמוד יותר עבור שאילתה: {query}...",
+            f"🌐 Browsing the web to learn more about the task: {query}...",
             self.researcher.websocket,
         )
 
         search_results = await get_search_results(query, self.researcher.retrievers[0])
+
         await stream_output(
             "logs",
             "planning_research",
-            f"🤔 בונה אסטרטגיה למחקר...",
+            f"🤔 Planning the research strategy and subtasks (this may take a minute)...",
             self.researcher.websocket,
         )
+
         return await plan_research_outline(
             query=query,
             search_results=search_results,

@@ -6,9 +6,11 @@
     0% {
         background-position: 0 50%;
     }
+
     50% {
         background-position: 100% 50%;
     }
+
     100% {
         background-position: 0 50%;
     }
@@ -22,9 +24,7 @@ body {
     font-family: 'Noto Sans Hebrew', 'Libre Baskerville', sans-serif;
     color: #fff;
     line-height: 1.6;
-    background-size: 200% 200%;
-    background-image: linear-gradient(45deg, #151A2D, #2D284D, #151A2D);
-    animation: gradientBG 10s ease infinite;
+    background-color: #1e272e;
     direction: rtl;
     text-align: right;
 }
@@ -47,6 +47,7 @@ body {
     font-size: 2rem;
     font-weight: 400;
     max-width: 1000px;
+    padding: 0 25px 0 25px;
     margin: auto auto 2rem auto;
 }
 
@@ -64,14 +65,21 @@ body {
     transform: scale(1.01);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
-input, select, #output, #reportContainer {
+
+input,
+select,
+#output,
+#reportContainer {
     background-color: rgba(255, 255, 255, 0.1);
     border: none;
     color: #fff;
     transition: all .3s ease-in-out;
 }
 
-input:hover, input:focus, select:hover, select:focus {
+input:hover,
+input:focus,
+select:hover,
+select:focus {
     background-color: #dfe4ea;
     border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -114,7 +122,6 @@ footer {
     right: 0;
     bottom: 0;
     width: 100%;
-    background: linear-gradient(to left, #151A2D, #111827);
     color: white;
     text-align: center;
     padding: 10px 0;
@@ -197,11 +204,13 @@ footer p {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.25rem; /* Minimal space between logo and heading */
+    gap: 0.25rem;
+    /* Minimal space between logo and heading */
 }
 
 .logo {
-    max-width: 100px;  /* Adjust this value as needed */
+    max-width: 100px;
+    /* Adjust this value as needed */
     height: auto;
 }
 
@@ -252,7 +261,9 @@ footer p {
 }
 
 /* RTL-specific adjustments */
-input, select, textarea {
+input,
+select,
+textarea {
     text-align: right;
 }
 
@@ -275,7 +286,7 @@ input, select, textarea {
     .container {
         font-size: 14px;
     }
-    
+
     .container select,
     .container input[type="text"],
     .container input[type="submit"] {
@@ -299,59 +310,143 @@ input, select, textarea {
     border-radius: 12px;
     padding: 15px;
     margin-bottom: 20px;
-    color: #fff;  /* Ensure text is visible */
+    color: #fff;
+    /* Ensure text is visible */
 }
 
 #selectedImagesContainer h3 {
     margin-top: 0;
     margin-bottom: 10px;
-    color: #fff;  /* Ensure header is visible */
+    color: #fff;
+    /* Ensure header is visible */
 }
 
 .image-dialog {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .image-dialog img {
-  max-width: 90%;
-  max-height: 80%;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+    max-height: 80%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .image-dialog button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .image-dialog button:hover {
-  background-color: #0056b3;
+    background-color: #0056b3;
 }
 
 #selectedImagesContainer img {
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 #selectedImagesContainer img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+footer a {
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Add or modify these styles at the end of the file */
+#selectedImagesContainer {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+#selectedImagesContainer h3 {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+#selectedImagesContainer img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 8px;
+}
+
+#selectedImagesContainer img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.image-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.image-dialog img {
+    max-width: 90%;
+    max-height: 80%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.image-dialog button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.image-dialog button:hover {
+    background-color: #0056b3;
 }

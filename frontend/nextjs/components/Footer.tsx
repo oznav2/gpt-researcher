@@ -1,43 +1,20 @@
-import Image from 'next/image';
-import Link from 'next/link';
-//import Modal from './Settings/Modal';
-import Modal from '@/components/Settings/Modal';
-
-
-// // Define the ChatBoxSettings interface
-// interface ChatBoxSettings {
-//   ANTHROPIC_API_KEY: string;
-//   TAVILY_API_KEY: string;
-//   LANGCHAIN_TRACING_V2: string;
-//   LANGCHAIN_API_KEY: string;
-//   OPENAI_API_KEY: string;
-//   DOC_PATH: string;
-//   RETRIEVER: 'tavily' | 'google' | 'searx' | 'serpapi' | 'googleSerp' | 'duckduckgo' | 'bing';
-//   GOOGLE_API_KEY: string;
-//   GOOGLE_CX_KEY: string;
-//   BING_API_KEY: string;
-//   SERPAPI_API_KEY: string;
-//   SERPER_API_KEY: string;
-//   SEARX_URL: string;
-//   LANGGRAPH_HOST_URL: string;
-// }
-
-// // Define the props for the Footer component
-// interface FooterProps {
-//   setChatBoxSettings: (settings: ChatBoxSettings) => void;
-//   chatBoxSettings: ChatBoxSettings;
-// }
+import Image from "next/image";
+import Link from "next/link";
+import Modal from './Settings/Modal';
 
 interface ChatBoxSettings {
   report_source: string;
   report_type: string;
   tone: string;
 }
+
 interface ChatBoxProps {
   chatBoxSettings: ChatBoxSettings;
   setChatBoxSettings: React.Dispatch<React.SetStateAction<ChatBoxSettings>>;
 }
+
 const Footer = ({ setChatBoxSettings, chatBoxSettings }: ChatBoxProps) => {
+
   return (
     <footer className="bg-gradient-to-r from-[#151A2D] to-[#111827] text-white">
       <div className="container mx-auto px-4 py-3 sm:px-6 sm:py-5 lg:px-8">

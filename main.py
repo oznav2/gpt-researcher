@@ -3,10 +3,6 @@ import logging
 
 load_dotenv()
 
-# Add this near the top of the file, before any WeasyPrint operations
-logging.getLogger('weasyprint').setLevel(logging.ERROR)
-
-
 from backend.server.server import app
 
 if __name__ == "__main__":

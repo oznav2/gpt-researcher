@@ -42,13 +42,13 @@ const LogMessage = ({ logs }: { logs: any[] }) => {
               } else {
                 return (
                   <div
-                      key={index}
-                      className="mb-4 w-full max-w-4xl mx-auto rounded-lg p-4 bg-gray-800 shadow-md log-message"
-                    >
-                      <p className="py-3 text-base leading-relaxed text-white dark:text-white log-message">
-                        {log.text}
-                      </p>
-                    </div>
+                    key={index}
+                    className="mb-4 w-full max-w-4xl mx-auto rounded-lg p-4 bg-gray-800 shadow-md log-message"
+                  >
+                    <p className="py-3 text-base leading-relaxed text-white dark:text-white log-message">
+                      {log.text}
+                    </p>
+                  </div>
                 );
               }
             })}
@@ -72,3 +72,4 @@ const markdownToHtml = async (markdown: string): Promise<string> => {
 const plainTextFields = ['task', 'sections', 'headers', 'sources', 'research_data'];
 
 export default LogMessage;
+

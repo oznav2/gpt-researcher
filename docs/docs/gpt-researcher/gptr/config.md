@@ -1,11 +1,11 @@
-# Introduction
+# Configuration
 
 The config.py enables you to customize GPT Researcher to your specific needs and preferences.
 
 Thanks to our amazing community and contributions, GPT Researcher supports multiple LLMs and Retrievers.
 In addition, GPT Researcher can be tailored to various report formats (such as APA), word count, research iterations depth, etc.
 
-GPT Researcher defaults to our recommended suite of integrations: [OpenAI](https://platform.openai.com/docs/overview) for LLM calls and [Tavily API](https://app.tavily.com) for retrieving realtime online information.
+GPT Researcher defaults to our recommended suite of integrations: [OpenAI](https://platform.openai.com/docs/overview) for LLM calls and [Tavily API](https://app.tavily.com) for retrieving real-time web information.
 
 As seen below, OpenAI still stands as the superior LLM. We assume it will stay this way for some time, and that prices will only continue to decrease, while performance and speed increase over time.
 
@@ -19,10 +19,10 @@ You can also include your own external JSON file `config.json` by adding the pat
 Below is a list of current supported options:
 
 - **`RETRIEVER`**: Web search engine used for retrieving sources. Defaults to `tavily`. Options: `duckduckgo`, `bing`, `google`, `searchapi`, `serper`, `searx`. [Check here](https://github.com/assafelovic/gpt-researcher/tree/master/gpt_researcher/retrievers) for supported retrievers
-- **`EMBEDDING_PROVIDER`**: Provider for embedding model. Defaults to `openai`. Options: `ollama`, `huggingface`, `azure_openai`, `custom`.
-- **`LLM_PROVIDER`**: LLM provider. Defaults to `openai`. Options: `google`, `ollama`, `groq` and much more!
-- **`FAST_LLM_MODEL`**: Model name for fast LLM operations such summaries. Defaults to `gpt-4o-mini`.
-- **`SMART_LLM_MODEL`**: Model name for smart operations like generating research reports and reasoning. Defaults to `gpt-4o`.
+- **`EMBEDDING`**: Embedding model. Defaults to `openai:text-embedding-3-small`. Options: `ollama`, `huggingface`, `azure_openai`, `custom`.
+- **`FAST_LLM`**: Model name for fast LLM operations such summaries. Defaults to `openai:gpt-4o-mini`.
+- **`SMART_LLM`**: Model name for smart operations like generating research reports and reasoning. Defaults to `openai:gpt-4o`.
+- **`STRATEGIC_LLM`**: Model name for strategic operations like generating research plans and strategies. Defaults to `openai:o1-preview`.
 - **`FAST_TOKEN_LIMIT`**: Maximum token limit for fast LLM responses. Defaults to `2000`.
 - **`SMART_TOKEN_LIMIT`**: Maximum token limit for smart LLM responses. Defaults to `4000`.
 - **`BROWSE_CHUNK_MAX_LENGTH`**: Maximum length of text chunks to browse in web sources. Defaults to `8192`.
@@ -59,22 +59,19 @@ Here is an example for [Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai
 
 ```bash
 
-EMBEDDING_PROVIDER="azureopenai"
-
 OPENAI_API_VERSION="2024-05-01-preview" # or whatever you are using
 AZURE_OPENAI_ENDPOINT="https://CHANGEMEN.openai.azure.com/" # change to the name of your deployment
-AZURE_OPENAI_API_KEY="CHANGEME" # change to your API key
+AZURE_OPENAI_API_KEY="[Your Key]" # change to your API key
 
-LLM_PROVIDER="azure_openai"
-AZURE_EMBEDDING_MODEL="text-embedding-ada-002" # change to the deployment of your embedding model
+EMBEDDING="azure_openai:text-embedding-ada-002" # change to the deployment of your embedding model
 
-FAST_LLM_MODEL="gpt-4o-mini" # change to the name of your deployment (not model-name)
+FAST_LLM="azure_openai:gpt-4o-mini" # change to the name of your deployment (not model-name)
 FAST_TOKEN_LIMIT=4000
 
-SMART_LLM_MODEL="gpt-4o" # change to the name of your deployment (not model-name)
+SMART_LLM="azure_openai:gpt-4o" # change to the name of your deployment (not model-name)
 SMART_TOKEN_LIMIT=4000
 
 RETRIEVER="bing" # if you are using Bing as your search engine (which is likely if you use Azure)
-BING_API_KEY="CHANGEME"
+BING_API_KEY="[Your Key]"
 
 ```

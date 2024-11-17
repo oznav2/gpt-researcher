@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import FileUpload from '../Settings/FileUpload';
-import ToneSelector from '../Settings/ToneSelector';
+import React, { useState, useEffect } from "react";
+import FileUpload from "../Settings/FileUpload";
+import ToneSelector from "../Settings/ToneSelector";
 
 interface ChatBoxSettings {
-    report_type: string;
-    report_source: string;
-    tone: string;
+  report_type: string;
+  report_source: string;
+  tone: string;
 }
 
 interface ResearchFormProps {
@@ -82,17 +82,20 @@ export default function ResearchForm({
           className="form-control"
           required
         >
-          <option value="multi_agents">דוח צוות מומחים</option>
+
+          <option value="multi_agents">Multi Agents Report</option>
           <option value="research_report">
-            דוח סיכום תמציתי (~2 דקות)
+            Summary - Short and fast (~2 min)
           </option>
-          <option value="detailed_report">דוח מפורט (~5 דקות)</option>
+          <option value="detailed_report">
+            Detailed - In depth and longer (~5 min)
+          </option>
 
         </select>
       </div>
       <div className="form-group">
         <label htmlFor="report_source" className="agent_question">
-          מקורות למחקר{" "}
+          Report Source{" "}
         </label>
         <select
           name="report_source"
@@ -101,9 +104,9 @@ export default function ResearchForm({
           className="form-control"
           required
         >
-          <option value="web">אתרי אינטרנט</option>
-          <option value="local">מסמכים מקומיים</option>
-          <option value="hybrid">משולב</option>
+          <option value="web">The Internet</option>
+          <option value="local">My Documents</option>
+          <option value="hybrid">Hybrid</option>
         </select>
       </div>
       {/* Conditional file upload if the report source is 'local' or 'hybrid' */}

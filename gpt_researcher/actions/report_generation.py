@@ -23,7 +23,7 @@ async def write_report_introduction(
     cost_callback: callable = None
 ) -> str:
     """
-    Generate an introduction for the report in Hebrew Language.
+    Generate an introduction for the report.
 
     Args:
         query (str): The research query.
@@ -34,7 +34,7 @@ async def write_report_introduction(
         cost_callback (callable, optional): Callback for calculating LLM costs.
 
     Returns:
-        str: The generated introduction in Hebrew Language.
+        str: The generated introduction.
     """
     try:
         introduction = await create_chat_completion(
@@ -67,7 +67,7 @@ async def write_conclusion(
     cost_callback: callable = None
 ) -> str:
     """
-    Write a conclusion for the report in Hebrew Language.
+    Write a conclusion for the report.
 
     Args:
         query (str): The research query.
@@ -78,7 +78,7 @@ async def write_conclusion(
         cost_callback (callable, optional): Callback for calculating LLM costs.
 
     Returns:
-        str: The generated conclusion in Hebrew Language.
+        str: The generated conclusion.
     """
     try:
         conclusion = await create_chat_completion(
@@ -110,7 +110,7 @@ async def summarize_url(
     cost_callback: callable = None
 ) -> str:
     """
-    Summarize in Hebrew language the content of a URL.
+    Summarize the content of a URL.
 
     Args:
         url (str): The URL to summarize.
@@ -121,7 +121,7 @@ async def summarize_url(
         cost_callback (callable, optional): Callback for calculating LLM costs.
 
     Returns:
-        str: The Hebrew summarized content.
+        str: The summarized content.
     """
     try:
         summary = await create_chat_completion(
@@ -154,7 +154,7 @@ async def generate_draft_section_titles(
     cost_callback: callable = None
 ) -> List[str]:
     """
-    Generate draft section titles for the report in Hebrew Language.
+    Generate draft section titles for the report.
 
     Args:
         query (str): The research query.
@@ -165,7 +165,7 @@ async def generate_draft_section_titles(
         cost_callback (callable, optional): Callback for calculating LLM costs.
 
     Returns:
-        List[str]: A list of generated section titles in Hebrew Language.
+        List[str]: A list of generated section titles.
     """
     try:
         section_titles = await create_chat_completion(

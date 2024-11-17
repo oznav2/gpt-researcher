@@ -29,7 +29,7 @@ class ReportGenerator:
 
     async def write_report(self, existing_headers: list = [], relevant_written_contents: list = [], ext_context=None) -> str:
         """
-        Write a report in Hebrew language based on existing headers and relevant contents.
+        Write a report based on existing headers and relevant contents.
 
         Args:
             existing_headers (list): List of existing headers.
@@ -37,15 +37,18 @@ class ReportGenerator:
             ext_context (Optional): External context, if any.
 
         Returns:
-            str: The generated report in Hebrew language.
+            str: The generated report.
         """
         # send the selected images prior to writing report
-        if self.researcher.research_images:
+        research_images = self.researcher.get_research_images()
+        if research_images:
             await stream_output(
                 "images",
                 "selected_images",
-                json.dumps(self.researcher.research_images),
+                json.dumps(research_images),
                 self.researcher.websocket,
+                True,
+                research_images
             )
 
         context = ext_context or self.researcher.context
@@ -53,7 +56,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "writing_report",
-                f"✍️ כותב דוח בנושא '{self.researcher.query}'...",
+                f"✍️ Writing report for '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -76,7 +79,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "report_written",
-                f"📝 דוח נוצר לנושא '{self.researcher.query}'",
+                f"📝 Report written for '{self.researcher.query}'",
                 self.researcher.websocket,
             )
 
@@ -96,7 +99,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "writing_conclusion",
-                f"✍️ מפיק סיכום מסקנות לדוח הסופי בנושא '{self.researcher.query}'...",
+                f"✍️ Writing conclusion for '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -113,7 +116,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "conclusion_written",
-                f"📝 סיכום מסקנות נוצר לדוח הסופי בנושא '{self.researcher.query}'",
+                f"📝 Conclusion written for '{self.researcher.query}'",
                 self.researcher.websocket,
             )
 
@@ -125,7 +128,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "writing_introduction",
-                f"✍️ מפיק פרק מבוא לדוח הסופי בנושא '{self.researcher.query}'...",
+                f"✍️ Writing introduction for '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -142,7 +145,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "introduction_written",
-                f"📝 פרק מבוא נוצר לדוח הסופי בנושא '{self.researcher.query}'",
+                f"📝 Introduction written for '{self.researcher.query}'",
                 self.researcher.websocket,
             )
 
@@ -154,7 +157,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "generating_subtopics",
-                f"🌳 מפיק כותרות משנה לנושא '{self.researcher.query}'...",
+                f"🌳 Generating subtopics for '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -169,7 +172,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "subtopics_generated",
-                f"📊 כותרות משנה נוצרו לנושא '{self.researcher.query}'",
+                f"📊 Subtopics generated for '{self.researcher.query}'",
                 self.researcher.websocket,
             )
 
@@ -181,7 +184,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "generating_draft_sections",
-                f"📑 מפיק טיוטת כותרות משנה לנושא '{self.researcher.query}'...",
+                f"📑 Generating draft section titles for '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -199,7 +202,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "draft_sections_generated",
-                f"🗂️ טיוטת כותרות משנה נוצרו לנושא '{self.researcher.query}'",
+                f"🗂️ Draft section titles generated for '{self.researcher.query}'",
                 self.researcher.websocket,
             )
 

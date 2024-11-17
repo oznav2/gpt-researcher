@@ -86,7 +86,7 @@ class ChiefEditorAgent:
         return self._create_workflow(agents)
 
     async def _log_research_start(self):
-        message = f"מתחיל מחקר רקע עבור שאילתה '{self.task.get('query')}'..."
+        message = f"Starting the research process for query '{self.task.get('query')}'..."
         if self.websocket and self.stream_output:
             await self.stream_output("logs", "starting_research", message, self.websocket)
         else:

@@ -6,37 +6,12 @@ pyyaml==6.0.2
 uvicorn
 pydantic==2.9.2
 fastapi
-jinja2==3.1.4
-aiofiles==24.1.0
-mistune==3.0.2
-loguru==0.7.2
-weasyprint
-
-# Web and API
-websockets==13.1
-python-multipart==0.0.10
-httpx==0.27.2
-aiohttp==3.10.5
-
-# Document Processing
-markdown==3.7
-md2pdf==1.0.1
-tiktoken==0.7.0
-htmldocx==0.0.6
-lxml_html_clean==0.2.2
-unstructured==0.15.13
-PyMuPDF==1.24.10
-pillow==10.4.0
-
-# JSON Handling
-json_repair==0.29.3
-json5==0.9.25
-
-# LangChain and AI
+python-multipart
+markdown
 langchain
-langchain-community
+langchain_community
 langchain-openai
-langchain-core
+langchain-ollama
 langgraph
 langgraph-cli
 gpt-researcher

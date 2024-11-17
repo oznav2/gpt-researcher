@@ -23,7 +23,7 @@ export default function Answer({ answer }: { answer: string }) {
   useEffect(() => {
     markdownToHtml(answer).then((html) => setHtmlContent(html));
   }, [answer]);
-  
+
   return (
     <div className="container flex h-auto w-full shrink-0 gap-4 bg-gray-800 shadow-md rounded-lg border border-solid border-[#C2C2C2] p-5">
       <div className="w-full">

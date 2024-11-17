@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import Link from "next/link";
 import { FC } from 'react';
-import InputArea from "./InputArea";
+import InputArea from "./ResearchBlocks/elements/InputArea";
 
 type THeroProps = {
   promptValue: string;
   setPromptValue: React.Dispatch<React.SetStateAction<string>>;
-  handleDisplayResult: (query : string) => void;
+  handleDisplayResult: (query: string) => void;
 };
 
 const Hero: FC<THeroProps> = ({
@@ -22,33 +22,33 @@ const Hero: FC<THeroProps> = ({
     <div>
       <div className="flex flex-col items-center justify-center">
         <div className="landing flex flex-col items-center">
-            <h1 className="text-4xl font-extrabold text-center lg:text-7xl" dir="rtl">
-             חיפוש מידע שלוקח שעות<br />
-              <span
-                style={{
-                  backgroundImage: 'linear-gradient(to right, #9867F0, #ED4E50)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}
-              >
-                הוא עכשיו עניין של שניות              </span>
-            </h1>
-            <h2 className="text-base sm:text-lg md:text-xl font-light text-center mx-4 sm:mx-8 md:mx-12 lg:mx-[20vw] mb-6 sm:mb-8 md:mb-10 text-gray-300 leading-relaxed" dir="rtl">
-             כלי בינה מלאכותית למחקר מהיר ומקיף באינטרנט ובמסמכים שתעלו לשרת
-              <span className="block mt-2">
-                במקום סתם לחפש בגוגל ולקבל לינקים לקריאה נוספת, תדמיינו שעומד לרשותכם צוות מומחי על, שפותח בו זמנית מאות שאילתות באינטרנט באינספור שפות, 
-                ומכין לכם תשובה מרוכזת, מקיפה, של כל המידע שנאסף בתוך דוח מסכם 
-                נח לקריאה...
-              </span>
-            </h2>
+          <h1 className="text-4xl font-extrabold text-center lg:text-7xl" dir="rtl">
+            חיפוש מידע שלוקח שעות<br />
+            <span
+              style={{
+                backgroundImage: 'linear-gradient(to right, #9867F0, #ED4E50)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              הוא עכשיו עניין של שניות              </span>
+          </h1>
+          <h2 className="text-base sm:text-lg md:text-xl font-light text-center mx-4 sm:mx-8 md:mx-12 lg:mx-[20vw] mb-6 sm:mb-8 md:mb-10 text-gray-300 leading-relaxed" dir="rtl">
+            כלי בינה מלאכותית למחקר מהיר ומקיף באינטרנט ובמסמכים שתעלו לשרת
+            <span className="block mt-2">
+              במקום סתם לחפש בגוגל ולקבל לינקים לקריאה נוספת, תדמיינו שעומד לרשותכם צוות מומחי על, שפותח בו זמנית מאות שאילתות באינטרנט באינספור שפות,
+              ומכין לכם תשובה מרוכזת, מקיפה, של כל המידע שנאסף בתוך דוח מסכם
+              נח לקריאה...
+            </span>
+          </h2>
         </div>
-        
-        {/* input section */}
-        <div className="w-full max-w-[708px] pb-6 mt-10">
+
+        {/* Input section */}
+        <div className="w-full max-w-[708px] pb-6">
           <InputArea
             promptValue={promptValue}
             setPromptValue={setPromptValue}
-            handleDisplayResult={handleDisplayResult}
+            handleSubmit={handleDisplayResult}
           />
         </div>
         {/* Suggestions section */}
@@ -73,9 +73,7 @@ const Hero: FC<THeroProps> = ({
             </div>
           ))}
         </div>
-
       </div>
-  
     </div>
   );
 };

@@ -19,6 +19,7 @@
       collapsed: false,
       items: [
         'gpt-researcher/getting-started/introduction',
+        'gpt-researcher/getting-started/how-to-choose',
         'gpt-researcher/getting-started/getting-started',
         'gpt-researcher/getting-started/cli',
         'gpt-researcher/getting-started/getting-started-with-docker',
@@ -35,6 +36,7 @@
         'gpt-researcher/gptr/example',
         'gpt-researcher/gptr/config',
         'gpt-researcher/gptr/scraping',
+        'gpt-researcher/gptr/handling-logs-as-they-stream',
         'gpt-researcher/gptr/querying-the-backend',
         'gpt-researcher/gptr/automated-tests',
         'gpt-researcher/gptr/troubleshooting',
@@ -69,7 +71,8 @@
       collapsed: true,
       items: [
         'gpt-researcher/llms/llms',
-        'gpt-researcher/llms/running-with-ollama'
+        'gpt-researcher/llms/running-with-ollama',
+        'gpt-researcher/llms/testing-your-llm'
       ]
     },
     {
@@ -79,6 +82,7 @@
       collapsed: true,
       items: [
         'gpt-researcher/search-engines/retrievers',
+        'gpt-researcher/search-engines/test-your-retriever'
         ]
     },
     {

@@ -1,5 +1,4 @@
 from .retriever import get_retriever, get_retrievers
-#from .query_processing import get_sub_queries
 from .query_processing import plan_research_outline
 from .agent_creator import extract_json_with_regex, choose_agent
 from .web_scraping import scrape_urls
@@ -10,7 +9,6 @@ from .utils import stream_output
 __all__ = [
     "get_retriever",
     "get_retrievers",
-    #"get_sub_queries",
     "plan_research_outline",
     "extract_json_with_regex",
     "scrape_urls",
