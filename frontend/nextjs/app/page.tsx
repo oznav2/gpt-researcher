@@ -259,6 +259,7 @@ export default function Home() {
                   orderedData={orderedData}
                   answer={answer}
                   allLogs={allLogs}
+                  chatBoxSettings={chatBoxSettings}
                   handleClickSuggestion={handleClickSuggestion}
                 />
               </div>

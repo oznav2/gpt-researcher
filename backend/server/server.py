@@ -32,17 +32,6 @@ from backend.server.server_utils import (
     extract_command_data
 )
 
-from gpt_researcher.config.config import Config
-
-from contextlib import asynccontextmanager
-
-from backend.server.middlewares import WebSocketTimeoutMiddleware
-
-config = Config()
-
-# Set up logging
-logging.basicConfig(level=logging.WARNING)
-logger = logging.getLogger(__name__)
 
 # Models
 
@@ -68,25 +57,9 @@ class ConfigRequest(BaseModel):
     SERPAPI_API_KEY: str = ''
     SERPER_API_KEY: str = ''
     SEARX_URL: str = ''
-    EMBEDDING_MODEL: str = ''
-    EMBEDDING_PROVIDER: str = ''
-    LLM_PROVIDER: str = ''
-    OLLAMA_BASE_URL: str = ''
-    DEFAULT_LLM_MODEL: str = ''
-    FAST_LLM_MODEL: str = ''
-    SMART_LLM_MODEL: str = ''
-    NEXT_PUBLIC_API_URL: str = ''
-    NEXT_PUBLIC_SITE_URL: str = ''
-    EXA_API_KEY: str = ''
-    NCBI_API_KEY: str = ''
-    ANTHROPIC_API_KEY: str = ''
+    XAI_API_KEY: str
+    DEEPSEEK_API_KEY: str
 
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    os.makedirs("outputs", exist_ok=True)
-    app.mount("/outputs", StaticFiles(directory="outputs"), name="outputs")
-    yield
 
 # App initialization
 app = FastAPI(lifespan=lifespan)
@@ -128,11 +101,12 @@ if not os.path.exists(DOC_PATH):
 # Startup event
 
 
-# @app.on_event("startup")
-# def startup_event():
-#     os.makedirs("outputs", exist_ok=True)
-#     app.mount("/outputs", StaticFiles(directory="outputs"), name="outputs")
-#     os.makedirs(DOC_PATH, exist_ok=True)
+@app.on_event("startup")
+def startup_event():
+    os.makedirs("outputs", exist_ok=True)
+    app.mount("/outputs", StaticFiles(directory="outputs"), name="outputs")
+    os.makedirs(DOC_PATH, exist_ok=True)
+    
 
 # Routes
 

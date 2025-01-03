@@ -1,5 +1,25 @@
 from dotenv import load_dotenv
 import logging
+from pathlib import Path
+
+# Create logs directory if it doesn't exist
+logs_dir = Path("logs")
+logs_dir.mkdir(exist_ok=True)
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        # File handler for general application logs
+        logging.FileHandler('logs/app.log'),
+        # Stream handler for console output
+        logging.StreamHandler()
+    ]
+)
+
+# Create logger instance
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -8,38 +28,5 @@ from backend.server.server import app
 if __name__ == "__main__":
     import uvicorn
     
-        
-    # Configure basic logging
-    logging.basicConfig(level=logging.WARNING)
-    
-    # Create null handler
-    null_handler = logging.NullHandler()
-    
-    # Configure all possible fontTools related loggers
-    fonttools_loggers = [
-        'fontTools',
-        'fontTools.subset',
-        'fontTools.subset.timer',
-        'fontTools.ttLib',
-        'fontTools.ttLib.ttFont',
-        'fontTools.subset.cff',
-        'fontTools.subset.layout',
-        'fontTools.subset.util',
-        'fontTools.pens',
-        'fontTools.misc',
-    ]
-    
-    # Silence all fontTools and weasyprint related loggers
-    logging.getLogger('weasyprint').setLevel(logging.CRITICAL)
-    
-    for logger_name in fonttools_loggers:
-        logger = logging.getLogger(logger_name)
-        logger.setLevel(logging.CRITICAL)  # Most strict level
-        logger.propagate = False
-        # Remove any existing handlers
-        for handler in logger.handlers[:]:
-            logger.removeHandler(handler)
-        # Add null handler
-        logger.addHandler(null_handler)
-    
-    uvicorn.run(app, host="0.0.0.0", port=8000, ws_ping_interval=20, ws_ping_timeout=20)
+    logger.info("Starting server...")
+    uvicorn.run(app, host="0.0.0.0", port=8000)
