@@ -26,7 +26,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "starting_research",
-                f"🔎 Starting the research task for '{self.researcher.query}'...",
+                f"🔎 מתחיל בביצוע מחקר בשאלה  '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -36,13 +36,13 @@ class ResearchConductor:
         # If specified, the researcher will use the given urls as the context for the research.
         if self.researcher.source_urls:
             self.context = await self.__get_context_by_urls(self.researcher.source_urls)
-            if self.context and len(self.context) == 0 and self.verbose:
+            if self.context and len(self.context) == 0 and self.researcher.verbose:
                 # Could not find any relevant resources in source_urls to answer the query or sub-query. Will answer using model's inherent knowledge
                 await stream_output(
                     "logs",
                     "answering_from_memory",
-                    f"🧐 I was unable to find relevant context in the provided sources...",
-                    self.websocket,
+                    f"🧐 לא ניתן למצוא מידע רלוונטי במקורות המצורפים...",
+                    self.researcher.websocket,
                 )
             # If complement_source_urls parameter is set, more resources can be gathered to create additional context using default web search
             if self.researcher.complement_source_urls:
@@ -85,7 +85,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "research_step_finalized",
-                f"Finalized research step.\n💸 Total Research Costs: ${self.researcher.get_costs()}",
+                f"שלב סיום המחקר.\n💸 עלות משוערת: ${self.researcher.get_costs()}",
                 self.researcher.websocket,
             )
 
@@ -100,7 +100,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "source_urls",
-                f"🗂️ I will conduct my research based on the following urls: {new_search_urls}...",
+                f"🗂️ אבצע מחקר בהתבסס על המקורות הבאים: {new_search_urls}...",
                 self.researcher.websocket,
             )
 
@@ -128,7 +128,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "subqueries",
-                f"🗂️  I will conduct my research based on the following queries: {sub_queries}...",
+                f"🗂️ אבצע מחקר בהתבסס על השאלות הבאות: {sub_queries}...",
                 self.researcher.websocket,
                 True,
                 sub_queries,
@@ -160,7 +160,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "subqueries",
-                f"🗂️ I will conduct my research based on the following queries: {sub_queries}...",
+                f"🗂️ אבצע מחקר בהתבסס על השאלות הבאות: {sub_queries}...",
                 self.researcher.websocket,
                 True,
                 sub_queries,
@@ -188,7 +188,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "running_subquery_with_vectorstore_research",
-                f"\n🔍 Running research for '{sub_query}'...",
+                f"\n🔍 מבצע מחקר עבור '{sub_query}'...",
                 self.researcher.websocket,
             )
 
@@ -202,7 +202,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "subquery_context_not_found",
-                f"🤷 No content found for '{sub_query}'...",
+                f"🤷 לא מצאתי תוכן רלוונטי עבור '{sub_query}'...",
                 self.researcher.websocket,
             )
         return content
@@ -221,7 +221,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "running_subquery_research",
-                f"\n🔍 Running research for '{sub_query}'...",
+                f"\n🔍 מבצע מחקר עבור '{sub_query}'...",
                 self.researcher.websocket,
             )
 
@@ -238,7 +238,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "subquery_context_not_found",
-                f"🤷 No content found for '{sub_query}'...",
+                f"🤷 לא מצאתי תוכן רלוונטי עבור '{sub_query}'...",
                 self.researcher.websocket,
             )
         return content
@@ -258,7 +258,7 @@ class ResearchConductor:
                     await stream_output(
                         "logs",
                         "added_source_url",
-                        f"✅ Added source url to research: {url}\n",
+                        f"✅ הוספתי מקור למחקר: {url}\n",
                         self.researcher.websocket,
                         True,
                         url,
@@ -301,7 +301,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "researching",
-                f"🤔 Researching for relevant information across multiple sources...\n",
+                f"🤔 מבודק מידע רלוונטי במקורות שונים...\n",
                 self.researcher.websocket,
             )
 
@@ -317,7 +317,7 @@ class ResearchConductor:
         await stream_output(
             "logs",
             "planning_research",
-            f"🌐 Browsing the web to learn more about the task: {query}...",
+            f"🌐 מאחזר מידע מהאינטרנט על הנושא: {query}...",
             self.researcher.websocket,
         )
 
@@ -326,7 +326,7 @@ class ResearchConductor:
         await stream_output(
             "logs",
             "planning_research",
-            f"🤔 Planning the research strategy and subtasks (this may take a minute)...",
+            f"🤔 בונה תוכנית לביצוע המחקר לרבות משימות משנה (זה עשוי לקחת מספר דקות)...",
             self.researcher.websocket,
         )
 

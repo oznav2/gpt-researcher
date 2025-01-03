@@ -8,14 +8,14 @@ async def stream_output(
     type, content, output, websocket=None, output_log=True, metadata=None
 ):
     """
-    Streams output to the websocket
+    Streams output to the websocket with connection state checking
     Args:
-        type:
-        content:
-        output:
-
-    Returns:
-        None
+        type: The type of output
+        content: The content to send
+        output: The output message
+        websocket: Optional websocket connection
+        output_log: Whether to log the output
+        metadata: Optional metadata to include
     """
     if (not websocket or output_log) and type != "images":
         try:
@@ -26,10 +26,22 @@ async def stream_output(
                 'cp1252', errors='replace').decode('cp1252'))
 
     if websocket:
-        await websocket.send_json(
-            {"type": type, "content": content,
-                "output": output, "metadata": metadata}
-        )
+        try:
+            if hasattr(websocket, "application_state"):
+                # Check if the connection is still open before sending
+                if websocket.application_state == "connected":
+                    await websocket.send_json(
+                        {"type": type, "content": content, "output": output, "metadata": metadata}
+                    )
+                else:
+                    logger.warning("WebSocket connection is closed, cannot send message")
+            else:
+                # Fallback for websockets without application_state
+                await websocket.send_json(
+                    {"type": type, "content": content, "output": output, "metadata": metadata}
+                )
+        except Exception as e:
+            logger.error(f"Error sending through WebSocket: {e}")
 
 
 async def safe_send_json(websocket: Any, data: Dict[str, Any]) -> None:

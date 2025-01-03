@@ -17,6 +17,11 @@ class ArxivScraper:
         for a given query extracted from the link.
         """
         query = self.link.split("/")[-1]
-        retriever = ArxivRetriever(load_max_docs=2, doc_content_chars_max=None)
-        docs = retriever.invoke(query=query)
+        retriever = ArxivRetriever(
+            load_max_docs=2,
+            doc_content_chars_max=None,
+            arxiv_search="all",
+            arxiv_exceptions=[]
+        )
+        docs = retriever.invoke(input=query)
         return docs[0].page_content

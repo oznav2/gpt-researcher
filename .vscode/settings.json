@@ -40,5 +40,6 @@
         "**/*.pyc": true
     },
     "terminal.integrated.cwd": "/home/ilan/gpt-researcher",
-    "terminal.integrated.initialWorkingDirectory": "/home/ilan/gpt-researcher"
+    "terminal.integrated.initialWorkingDirectory": "/home/ilan/gpt-researcher",
+    "diffviewer.colorScheme": "dark"
 }

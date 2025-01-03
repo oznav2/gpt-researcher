@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 
 interface HumanFeedbackProps {
-  questionForHuman: string | boolean;
   websocket: WebSocket | null;
   onFeedbackSubmit: (feedback: string | null) => void;
   questionForHuman: boolean;
@@ -26,7 +25,7 @@ const HumanFeedback: React.FC<HumanFeedbackProps> = ({ questionForHuman, websock
       <p className="mb-4">{questionForHuman}</p>
       <form onSubmit={handleSubmit}>
         <textarea
-          className="w-full p-2 border rounded-md"
+          className="w-full p-2 border rounded-lg shadow-md"
           value={userFeedback}
           onChange={(e) => setUserFeedback(e.target.value)}
           placeholder="כתוב כאן אם יש לך הערות או השאר ריק כדי להתעלם"

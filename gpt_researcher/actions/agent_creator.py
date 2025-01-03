@@ -63,7 +63,7 @@ async def handle_json_error(response):
     print("No JSON found in the string. Falling back to Default Agent.")
     return "Default Agent", (
         "You are an AI critical thinker research assistant. Your sole purpose is to write well written, "
-        "critically acclaimed, objective and structured reports on given text."
+        "critically acclaimed, objective and structured reports in Hebrew Language based on given text."
     )
 
 

@@ -25,11 +25,36 @@ class Config:
         self._handle_deprecated_attributes()
         self._set_doc_path(config_to_use)
 
-    def _set_attributes(self, config: Dict[str, Any]) -> None:
+    def _set_attributes(self, config: BaseConfig) -> None:
+        # Add embedding with a default value if not present
+        if 'EMBEDDING' not in config:
+            config['EMBEDDING'] = "openai:text-embedding-3-large"
+            
+        # Add smart_token_limit with a default value
+        if 'SMART_TOKEN_LIMIT' not in config:
+            config['SMART_TOKEN_LIMIT'] = 4096
+            
+        # Set embedding attribute first
+        self.embedding = config['EMBEDDING']
+        
+        # Add default LLM values if not present
+        if 'FAST_LLM' not in config:
+            config['FAST_LLM'] = "openai:gpt-3.5-turbo"
+        if 'SMART_LLM' not in config:
+            config['SMART_LLM'] = "openai:gpt-4"
+        if 'STRATEGIC_LLM' not in config:
+            config['STRATEGIC_LLM'] = "openai:gpt-4"
+            
+        # Set LLM attributes with correct casing
+        self.fast_llm = config['FAST_LLM']
+        self.smart_llm = config['SMART_LLM']
+        self.strategic_llm = config['STRATEGIC_LLM']
+        
         for key, value in config.items():
             env_value = os.getenv(key)
             if env_value is not None:
                 value = self.convert_env_value(key, env_value, BaseConfig.__annotations__[key])
+            # This line converts all keys to lowercase
             setattr(self, key.lower(), value)
 
         # Handle RETRIEVER with default value
@@ -41,9 +66,9 @@ class Config:
             self.retrievers = ["tavily"]
 
     def _set_embedding_attributes(self) -> None:
-        self.embedding_provider, self.embedding_model = self.parse_embedding(
-            self.embedding
-        )
+        provider, model = self.parse_embedding(self.embedding)
+        self.embedding_provider = provider or "openai"
+        self.embedding_model = model or "text-embedding-3-large"
 
     def _set_llm_attributes(self) -> None:
         self.fast_llm_provider, self.fast_llm_model = self.parse_llm(self.fast_llm)
@@ -94,34 +119,32 @@ class Config:
             warnings.warn(_deprecation_warning, FutureWarning, stacklevel=2)
             self.smart_llm_model = os.environ["SMART_LLM_MODEL"] or self.smart_llm_model
         
-    def _set_doc_path(self, config: Dict[str, Any]) -> None:
-        self.doc_path = config['DOC_PATH']
+    def _set_doc_path(self, config: BaseConfig) -> None:
+        self.doc_path = config.get('DOC_PATH', "./my-docs")
         if self.doc_path:
             try:
                 self.validate_doc_path()
             except Exception as e:
-                print(f"Warning: Error validating doc_path: {str(e)}. Using default doc_path.")
-                self.doc_path = DEFAULT_CONFIG['DOC_PATH']
+                print(f"Warning: Could not create or access directory at '{self.doc_path}': {str(e)}")
+                print("Falling back to default document path './my-docs'")
+                self.doc_path = "./my-docs"
 
     @classmethod
-    def load_config(cls, config_path: str | None) -> Dict[str, Any]:
+    def load_config(cls, config_name: str | None) -> BaseConfig:
         """Load a configuration by name."""
-        if config_path is None:
+        if not config_name or config_name == "default":
             return DEFAULT_CONFIG
 
-        # config_path = os.path.join(cls.CONFIG_DIR, config_path)
+        config_path = os.path.join(cls.CONFIG_DIR, f"{config_name}.json")
         if not os.path.exists(config_path):
-            if config_path:
-                print(f"Warning: Configuration not found at '{config_path}'. Using default configuration.")
-                if not config_path.endswith(".json"):
-                    print(f"Do you mean '{config_path}.json'?")
+            print(f"Warning: Configuration '{config_name}' not found. Using default configuration.")
             return DEFAULT_CONFIG
 
         with open(config_path, "r") as f:
             custom_config = json.load(f)
 
         # Merge with default config to ensure all keys are present
-        merged_config = DEFAULT_CONFIG.copy()
+        merged_config: BaseConfig = DEFAULT_CONFIG.copy()
         merged_config.update(custom_config)
         return merged_config
 

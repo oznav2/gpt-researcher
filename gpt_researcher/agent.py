@@ -45,7 +45,7 @@ class GPTResearcher:
         visited_urls: set = set(),
         verbose: bool = True,
         context=[],
-        headers: dict = None,
+        headers: Optional[dict] = None,
         max_subtopics: int = 5,
     ):
         self.query = query

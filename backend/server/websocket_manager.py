@@ -1,9 +1,11 @@
 import asyncio
 import datetime
 import logging
+import time
 from typing import Dict, List
 
-from fastapi import WebSocket
+from fastapi import WebSocket, WebSocketDisconnect
+from starlette.websockets import WebSocketState
 
 from backend.report_type import BasicReport, DetailedReport
 from gpt_researcher.utils.enum import ReportType, Tone
@@ -19,6 +21,7 @@ class WebSocketManager:
         self.active_connections: List[WebSocket] = []
         self.sender_tasks: Dict[WebSocket, asyncio.Task] = {}
         self.message_queues: Dict[WebSocket, asyncio.Queue] = {}
+
 
     async def start_sender(self, websocket: WebSocket):
         """Start the sender task."""
@@ -40,12 +43,12 @@ class WebSocketManager:
                 break
 
     async def connect(self, websocket: WebSocket):
-        """Connect a websocket."""
+        """Connect a websocket and initialize activity tracking."""
         await websocket.accept()
         self.active_connections.append(websocket)
         self.message_queues[websocket] = asyncio.Queue()
-        self.sender_tasks[websocket] = asyncio.create_task(
-            self.start_sender(websocket))
+        self.sender_tasks[websocket] = asyncio.create_task(self.start_sender(websocket))
+        
 
     async def disconnect(self, websocket: WebSocket):
         """Disconnect a websocket."""
@@ -62,14 +65,13 @@ class WebSocketManager:
         report = await run_agent(task, report_type, report_source, source_urls, tone, websocket, headers)
         return report
 
-
 async def run_agent(task, report_type, report_source, source_urls, tone: Tone, websocket, headers=None):
     """Run the agent."""
     start_time = datetime.datetime.now()
     config_path = ""
     if report_type == "multi_agents":
         report = await run_research_task(query=task, websocket=websocket, stream_output=stream_output, tone=tone, headers=headers)
-        report = report.get("report", "")
+        report = report.get("report", "") #if report else ""
     elif report_type == ReportType.DetailedReport.value:
         researcher = DetailedReport(
             query=task,

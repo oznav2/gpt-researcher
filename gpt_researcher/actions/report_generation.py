@@ -205,47 +205,56 @@ async def generate_report(
     headers=None,
 ):
     """
-    generates the final report
-    Args:
-        query:
-        context:
-        agent_role_prompt:
-        report_type:
-        websocket:
-        tone:
-        cfg:
-        main_topic:
-        existing_headers:
-        relevant_written_contents:
-        cost_callback:
-
-    Returns:
-        report:
-
+    Generates the final report with improved error handling and WebSocket management
     """
-    generate_prompt = get_prompt_by_report_type(report_type)
-    report = ""
-
-    if report_type == "subtopic_report":
-        content = f"{generate_prompt(query, existing_headers, relevant_written_contents, main_topic, context, report_format=cfg.report_format, tone=tone, total_words=cfg.total_words)}"
-    else:
-        content = f"{generate_prompt(query, context, report_source, report_format=cfg.report_format, tone=tone, total_words=cfg.total_words)}"
     try:
-        report = await create_chat_completion(
+        # Get the prompt based on report type
+        prompt = get_prompt_by_report_type(report_type, tone)
+        
+        # Prepare the messages
+        messages = [
+            {"role": "system", "content": f"{agent_role_prompt}"},
+            {"role": "user", "content": prompt(query, context)}
+        ]
+
+        # Generate the report with streaming
+        report = ""
+        async for chunk in create_chat_completion(
             model=cfg.smart_llm_model,
-            messages=[
-                {"role": "system", "content": f"{agent_role_prompt}"},
-                {"role": "user", "content": content},
-            ],
-            temperature=0.35,
+            messages=messages,
+            temperature=0.7,
             llm_provider=cfg.smart_llm_provider,
             stream=True,
             websocket=websocket,
             max_tokens=cfg.smart_token_limit,
-            llm_kwargs=cfg.llm_kwargs,
-            cost_callback=cost_callback,
-        )
-    except Exception as e:
-        print(f"Error in generate_report: {e}")
+            cost_callback=cost_callback
+        ):
+            if chunk:
+                report += chunk
 
-    return report
+        # Check if WebSocket is still connected before sending final report
+        if websocket and hasattr(websocket, 'application_state') and websocket.application_state == 'connected':
+            try:
+                await websocket.send_json({
+                    "type": "report",
+                    "content": "Final report",
+                    "output": report
+                })
+            except Exception as e:
+                logger.error(f"Error sending final report through WebSocket: {e}")
+
+        return report
+
+    except Exception as e:
+        logger.error(f"Error generating report: {e}")
+        # Send error message through WebSocket if possible
+        if websocket and hasattr(websocket, 'application_state') and websocket.application_state == 'connected':
+            try:
+                await websocket.send_json({
+                    "type": "error",
+                    "content": "Error generating report",
+                    "output": str(e)
+                })
+            except Exception as ws_error:
+                logger.error(f"Error sending error message through WebSocket: {ws_error}")
+        return f"Error generating report: {str(e)}"

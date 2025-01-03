@@ -17,7 +17,6 @@ VALID_RETRIEVERS = [
     "pubmed_central",
 ]
 
-
 def check_pkg(pkg: str) -> None:
     if not importlib.util.find_spec(pkg):
         pkg_kebab = pkg.replace("_", "-")

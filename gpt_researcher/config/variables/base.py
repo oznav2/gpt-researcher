@@ -2,7 +2,7 @@ from typing import Union
 from typing_extensions import TypedDict
 
 
-class BaseConfig(TypedDict):
+class BaseConfig(TypedDict, total=False):
     RETRIEVER: str
     EMBEDDING: str
     SIMILARITY_THRESHOLD: float
@@ -26,3 +26,4 @@ class BaseConfig(TypedDict):
     MAX_SUBTOPICS: int
     REPORT_SOURCE: Union[str, None]
     DOC_PATH: str
+    MAX_TOKENS: int

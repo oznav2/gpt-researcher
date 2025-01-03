@@ -33,5 +33,4 @@ const Footer = ({ setChatBoxSettings, chatBoxSettings }: ChatBoxProps) => {
     </footer>
   );
 };
-
 export default Footer;
