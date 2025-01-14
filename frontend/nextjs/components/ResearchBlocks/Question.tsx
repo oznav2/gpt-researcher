@@ -16,7 +16,7 @@ const Question: React.FC<QuestionProps> = ({ question }) => {
           className="w-6 h-6"
         />
         <p className="font-bold uppercase leading-[152%] text-white">
-          Research Task:
+          משימת המחקר:
         </p><br/>
       </div>
       <div className="grow text-white break-words max-w-full log-message">&quot;{question}&quot;</div>

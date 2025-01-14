@@ -40,14 +40,14 @@ const InputArea: FC<TInputAreaProps> = ({
   }
 
   const placeholder = handleSecondary
-    ? "Any questions about this report?"
-    : "What would you like to research next?";
+    ? "האם יש לך שאלות לגבי ממצאי המחקר?"
+    : "מה הנושא אותו תרצה לחקור?";
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const resetHeight = () => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = '3em'; // Reset to base height
+      textareaRef.current.style.height = '3em';
     }
   };
 
@@ -81,22 +81,23 @@ const InputArea: FC<TInputAreaProps> = ({
 
   return (
     <form
-      className="mx-auto flex pt-2 pb-2 w-full items-center justify-between rounded-lg border bg-white px-3 shadow-[2px_2px_38px_0px_rgba(0,0,0,0.25),0px_-2px_4px_0px_rgba(0,0,0,0.25)_inset,1px_2px_4px_0px_rgba(0,0,0,0.25)_inset]"
+      className="mx-auto flex pt-2 pb-2 w-full items-center justify-between rounded-lg border bg-white 
+      px-2 sm:px-3 shadow-[2px_2px_38px_0px_rgba(0,0,0,0.25),0px_-2px_4px_0px_rgba(0,0,0,0.25)_inset,1px_2px_4px_0px_rgba(0,0,0,0.25)_inset]
+      max-w-[100vw] sm:max-w-none"
       onSubmit={(e) => {
         e.preventDefault();
         if (reset) reset();
         handleSubmit(promptValue);
-        setPromptValue(''); // Clear prompt value
+        setPromptValue('');
         resetHeight();
       }}
     >
-
       <textarea
         placeholder={placeholder}
         ref={textareaRef}
-        className="focus-visible::outline-0 my-1 w-full pl-5 font-light not-italic leading-[normal] 
+        className="focus-visible::outline-0 my-1 w-full pl-2 sm:pl-5 font-light not-italic leading-[normal] 
         text-[#1B1B16]/30 text-black outline-none focus-visible:ring-0 focus-visible:ring-offset-0 
-        sm:text-xl min-h-[3em] resize-none"
+        text-base sm:text-xl min-h-[3em] resize-none px-2 sm:px-0"
         disabled={disabled}
         value={promptValue}
         required
@@ -107,7 +108,9 @@ const InputArea: FC<TInputAreaProps> = ({
       <button
         disabled={disabled}
         type="submit"
-        className="relative flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-[3px] bg-[linear-gradient(154deg,#1B1B16_23.37%,#565646_91.91%)] disabled:pointer-events-none disabled:opacity-75"
+        className="relative flex h-[40px] sm:h-[50px] w-[40px] sm:w-[50px] shrink-0 items-center justify-center 
+        rounded-[3px] bg-[linear-gradient(154deg,#1B1B16_23.37%,#565646_91.91%)] 
+        disabled:pointer-events-none disabled:opacity-75 mr-1 sm:mr-0"
       >
         {disabled && (
           <div className="absolute inset-0 flex items-center justify-center">
@@ -119,9 +122,9 @@ const InputArea: FC<TInputAreaProps> = ({
           unoptimized
           src={"/img/arrow-narrow-right.svg"}
           alt="search"
-          width={24}
-          height={24}
-          className={disabled ? "invisible" : ""}
+          width={20}
+          height={20}
+          className={`${disabled ? "invisible" : ""} w-5 h-5 sm:w-6 sm:h-6`}
         />
       </button>
     </form>

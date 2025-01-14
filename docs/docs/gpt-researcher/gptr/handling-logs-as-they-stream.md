@@ -56,7 +56,7 @@ Here's a sample of the output:
 {
     "type": "logs",
     "content": "added_source_url",
-    "output": "✅ Added source url to research: https://www.npr.org/2023/09/28/1202110410/how-rumors-and-conspiracy-theories-got-in-the-way-of-mauis-fire-recovery\n",
+    "output": "✅ מוסיף מקור למחקר: https://www.npr.org/2023/09/28/1202110410/how-rumors-and-conspiracy-theories-got-in-the-way-of-mauis-fire-recovery\n",
     "metadata": "https://www.npr.org/2023/09/28/1202110410/how-rumors-and-conspiracy-theories-got-in-the-way-of-mauis-fire-recovery"
 }
 ```

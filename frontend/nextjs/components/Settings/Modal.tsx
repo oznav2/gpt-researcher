@@ -132,7 +132,7 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }: ChatBoxPr
         type="button"
         onClick={() => setShowModal(true)}
       >
-        Preferences
+        העדפות
       </button>
       {showModal ? (
         <>
@@ -143,7 +143,7 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }: ChatBoxPr
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="relative p-6 flex-auto">
                   <div className="tabs">
-                    <button onClick={() => setActiveTab('search')} className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}>Search Settings</button>
+                    <button onClick={() => setActiveTab('search')} className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}>הגדרות חיפוש</button>
                     </div>
                   {activeTab === 'search' && (
                     <div className="App">
@@ -156,9 +156,9 @@ export default function Modal({ setChatBoxSettings, chatBoxSettings }: ChatBoxPr
                     <main className="container" id="form">
                       <form method="POST" className="report_settings">
                         <div className="form-group">
-                          <label className="form-group-label">Search Engine</label>
+                          <label className="form-group-label">מנועי חיפוש</label>
                           <select name="RETRIEVER" value={apiVariables.RETRIEVER} onChange={handleInputChange}>
-                            <option value="" disabled>Select Retriever</option>
+                            <option value="" disabled>בחר מנוע חיפוש</option>
                             <option value="tavily">Tavily</option>
                             <option value="google">Google</option>
                             <option value="searx">Searx</option>

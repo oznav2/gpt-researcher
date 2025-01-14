@@ -21,9 +21,10 @@ class PublisherAgent:
 
     def generate_layout(self, research_state: dict):
         sections = '\n\n'.join(f"{value}"
-                                 for subheader in research_state.get("research_data")
+                                 for subheader in research_state.get("research_data", [])
                                  for key, value in subheader.items())
-        references = '\n'.join(f"{reference}" for reference in research_state.get("sources"))
+        sources = research_state.get("sources", [])
+        references = '\n'.join(f"{reference}" for reference in sources) if sources else ""
         headers = research_state.get("headers")
         layout = f"""# {headers.get('title')}
 #### {headers.get("date")}: {research_state.get('date')}
@@ -53,6 +54,10 @@ class PublisherAgent:
             await write_text_to_md(layout, self.output_dir)
 
     async def run(self, research_state: dict):
+        # Ensure sources exist
+        if "sources" not in research_state:
+            research_state["sources"] = []
+        
         task = research_state.get("task")
         publish_formats = task.get("publish_formats")
         if self.websocket and self.stream_output:

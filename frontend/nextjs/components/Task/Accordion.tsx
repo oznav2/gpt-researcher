@@ -31,8 +31,8 @@ const Accordion: React.FC<AccordionProps> = ({ logs }) => {
     }
 
     return log.header === 'differences'
-      ? 'The following fields on the Langgraph were updated: ' + Object.keys(JSON.parse(log.text).data).join(', ')
-      : `📄 Retrieved relevant content from the source: ${sourceUrl}`;
+      ? 'השדות הבאים ב Langgraph נתעדכנו: ' + Object.keys(JSON.parse(log.text).data).join(', ')
+      : `📄 תוצאות מקור: ${sourceUrl}`;
   };
 
   const renderLogContent = (log: Log) => {

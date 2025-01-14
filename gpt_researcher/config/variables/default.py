@@ -6,7 +6,7 @@ DEFAULT_CONFIG: BaseConfig = {
     "SIMILARITY_THRESHOLD": 0.42,
     "FAST_LLM": "openai:gpt-4o-mini",
     "SMART_LLM": "openai:gpt-4o-2024-11-20",
-    "STRATEGIC_LLM": "openai:gpt-4o", # Can be used with gpt-o1
+    "STRATEGIC_LLM": "openai:o1-mini-2024-09-12", # Can be used with gpt-o1
     "FAST_TOKEN_LIMIT": 2000,
     "SMART_TOKEN_LIMIT": 4000,
     "STRATEGIC_TOKEN_LIMIT": 4000,
@@ -18,13 +18,13 @@ DEFAULT_CONFIG: BaseConfig = {
     "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0",
     "MAX_SEARCH_RESULTS_PER_QUERY": 5,
     "MEMORY_BACKEND": "local",
-    "TOTAL_WORDS": 1000,
+    "TOTAL_WORDS": 1500,
     "REPORT_FORMAT": "APA",
     "MAX_ITERATIONS": 4,
     "AGENT_ROLE": None,
     "SCRAPER": "bs",
     "MAX_SUBTOPICS": 3,
-    "LANGUAGE": "english",
+    "LANGUAGE": "Hebrew",
     "REPORT_SOURCE": "web",
     "DOC_PATH": "./my-docs"
 }

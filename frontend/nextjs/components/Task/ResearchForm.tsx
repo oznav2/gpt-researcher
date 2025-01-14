@@ -73,7 +73,7 @@ export default function ResearchForm({
     >
       <div className="form-group">
         <label htmlFor="report_type" className="agent_question">
-          Report Type{" "}
+          סוג המחקר{" "}
         </label>
         <select
           name="report_type"
@@ -83,19 +83,19 @@ export default function ResearchForm({
           required
         >
 
-          <option value="multi_agents">Multi Agents Report</option>
+          <option value="multi_agents">מחקר מרובה סוכנים</option>
           <option value="research_report">
-            Summary - Short and fast (~2 min)
+            סיכום - קצר ומהיר (~2 דקות)
           </option>
           <option value="detailed_report">
-            Detailed - In depth and longer (~5 min)
+            מחקר מפורט - מעמיק וארוך (~5 דקות)
           </option>
 
         </select>
       </div>
       <div className="form-group">
         <label htmlFor="report_source" className="agent_question">
-          Report Source{" "}
+          מקור המחקר{" "}
         </label>
         <select
           name="report_source"
@@ -104,9 +104,9 @@ export default function ResearchForm({
           className="form-control"
           required
         >
-          <option value="web">The Internet</option>
-          <option value="local">My Documents</option>
-          <option value="hybrid">Hybrid</option>
+          <option value="web">האינטרנט</option>
+          <option value="local">המסמכים שלי</option>
+          <option value="hybrid">משולב</option>
         </select>
       </div>
       {/* Conditional file upload if the report source is 'local' or 'hybrid' */}

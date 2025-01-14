@@ -240,7 +240,7 @@ export default function Home() {
         onStop={handleStopResearch}
         onNewResearch={handleStartNewResearch}
       />
-      <main ref={mainContentRef} className="min-h-[100vh] pt-[120px]">
+      <main ref={mainContentRef} className="min-h-[100vh] pt-[60px] md:pt-[120px]">
         {!showResult && (
           <Hero
             promptValue={promptValue}
@@ -251,7 +251,7 @@ export default function Home() {
 
         {showResult && (
           <div className="flex h-full w-full grow flex-col justify-between">
-            <div className="container w-full space-y-2">
+            <div className="container w-full space-y-2 px-4 sm:px-0">
               <div className="container space-y-2 task-components">
                 <ResearchResults
                   orderedData={orderedData}
@@ -272,7 +272,7 @@ export default function Home() {
 
               <div className="pt-1 sm:pt-2" ref={chatContainerRef}></div>
             </div>
-            <div id="input-area" className="container px-4 lg:px-0">
+            <div id="input-area" className="container px-4 w-full fixed bottom-0 left-0 right-0 bg-white pb-4 sm:static sm:pb-0">
               {loading ? (
                 <LoadingDots />
               ) : (

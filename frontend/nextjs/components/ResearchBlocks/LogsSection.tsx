@@ -28,7 +28,7 @@ const LogsSection = ({ logs }: OrderedLogsProps) => {
       <div className="flex items-start gap-4 pb-3 lg:pb-3.5">
         <Image src="/img/chat-check.svg" alt="logs" width={24} height={24} />
         <h3 className="text-base font-bold uppercase leading-[152.5%] text-white">
-          Agent Work
+          עבודת צוות המומחים
         </h3>
       </div>
       <div 

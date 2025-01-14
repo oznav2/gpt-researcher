@@ -11,6 +11,7 @@ from pathlib import Path
 from datetime import datetime
 from fastapi import HTTPException
 import logging
+import hashlib
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -103,16 +104,23 @@ def sanitize_filename(filename: str) -> str:
     prefix, timestamp, *task_parts = filename.split('_')
     task = '_'.join(task_parts)
     
-    # Calculate max length for task portion
-    # 255 - len("outputs/") - len("task_") - len(timestamp) - len("_.json") - safety_margin
-    max_task_length = 255 - 8 - 5 - 10 - 6 - 10  # ~216 chars for task
-    
-    # Truncate task if needed
-    truncated_task = task[:max_task_length] if len(task) > max_task_length else task
+    # For UTF-8 content (like Hebrew), use hash-based approach
+    if any(ord(c) > 127 for c in task):  # Check for non-ASCII characters
+        # Create a hash of the full task
+        task_hash = hashlib.md5(task.encode('utf-8')).hexdigest()[:12]
+        # Take first 30 chars of task + hash for readability while keeping uniqueness
+        truncated_task = f"{task[:30]}_{task_hash}"
+    else:
+        # For ASCII content, use the extended length approach
+        max_task_length = 500 - 8 - 5 - 10 - 6 - 10  # ~432 chars for task
+        truncated_task = task[:max_task_length] if len(task) > max_task_length else task
     
     # Reassemble and clean the filename
     sanitized = f"{prefix}_{timestamp}_{truncated_task}"
-    return re.sub(r"[^\w\s-]", "", sanitized).strip()
+    # Allow Hebrew characters, alphanumeric, and basic punctuation
+    cleaned = re.sub(r'[^\w\s\u0590-\u05FF-]', '', sanitized).strip()
+    
+    return cleaned
 
 
 async def handle_start_command(websocket, data: str, manager):

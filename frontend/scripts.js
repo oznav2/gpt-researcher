@@ -29,7 +29,7 @@ const GPTResearcher = (() => {
     updateState('in_progress')
 
     addAgentResponse({
-      output: '🤔 Thinking about research questions for the task...',
+      output: '🤔 מבצע חשיבה ותכנון השאלות הכי טובות הדרושות לביצוע המחקר...',
     })
 
     listenToSockEvents()
@@ -150,15 +150,15 @@ const GPTResearcher = (() => {
     var status = ''
     switch (state) {
       case 'in_progress':
-        status = 'Research in progress...'
+        status = 'תהליך המחקר התחיל והוא מתבצע ברקע..'
         setReportActionsStatus('disabled')
         break
       case 'finished':
-        status = 'Research finished!'
+        status = 'תהליך המחקר הסתיים ודוח התשובה נוצר עבורך. לחץ על הקישורים למטה כדי להוריד אותו.'
         setReportActionsStatus('enabled')
         break
       case 'error':
-        status = 'Research failed!'
+        status = 'תהליך המחקר נכשל. נסה שנית.'
         setReportActionsStatus('disabled')
         break
       case 'initial':
@@ -244,7 +244,7 @@ const GPTResearcher = (() => {
       })
       imageContainer.style.display = 'block'
     } else {
-      imageContainer.innerHTML += '<p>No images found for this research.</p>'
+      imageContainer.innerHTML += '<p>לא נמצאו תמונות רלוונטיות למחקר זה.</p>'
     }
   }
 

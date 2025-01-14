@@ -32,7 +32,7 @@ export default function Answer({ answer }: { answer: string }) {
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText(answer.trim());
-                    toast("Answer copied to clipboard", {
+                    toast("המחקר נשמר בזכרון", {
                       icon: "✂️",
                     });
                   }}

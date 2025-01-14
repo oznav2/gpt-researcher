@@ -2,9 +2,10 @@ import json
 import os
 from typing import Dict, List
 
-from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, File, UploadFile, Header
+from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, File, UploadFile, Header, HTTPException, logger
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
@@ -76,12 +77,11 @@ manager = WebSocketManager()
 # Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://wow.ilanel.co.il", "https://wow.ilanel.co.il", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # Constants
 DOC_PATH = os.getenv("DOC_PATH", "./my-docs")
 
@@ -102,6 +102,19 @@ def startup_event():
 async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request, "report": None})
 
+@app.options("/files/")
+async def options_files(request: Request):
+    logging.info("Handling OPTIONS request for /files/")
+    return JSONResponse(
+        status_code=200,
+        content={"message": "OK"},
+        headers={
+            "Access-Control-Allow-Origin": request.headers.get("Origin", "*"),
+            "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Credentials": "true",
+        },
+    )
 
 @app.get("/files/")
 async def list_files():
@@ -132,3 +145,45 @@ async def websocket_endpoint(websocket: WebSocket):
         await handle_websocket_communication(websocket, manager)
     except WebSocketDisconnect:
         await manager.disconnect(websocket)
+
+
+@app.get("/outputs/{filename}")
+async def serve_file(filename: str):
+    file_path = f"outputs/{filename}"
+    if os.path.exists(file_path):
+        return FileResponse(file_path)
+    return {"error": "File not found"}, 404
+
+# Error handler for 400 Bad Request
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    logging.error(f"HTTPException for {request.url}: {exc.detail}")
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"message": str(exc.detail)},
+    )
+
+# Catch-all OPTIONS handler
+@app.options("/{full_path:path}")
+async def options_handler(request: Request, full_path: str):
+    logging.info(f"Handling OPTIONS request for /{full_path}")
+    return JSONResponse(
+        status_code=200,
+        content={"message": "OK"},
+        headers={
+            "Access-Control-Allow-Origin": request.headers.get("Origin", "*"),
+            "Access-Control-Allow-Methods": "*",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Credentials": "true",
+        },
+    )
+
+# Add this new route handler
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    file_name = "favicon.ico"
+    file_path = os.path.join("frontend", "static", file_name)
+    if os.path.isfile(file_path):
+        return FileResponse(path=file_path)
+    else:
+        return {"message": "Favicon not found"}, 404

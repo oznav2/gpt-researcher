@@ -25,7 +25,7 @@ class ResearchConductor:
         await stream_output(
             "logs",
             "planning_research",
-            f"🌐 Browsing the web to learn more about the task: {query}...",
+            f"🌐 גולש ברשת כדי ללמוד עוד על המשימה: {query}...",
             self.researcher.websocket,
         )
 
@@ -35,7 +35,7 @@ class ResearchConductor:
         await stream_output(
             "logs",
             "planning_research",
-            f"🤔 Planning the research strategy and subtasks...",
+            f"🤔 מתכנן את אסטרטגיית המחקר והמשימות המשלימות...",
             self.researcher.websocket,
         )
 
@@ -66,7 +66,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "starting_research",
-                f"🔍 Starting the research task for '{self.researcher.query}'...",
+                f"🔍 מתחיל בביצוע משימת המחקר באיסוף מידע על '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -81,7 +81,7 @@ class ResearchConductor:
                 await stream_output(
                     "logs",
                     "answering_from_memory",
-                    f"🧐 I was unable to find relevant context in the provided sources...",
+                    f"🧐 לא מצאתי מידע רלוונטי במקור שקראתי...",
                     self.researcher.websocket,
                 )
             if self.researcher.complement_source_urls:
@@ -136,7 +136,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "research_step_finalized",
-                f"Finalized research step.\n💸 Total Research Costs: ${self.researcher.get_costs()}",
+                f"תהליך עיבוד המחקר הסתיים.\n💸עלות משוערתר: ${self.researcher.get_costs()}",
                 self.researcher.websocket,
             )
             if self.json_handler:
@@ -185,7 +185,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "subqueries",
-                f"🗂️  I will conduct my research based on the following queries: {sub_queries}...",
+                f"🗂️  מבצע מחקר בהתבסס על השאלות הבאות: {sub_queries}...",
                 self.researcher.websocket,
                 True,
                 sub_queries,
@@ -220,7 +220,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "subqueries",
-                f"🗂️ I will conduct my research based on the following queries: {sub_queries}...",
+                f"🗂️ מבצע מחקר בהתבסס על השאלות הבאות: {sub_queries}...",
                 self.researcher.websocket,
                 True,
                 sub_queries,
@@ -258,7 +258,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "running_subquery_research",
-                f"\n🔍 Running research for '{sub_query}'...",
+                f"\n🔍 חוקר את הנושא '{sub_query}'...",
                 self.researcher.websocket,
             )
 
@@ -305,7 +305,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "running_subquery_with_vectorstore_research",
-                f"\n🔍 Running research for '{sub_query}'...",
+                f"\n🔍 חוקר את הנושא '{sub_query}'...",
                 self.researcher.websocket,
             )
 
@@ -339,7 +339,7 @@ class ResearchConductor:
                     await stream_output(
                         "logs",
                         "added_source_url",
-                        f"✅ Added source url to research: {url}\n",
+                        f"✅ מוסיף מקור למחקר: {url}\n",
                         self.researcher.websocket,
                         True,
                         url,
@@ -387,7 +387,7 @@ class ResearchConductor:
             await stream_output(
                 "logs",
                 "researching",
-                f"🤔 Researching for relevant information across multiple sources...\n",
+                f"🤔 מאתר מידע רלוונטי משלים ממקורות שונים...\n",
                 self.researcher.websocket,
             )
 

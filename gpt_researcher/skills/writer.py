@@ -56,7 +56,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "writing_report",
-                f"✍️ Writing report for '{self.researcher.query}'...",
+                f"✍️ כותב דוח תשובה שמסכם את ממצאי המחקר בנושא '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -79,7 +79,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "report_written",
-                f"📝 Report written for '{self.researcher.query}'",
+                f"📝 סיימתי לכתוב דוח תשובה שמסכם את ממצאי המחקר בנושא '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -99,7 +99,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "writing_conclusion",
-                f"✍️ Writing conclusion for '{self.researcher.query}'...",
+                f"✍️ מסכם את מסקנותי בנושא'{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -116,7 +116,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "conclusion_written",
-                f"📝 Conclusion written for '{self.researcher.query}'",
+                f"📝 הוספתי את מסקנותיי לדוח התשובה בנושא '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -128,7 +128,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "writing_introduction",
-                f"✍️ Writing introduction for '{self.researcher.query}'...",
+                f"✍️ כותב תקציר מבוא בנושא '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -145,7 +145,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "introduction_written",
-                f"📝 Introduction written for '{self.researcher.query}'",
+                f"📝 סיימתי לכתוב מבוא למחקר בנושא '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -157,7 +157,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "generating_subtopics",
-                f"🌳 Generating subtopics for '{self.researcher.query}'...",
+                f"🌳 יוצר רשימת תתי נושאים למחקר בנושא '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -172,7 +172,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "subtopics_generated",
-                f"📊 Subtopics generated for '{self.researcher.query}'",
+                f"📊 רשימת תתי נושאים נוצרה למחקר בנושא '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -184,7 +184,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "generating_draft_sections",
-                f"📑 Generating draft section titles for '{self.researcher.query}'...",
+                f"📑 יוצר טיוטא של כותרות הפסקאות במחקר בנושא '{self.researcher.query}'...",
                 self.researcher.websocket,
             )
 
@@ -202,7 +202,7 @@ class ReportGenerator:
             await stream_output(
                 "logs",
                 "draft_sections_generated",
-                f"🗂️ Draft section titles generated for '{self.researcher.query}'",
+                f"🗂️ טיוטא של כותרות בנושא המחקר נוצרה בהצלחה '{self.researcher.query}'",
                 self.researcher.websocket,
             )
 

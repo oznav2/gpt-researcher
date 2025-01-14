@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+
+
 @keyframes gradientBG {
   0% {background-position: 0% 50%;}
   50% {background-position: 100% 50%;}
@@ -30,16 +34,20 @@ body {
   line-height: 1.6;
   background-size: 200% 200%;
   background-image: linear-gradient(170deg, #151A2D, #036f73, #151A2D);
-  /*animation: gradientBG 10s ease infinite;*/
+  text-align: right;
+  direction: rtl;
+  margin: 0px !important;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .landing {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30vh;
+  height: auto; /* Adjust height for better content fit */
   text-align: center;
   color: white;
+  padding: 2rem 0; /* Add padding for spacing */
 }
 
 .landing h1 {
@@ -65,42 +73,61 @@ body {
     text-align: left;
     display: flex;
     gap: 3px;
-  }
-
-  .loader span {
-    display: inline-block;
+    width: fit-content;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 16px;
+    background: radial-gradient(circle closest-side,#000 94%,#0000) right/calc(200% - 1em) 100%;
+    animation: l24 0.6s infinite alternate;
+    opacity: 0.3;
+    transform: scale(0.6);
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
     vertical-align: middle;
-    width: 7px;
-    height: 7px;
-    /* background: #4b4b4b; */
-    background: white;
-    border-radius: 50%;
-    animation: loader 0.6s infinite alternate;
   }
-
-  .loader span:nth-of-type(2) {
-    animation-delay: 0.2s;
+  
+  .loader::before {
+    content: "מבצע מחקר";
+    line-height: 1em;
+    color: #0000;
+    background: inherit;
+    background-image: radial-gradient(circle closest-side,#fff 94%,#000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    vertical-align: middle;
   }
-
-  .loader span:nth-of-type(3) {
-    animation-delay: 0.6s;
-  }
-
-  @keyframes loader {
+  
+  @keyframes l24 {
     0% {
       opacity: 1;
       transform: scale(0.6);
+      background-position: right;
     }
-
     100% {
       opacity: 0.3;
       transform: scale(1);
+      background-position: left;
     }
   }
 }
 
-body {
-  margin: 0px !important;
+/* Add media queries for responsive design */
+@media (max-width: 640px) {
+  .landing h1 {
+    font-size: 2rem; /* Adjust as needed */
+    line-height: 1.2;
+  }
+
+  .landing h2 {
+    font-size: 0.875rem; /* Adjust as needed */
+    line-height: 1.4;
+    margin-bottom: 1rem; /* Ensure spacing between elements */
+  }
+}
+
+/* Ensure consistent spacing and layout */
+.mt-4 {
+  margin-top: 1rem;
 }
 
 /* Add these styles for the scrollbar */
@@ -119,4 +146,20 @@ body {
 
 .scrollbar-thin::-webkit-scrollbar {
   width: 6px;
+}
+
+
+/* Add this new rule for proper RTL rendering of inline parentheses */
+body *:not(pre):not(code) {
+  unicode-bidi: embed;
+}
+.ltr {
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: bidi-override;
+}
+
+/* Add this new rule for elements that might contain citations or references */
+.citation, .reference {
+  unicode-bidi: embed;
 }

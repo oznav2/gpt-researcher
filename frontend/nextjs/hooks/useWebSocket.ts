@@ -1,7 +1,19 @@
 import { useRef, useState } from 'react';
 import { Data, ChatBoxSettings, QuestionData } from '../types/data';
 
-export const useWebSocket = (setOrderedData: React.Dispatch<React.SetStateAction<Data[]>>, setAnswer: React.Dispatch<React.SetStateAction<string>>, setLoading: React.Dispatch<React.SetStateAction<boolean>>, setShowHumanFeedback: React.Dispatch<React.SetStateAction<boolean>>, setQuestionForHuman: React.Dispatch<React.SetStateAction<boolean | true>>) => {
+declare global {
+  interface Window {
+    WebSocket: typeof WebSocket;
+  }
+}
+
+export const useWebSocket = (
+  setOrderedData: React.Dispatch<React.SetStateAction<Data[]>>,
+  setAnswer: React.Dispatch<React.SetStateAction<string>>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setShowHumanFeedback: React.Dispatch<React.SetStateAction<boolean>>,
+  setQuestionForHuman: React.Dispatch<React.SetStateAction<boolean | true>>
+) => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const heartbeatInterval = useRef<number>();
 
@@ -25,8 +37,13 @@ export const useWebSocket = (setOrderedData: React.Dispatch<React.SetStateAction
     if (!socket && typeof window !== 'undefined') {
       const { protocol, pathname } = window.location;
       let { host } = window.location;
-      host = host.includes('localhost') ? 'localhost:8000' : host;
-      const ws_uri = `${protocol === 'https:' ? 'wss:' : 'ws:'}//${host}${pathname}ws`;
+      
+      // Handle both localhost and production domains
+      const apiHost = host.includes('localhost') 
+        ? 'localhost:8000' 
+        : (process.env.NEXT_PUBLIC_API_URL?.split(',')[0].replace(/^https?:\/\//, '') || 'gpt.ilanel.co.il');
+      
+      const ws_uri = `${protocol === 'https:' ? 'wss:' : 'ws:'}//${apiHost}${pathname}ws`;
 
       const newSocket = new WebSocket(ws_uri);
       setSocket(newSocket);
@@ -55,7 +72,7 @@ export const useWebSocket = (setOrderedData: React.Dispatch<React.SetStateAction
 
         heartbeatInterval.current = window.setInterval(() => {
           socket?.send('ping');
-        }, 3000); // Send ping every 3 seconds
+        }, 3000);
       };
 
       newSocket.onclose = () => {

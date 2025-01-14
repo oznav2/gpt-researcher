@@ -4,7 +4,7 @@ export default function Report({report}:any) {
 
     return (
         <div>
-            <h2>Research Report</h2>
+            <h2>דוח המחקר</h2>
             <div id="reportContainer">
                 {/* <MarkdownView
                     markdown={report}

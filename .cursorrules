@@ -1,0 +1,1758 @@
+# GPT-RESEARCHER
+
+## Project Context
+A user interface that allows users to use an autonomous agent designed for comprehensive online research on various tasks. The system uses planner and execution agents, where the planner generates research questions and the execution agents seek related information based on each question. Finally, the planner filters and aggregates information to create a research report.
+
+## Project Components
+
+### Backend Server (FastAPI)
+- Execution: `python -m uvicorn main:app --reload`
+- Port: http://localhost:8000
+- Core Functionality:
+  - Creates domain-specific agents based on research queries
+  - Generates research questions for objective analysis
+  - Triggers crawler agents for online resource scraping
+  - Summarizes and tracks information sources
+  - Filters and aggregates sources for report generation
+  - WebSocket server for real-time communication
+  - Streams logs and results back to clients
+  - Serves the HTML/JS static frontend
+
+### GPT Researcher (Python Package)
+- Core research agent implementation
+- Handles autonomous research execution
+- Manages web scraping and content analysis
+- Processes and synthesizes information
+- Generates comprehensive research reports
+- Maintains source tracking and verification
+
+### Multi-Agents System (LangGraph)
+- Advanced research capabilities using LangGraph
+- Coordinates multiple specialized agents
+- Enables parallel research execution
+- Provides enhanced analysis capabilities
+- Supports complex research workflows
+- Integrates with the main research system
+
+### Frontend Options
+
+#### HTML/JS Static Frontend
+- Purpose: Quick setup and lightweight deployment
+- Location: frontend/static directory
+- Server: Nginx with FastAPI static file serving
+- Core Files:
+  - `index.html`: Main entry point with responsive layout
+  - `scripts.js`: WebSocket handling and UI interactions
+  - `styles.css`: Core styling and responsive design
+  - `pdf_styles.css`: PDF report styling
+
+##### Static Frontend Features
+- Basic research interface with minimalist design
+- Real-time progress tracking via WebSocket
+- Research result display with Markdown support
+- Mobile-responsive layout
+- File upload/download capabilities
+- Research configuration options
+
+##### Nginx Configuration
+- Server block listening on port 80/443
+- WebSocket proxy for /ws endpoint
+- Static file serving configuration
+- SSL/TLS support (optional)
+- Proxy settings for API endpoints
+- File upload size limits
+- CORS and security headers
+
+#### NextJS Frontend (React)
+- Execution: `npm run dev`
+- Port: http://localhost:3000
+- Location: frontend/nextjs directory
+
+##### Core Components
+###### Page Components
+- `app/page.tsx`: Main application page
+  - Research state management
+  - WebSocket connection handling
+  - UI layout orchestration
+  - Research flow control
+  - Real-time updates handling
+
+- `app/layout.tsx`: Root layout component
+  - Meta tags and SEO configuration
+  - Font loading (Lexend)
+  - Analytics integration (Plausible)
+  - Global styles
+  - RTL support
+
+###### UI Components
+- `Header.tsx`: Application header
+  - Logo display
+  - Research control buttons
+  - Navigation elements
+  - Loading state indicators
+
+- `Footer.tsx`: Application footer
+  - Settings controls
+  - Configuration options
+  - Attribution links
+
+- `Hero.tsx`: Landing page hero section
+  - Research input interface
+  - Call-to-action elements
+  - Initial state display
+
+- `ResearchResults.tsx`: Results display
+  - Research findings presentation
+  - Source attribution
+  - Interactive elements
+  - Progress indicators
+
+###### Research Components
+- `ResearchBlocks/`: Research-specific components
+  - `AccessReport.tsx`: Report access controls
+  - `LogsSection.tsx`: Research logs display
+  - `Question.tsx`: Research question display
+  - `Answer.tsx`: Research answer presentation
+  - `Sources.tsx`: Source management
+  - `ImageSection.tsx`: Research images display
+  - `elements/`: Reusable research elements
+    - `InputArea.tsx`: Research input interface
+    - `SubQuestions.tsx`: Sub-query management
+
+###### Interactive Components
+- `HumanFeedback.tsx`: User feedback interface
+- `LoadingDots.tsx`: Loading state animations
+- `SimilarTopics.tsx`: Related research suggestions
+- `Task/`: Task-specific components
+  - `Accordion.tsx`: Collapsible content sections
+  - `Report.tsx`: Research report display
+  - `ImagesCarousel.tsx`: Image gallery
+
+##### State Management
+- React hooks for local state
+- WebSocket context for real-time updates
+- Research context for global state
+- Form state management
+- UI state coordination
+
+##### Styling System
+- Tailwind CSS configuration
+  - Custom color schemes
+  - Responsive breakpoints
+  - Typography system
+  - Component variants
+  - Animation utilities
+
+- Global styles (`globals.css`)
+  - Base styles
+  - Utility classes
+  - Animation keyframes
+  - RTL support
+  - Scrollbar customization
+
+- Markdown styles (`markdown.css`)
+  - Typography hierarchy
+  - Code block styling
+  - List formatting
+  - Link styling
+  - Spacing system
+
+##### Configuration
+- `next.config.mjs`: Next.js configuration
+  - Image domains
+  - API rewrites
+  - Runtime configuration
+  - Security headers
+  - Build optimization
+
+- `tsconfig.json`: TypeScript configuration
+  - Strict mode settings
+  - Path aliases
+  - Module resolution
+  - Type checking rules
+
+- `tailwind.config.ts`: Tailwind configuration
+  - Theme customization
+  - Screen breakpoints
+  - Container settings
+  - Custom gradients
+  - Plugin integration
+
+##### Development Tools
+- ESLint configuration
+- Prettier setup
+- TypeScript type checking
+- Development server
+- Build optimization
+- Hot module replacement
+
+##### Production Deployment
+- Docker configuration
+  - Multi-stage build
+  - Nginx setup
+  - Static file optimization
+  - Environment configuration
+  - Security hardening
+
+- Nginx production setup
+  - Static file serving
+  - Compression
+  - Caching
+  - SSL/TLS
+  - Security headers
+  - WebSocket proxy
+
+### System Integration
+- Both frontends depend on FastAPI backend
+- WebSocket communication for real-time updates
+- Unified research process flow:
+  1. Query submission and task creation
+  2. Research question generation
+  3. Web resource crawling and analysis
+  4. Information synthesis and summarization
+  5. Report generation and delivery
+
+## Code Style and Structure
+
+### Python (Backend & GPT Researcher)
+- Use Python 3.10+ features and type hints
+- Follow PEP 8 style guide
+- Use functional programming patterns where appropriate
+- Implement proper error handling and logging
+- Use descriptive variable names with underscores (snake_case)
+- Structure modules with clear separation of concerns
+- Use FastAPI dependency injection for services
+- Implement proper async/await patterns
+- Use Pydantic models for data validation
+
+### FastAPI Best Practices
+- Use dependency injection for services and repositories
+- Implement proper error handling with HTTPException
+- Use Pydantic models for request/response validation
+- Implement proper CORS handling
+- Use WebSocket manager for real-time communication
+- Implement proper logging and monitoring
+- Use async database operations where applicable
+- Structure routes logically by domain
+- Implement proper middleware for cross-cutting concerns
+
+### NextJS & React Best Practices
+- Use functional components with TypeScript
+- Implement proper state management with React hooks
+- Use proper data fetching patterns (SWR/React Query)
+- Implement proper error boundaries
+- Use proper code splitting and lazy loading
+- Follow atomic design principles for components
+- Use proper routing patterns
+- Implement proper SEO practices
+- Use proper image optimization
+- Follow proper accessibility guidelines
+
+### TypeScript Usage
+- Use strict TypeScript configuration
+- Define proper interfaces and types
+- Use proper type inference
+- Avoid any type
+- Use proper generics where applicable
+- Use proper utility types
+- Use proper discriminated unions
+- Use proper type guards
+- Use proper module augmentation
+- Use proper declaration merging
+
+### CSS & Tailwind Best Practices
+- Use proper Tailwind utility classes
+- Follow mobile-first approach
+- Use proper responsive design patterns
+- Use proper color schemes
+- Use proper typography
+- Use proper spacing
+- Use proper flexbox/grid layouts
+- Use proper animations
+- Use proper transitions
+- Use proper dark mode support
+
+### Project Structure
+```
+/
+├── backend/                    # FastAPI server implementation
+│   ├── server/                # Core server implementation and routes
+│   ├── report_type/           # Different report generation templates
+│   ├── chat/                  # WebSocket chat implementation
+│   ├── memory/                # Memory management for conversations
+│   └── utils.py               # Backend utility functions
+│
+├── gpt_researcher/            # Core research agent implementation
+│   ├── actions/               # Agent action implementations
+│   ├── config/                # Configuration files and settings
+│   ├── context/               # Context management for research
+│   ├── document/              # Document processing and handling
+│   ├── llm_provider/          # LLM integration implementations
+│   ├── memory/                # Agent memory management
+│   ├── retrievers/            # Data retrieval implementations
+│   ├── scraper/               # Web scraping functionality
+│   ├── skills/                # Agent skill implementations
+│   ├── utils/                 # Utility functions
+│   ├── vector_store/          # Vector storage implementations
+│   ├── agent.py               # Main agent implementation
+│   └── prompts.py             # LLM prompt templates
+│
+├── frontend/                  # Frontend implementations
+│   ├── static/                # Static assets for HTML frontend
+│   ├── nextjs/                # Next.js implementation
+│   │   ├── app/              # Next.js app directory
+│   │   ├── components/       # Reusable React components
+│   │   ├── actions/          # Server actions
+│   │   ├── config/           # Frontend configuration
+│   │   ├── helpers/          # Helper utilities
+│   │   ├── hooks/            # Custom React hooks
+│   │   ├── public/           # Public assets
+│   │   ├── styles/           # CSS and styling
+│   │   ├── types/            # TypeScript type definitions
+│   │   └── utils/            # Frontend utility functions
+│   ├── index.html            # Static frontend entry
+│   ├── scripts.js            # Static frontend JavaScript
+│   └── styles.css            # Static frontend styling
+│
+├── multi_agents/             # LangGraph-based multi-agent system
+├── outputs/                  # Research output storage
+├── tests/                    # Project test suite
+├── docs/                     # Project documentation
+└── main.py                   # Main application entry point
+```
+
+### Naming Conventions
+- Python: snake_case for functions, variables, and modules
+- TypeScript/JavaScript: camelCase for variables and functions
+- React Components: PascalCase
+- CSS Classes: kebab-case
+- Constants: UPPER_SNAKE_CASE
+- Types/Interfaces: PascalCase with I prefix for interfaces
+
+### Testing
+- Write unit tests for all business logic
+- Write integration tests for API endpoints
+- Write end-to-end tests for critical flows
+- Use proper test fixtures and factories
+- Implement proper test coverage
+- Use proper mocking patterns
+- Use proper test naming conventions
+- Use proper test organization
+
+### Documentation
+- Write clear and concise documentation
+- Document all public APIs
+- Document all configuration options
+- Document all environment variables
+- Document all deployment procedures
+- Document all testing procedures
+- Keep documentation up to date
+- Use proper JSDoc/docstring conventions
+
+### Git Workflow
+Commit Message Prefixes:
+- feat: New feature
+- fix: Bug fix
+- docs: Documentation changes
+- style: Code style changes
+- refactor: Code refactoring
+- test: Test changes
+- chore: Build process or auxiliary tool changes
+
+Branch Naming:
+- feature/: New features
+- bugfix/: Bug fixes
+- hotfix/: Critical bug fixes
+- release/: Release branches
+- docs/: Documentation updates
+
+### Security
+- Implement proper authentication
+- Implement proper authorization
+- Implement proper input validation
+- Implement proper output sanitization
+- Use proper CORS policies
+- Use proper CSP policies
+- Use proper rate limiting
+- Use proper error handling
+- Keep dependencies up to date
+- Follow security best practices
+
+### Performance
+- Implement proper caching strategies
+- Use proper code splitting
+- Use proper lazy loading
+- Optimize database queries
+- Optimize API responses
+- Use proper memory management
+- Use proper resource cleanup
+- Monitor performance metrics
+- Use proper profiling tools
+
+### Error Handling
+- Use proper error boundaries in React
+- Use proper exception handling in Python
+- Use proper error logging
+- Use proper error reporting
+- Use proper error recovery
+- Use proper fallback UI
+- Use proper error messages
+- Use proper error codes
+
+### State Management
+- Use proper React hooks
+- Use proper context providers
+- Use proper state initialization
+- Use proper state updates
+- Use proper state persistence
+- Use proper state synchronization
+- Use proper state cleanup
+- Use proper state sharing
+
+### API Design
+- Use proper REST principles
+- Use proper GraphQL patterns where applicable
+- Use proper versioning
+- Use proper pagination
+- Use proper filtering
+- Use proper sorting
+- Use proper error responses
+- Use proper documentation
+- Use proper rate limiting
+- Use proper caching headers
+
+### Research Workflow Actions
+- starting_research: Research process initiation
+- agent_generated: Agent type indication
+- planning_research: Initial browsing and planning
+- subqueries: Creation and listing of research subqueries
+- running_subquery_research: Execution of specific subqueries
+- added_source_url: URL source tracking
+- researching: Active multi-source research
+- scraping_urls: URL content scraping initiation
+- scraping_content: Content extraction process
+- scraping_images: Image identification and selection
+- scraping_complete: Scraping process completion
+- fetching_query_content: Query-specific content retrieval
+- subquery_context_window: Context creation for subqueries
+- research_step_finalized: Research step completion
+- generating_subtopics: Subtopic generation process
+- subtopics_generated: Subtopic completion
+- writing_introduction: Introduction creation
+- introduction_written: Introduction completion
+- generating_draft_sections: Draft section creation
+- draft_sections_generated: Draft completion
+- fetching_relevant_written_content: Content retrieval for report
+- writing_report: Report compilation
+- report_written: Report completion
+- relevant_contents_context: Content context window creation
+- writing_conclusion: Conclusion creation
+- conclusion_written: Conclusion completion
+
+### Configuration Parameters
+#### Search and Retrieval
+- RETRIEVER: Web search engine selection (tavily, duckduckgo, bing, google, searchapi, serper, searx)
+- EMBEDDING: Embedding model configuration (openai, ollama, huggingface, azure_openai, custom)
+- SCRAPER: Web scraping method (bs, newspaper)
+- CURATE_SOURCES: Source curation toggle (default: True)
+
+#### Language Models
+- FAST_LLM: Quick operations model (default: openai:gpt-4o-mini)
+- SMART_LLM: Complex operations model (default: openai:gpt-4o)
+- STRATEGIC_LLM: Strategic planning model (default: openai:o1-preview)
+- TEMPERATURE: Model creativity setting (default: 0.55)
+
+#### Token Limits
+- FAST_TOKEN_LIMIT: Fast LLM token cap (default: 2000)
+- SMART_TOKEN_LIMIT: Smart LLM token cap (default: 4000)
+- STRATEGIC_TOKEN_LIMIT: Strategic LLM token cap (default: 4000)
+- SUMMARY_TOKEN_LIMIT: Summary generation cap (default: 700)
+
+#### Content Parameters
+- LANGUAGE: Report language (default: english)
+- TOTAL_WORDS: Document word limit (default: 800)
+- REPORT_FORMAT: Documentation style (default: APA)
+- MAX_ITERATIONS: Process iteration limit (default: 3)
+- MAX_SUBTOPICS: Subtopic generation limit (default: 3)
+- BROWSE_CHUNK_MAX_LENGTH: Source text chunk size (default: 8192)
+
+#### System Configuration
+- DOC_PATH: Local document directory
+- USER_AGENT: Web request identifier
+- MEMORY_BACKEND: Data storage system (default: local)
+
+### Web Scraping Methods
+- BeautifulSoup: Static content extraction
+- Selenium: Dynamic content scraping
+- Tavily Extract: High-scale scraping operations
+
+### Logging System
+
+#### Log File Structure
+- Timestamp Format: YYYY-MM-DDTHH:MM:SS.ffffff (ISO format)
+- Event-based logging with sequential timestamps
+- JSON-structured event records
+
+#### Event Object Schema
+```json
+{
+  "timestamp": "YYYY-MM-DDTHH:MM:SS.ffffff",
+  "type": "event",
+  "data": {
+    "type": "logs",
+    "content": "event_type",
+    "output": "detailed_message",
+    "metadata": ["additional_data"]
+  }
+}
+```
+
+#### Event Types and Logging Rules
+
+##### Research Initialization
+- starting_research
+  - Log research query text
+  - Include initial parameters
+- agent_generated
+  - Log agent type and configuration
+  - Record initialization parameters
+
+##### Planning Phase
+- planning_research
+  - Log browsing activities
+  - Record planning decisions
+- subqueries
+  - Log all generated subqueries
+  - Include metadata array of queries
+
+##### Research Execution
+- running_subquery_research
+  - Log active subquery details
+  - Track execution progress
+- added_source_url
+  - Log source URLs with checkmark
+  - Include metadata with full URL
+- researching
+  - Log multi-source research status
+  - Track parallel research activities
+
+##### Content Gathering
+- scraping_urls
+  - Log number of target URLs
+  - Track scraping initialization
+- scraping_content
+  - Log successful scrapes
+  - Record page count metrics
+- scraping_images
+  - Log image selection stats
+  - Include image URL metadata
+- scraping_complete
+  - Log completion status
+  - Include success metrics
+
+##### Content Processing
+- fetching_query_content
+  - Log query-specific fetches
+  - Track content retrieval
+- subquery_context_window
+  - Log context creation
+  - Track window parameters
+- research_step_finalized
+  - Log completion status
+  - Include step metrics
+
+##### Report Generation
+- generating_subtopics
+  - Log subtopic creation
+  - Track organization structure
+- subtopics_generated
+  - Log final subtopics
+  - Include hierarchy data
+- writing_introduction
+  - Log introduction progress
+  - Track section completion
+- introduction_written
+  - Log completion status
+  - Include section metrics
+
+##### Draft Management
+- generating_draft_sections
+  - Log section generation
+  - Track writing progress
+- draft_sections_generated
+  - Log section completion
+  - Include section metrics
+- fetching_relevant_written_content
+  - Log content retrieval
+  - Track source mapping
+
+##### Report Finalization
+- writing_report
+  - Log compilation process
+  - Track integration status
+- report_written
+  - Log completion status
+  - Include final metrics
+- relevant_contents_context
+  - Log context windows
+  - Track content organization
+- writing_conclusion
+  - Log conclusion progress
+  - Track completion status
+- conclusion_written
+  - Log final status
+  - Include completion metrics
+
+#### Logging Best Practices
+- Maintain consistent timestamp format
+- Include all relevant metadata
+- Log both success and failure states
+- Track performance metrics
+- Implement proper log rotation
+- Use appropriate log levels
+- Implement structured logging
+- Enable searchable logs
+- Maintain audit trails
+- Implement log aggregation
+
+#### Log Management
+- Implement log rotation policies
+- Set up log aggregation
+- Configure log retention periods
+- Enable log analysis tools
+- Implement log monitoring
+- Set up alerting systems
+- Enable log visualization
+- Implement log security
+- Configure backup policies
+- Enable log archival
+
+### Multi-Agent System Architecture
+
+#### Team Composition
+- Human: Oversight and feedback provider
+- Chief Editor: Process coordinator and team manager using LangGraph
+- Researcher (gpt-researcher): Autonomous research conductor
+- Editor: Research planning and structure specialist
+- Reviewer: Research validation and criteria checker
+- Revisor: Feedback-based content revision specialist
+- Writer: Final report compilation specialist
+- Publisher: Multi-format publication handler
+
+#### Process Stages
+1. Planning Stage
+   - Initial task analysis
+   - Research scope definition
+   - Team coordination setup
+
+2. Data Collection and Analysis
+   - Web browsing and source gathering
+   - Content extraction and processing
+   - Information synthesis
+
+3. Review and Revision
+   - Quality validation
+   - Feedback incorporation
+   - Content refinement
+
+4. Writing and Submission
+   - Report compilation
+   - Structure implementation
+   - Content organization
+
+5. Publication
+   - Format conversion
+   - Quality assurance
+   - Distribution preparation
+
+#### Workflow Steps
+1. Browser (gpt-researcher)
+   - Initial internet research
+   - Source identification
+   - Preliminary data gathering
+
+2. Editor
+   - Report outline creation
+   - Structure planning
+   - Topic organization
+
+3. Parallel Research Process
+   - Subtopic distribution
+   - In-depth research execution
+   - Draft creation per topic
+
+4. Review Process
+   - Content validation
+   - Criteria checking
+   - Feedback generation
+
+5. Revision Process
+   - Feedback incorporation
+   - Content refinement
+   - Quality improvement
+
+6. Writing Process
+   - Report compilation
+   - Section integration
+   - Reference management
+
+7. Publication Process
+   - Format conversion (PDF, Docx, Markdown)
+   - Quality verification
+   - Final delivery
+
+#### Agent Communication Patterns
+- Hierarchical reporting to Chief Editor
+- Parallel execution of research tasks
+- Sequential review and revision
+- Synchronized content compilation
+- Coordinated publication process
+
+#### Quality Control Measures
+- Multiple validation layers
+- Iterative improvement cycles
+- Cross-agent verification
+- Human feedback integration
+- Continuous quality monitoring
+
+### Python (Backend & GPT Researcher)
+#### Server Architecture
+- **FastAPI Application (`server.py`)**
+  - Core server initialization with CORS middleware
+  - Static file serving for frontend assets
+  - WebSocket manager for real-time communication
+  - Route handlers for research operations
+  - Error handling and logging configuration
+
+- **WebSocket Management (`websocket_manager.py`)**
+  - Active connection tracking
+  - Message queue management per connection
+  - Asynchronous message handling
+  - Research streaming coordination
+  - Chat agent integration
+
+- **Server Utilities (`server_utils.py`)**
+  - File handling (upload/delete)
+  - Configuration management
+  - Report file generation (PDF/DOCX/MD)
+  - WebSocket command processing
+  - Research task execution
+
+#### Core Components
+- **Research State Management (`memory/research.py`)**
+  - Task tracking and metadata
+  - Research progress state
+  - Section organization
+  - Report structure management
+  - Source tracking
+
+- **Report Generation**
+  - `BasicReport`: Standard research report generation
+  - `DetailedReport`: Enhanced report with additional analysis
+  - Report format customization
+  - Source verification
+  - Content synthesis
+
+- **Chat System (`chat/`)**
+  - `ChatAgentWithMemory`: Maintains context of research
+  - Handles follow-up questions
+  - Integrates with research results
+  - Memory persistence
+  - Response generation
+
+#### Key Features
+- Asynchronous operation using FastAPI
+- Real-time progress streaming via WebSocket
+- Multiple report format support (PDF, DOCX, MD)
+- Structured logging with JSON format
+- File upload and management
+- Configuration management
+- Error handling and recovery
+- Memory management for research context
+
+#### Endpoints
+- `/`: Serves the main application
+- `/ws`: WebSocket endpoint for real-time communication
+- `/api/multi_agents`: Triggers multi-agent research
+- `/upload/`: Handles file uploads
+- `/files/`: Lists and manages uploaded files
+- `/outputs/`: Serves generated reports
+
+#### WebSocket Commands
+- `start`: Initiates research process
+- `chat`: Handles follow-up questions
+- `human_feedback`: Processes user feedback
+
+#### Logging System
+- Structured JSON logging
+- Event tracking
+- Research progress monitoring
+- Cost tracking
+- Performance metrics
+- Error logging
+
+#### Best Practices
+
+### Dependencies
+#### Core Framework and Server
+- **fastapi**: Web framework for building APIs, used for the backend server implementation
+- **uvicorn**: ASGI server for running FastAPI applications
+- **python-multipart**: Support for handling file uploads and form data
+- **websockets**: WebSocket protocol implementation for real-time communication
+- **aiofiles**: Asynchronous file operations support
+
+#### Research and AI Components
+- **langchain**: Framework for developing applications powered by language models
+- **langchain_community**: Community-maintained components for LangChain
+- **langchain-openai**: OpenAI integration for LangChain
+- **langchain-ollama**: Ollama integration for LangChain
+- **langgraph**: Graph-based framework for multi-agent orchestration
+- **tiktoken**: OpenAI's tokenizer for text processing
+- **gpt-researcher**: Core research agent implementation
+
+#### Web Scraping and Content Processing
+- **beautifulsoup4**: HTML parsing and web scraping
+- **requests**: HTTP library for making web requests
+- **arxiv**: Interface for accessing arXiv.org research papers
+- **PyMuPDF**: PDF document processing
+- **unstructured**: Document parsing and text extraction
+
+#### Document Generation and Formatting
+- **markdown**: Markdown text processing
+- **md2pdf**: Markdown to PDF conversion
+- **python-docx**: Microsoft Word document generation
+- **htmldocx**: HTML to DOCX conversion
+- **lxml_html_clean**: HTML cleaning and sanitization
+
+#### Data Handling and Serialization
+- **pydantic**: Data validation using Python type annotations
+- **json_repair**: JSON data repair and validation
+- **json5**: JSON parsing with additional features
+- **pyyaml**: YAML file parsing and generation
+
+#### Development and Utilities
+- **python-dotenv**: Environment variable management
+- **colorama**: Terminal text coloring
+- **loguru**: Advanced logging functionality
+- **jinja2**: Template engine for generating dynamic content
+
+#### Testing (Optional)
+- **pytest**: Testing framework
+- **pytest-asyncio**: Asynchronous testing support
+
+Each package serves specific purposes in the project:
+- Web framework packages enable the FastAPI server and real-time communication
+- Research packages power the autonomous research capabilities
+- Web scraping packages facilitate content gathering and processing
+- Document packages handle report generation in various formats
+- Data handling packages ensure robust data validation and processing
+- Utility packages support development and system operations
+
+##### Dependencies
+###### Core Dependencies
+- **next**: ^14.2.3 - Framework for server-rendered React applications
+- **react**: ^18 - Core React library
+- **react-dom**: ^18 - React rendering for web
+- **typescript**: ^5 - TypeScript language support
+
+###### UI and Styling
+- **@chakra-ui/react**: ^2.4.9 - Component library for building accessible UI
+- **@emotion/react**: ^11.10.5 - CSS-in-JS library
+- **@emotion/styled**: ^11.10.5 - Styled components support
+- **framer-motion**: ^9.0.2 - Animation library
+- **tailwindcss**: ^3.4.1 - Utility-first CSS framework
+- **postcss**: ^8 - CSS transformation tool
+
+###### Data Handling and Validation
+- **axios**: ^1.3.2 - HTTP client for API requests
+- **zod**: ^3.0.0 - TypeScript-first schema validation
+- **zod-to-json-schema**: ^3.23.0 - Zod to JSON Schema converter
+- **@mozilla/readability**: ^0.5.0 - Content parsing and readability
+- **jsdom**: ^24.1.0 - DOM environment implementation
+
+###### Research and AI Integration
+- **@langchain/langgraph-sdk**: ^0.0.1-rc.12 - LangGraph integration
+- **together-ai**: ^0.6.0-alpha.3 - AI model integration
+- **eventsource-parser**: ^1.1.2 - Event stream parsing
+
+###### Markdown Processing
+- **remark**: ^15.0.1 - Markdown processor
+- **remark-html**: ^16.0.1 - Markdown to HTML conversion
+- **remark-parse**: ^11.0.0 - Markdown parsing
+
+###### UI Components and Features
+- **react-dropzone**: ^14.2.3 - File drag-and-drop functionality
+- **react-hot-toast**: ^2.4.1 - Toast notifications
+- **next-plausible**: ^3.12.0 - Analytics integration
+
+###### Development Tools
+- **eslint**: ^8 - Code linting
+- **eslint-config-next**: 14.2.3 - Next.js ESLint configuration
+- **prettier**: ^3.2.5 - Code formatting
+- **prettier-plugin-tailwindcss**: ^0.6.0 - Tailwind CSS class sorting
+
+###### Testing
+- **@testing-library/jest-dom**: ^5.16.5 - DOM testing utilities
+- **@testing-library/react**: ^13.4.0 - React component testing
+- **@testing-library/user-event**: ^13.5.0 - User event simulation
+- **web-vitals**: ^2.1.4 - Performance monitoring
+
+###### Type Definitions
+- **@types/node**: ^20 - Node.js type definitions
+- **@types/react**: ^18 - React type definitions
+- **@types/react-dom**: ^18 - React DOM type definitions
+- **@types/jsdom**: ^21.1.6 - JSDOM type definitions
+
+##### Environment and Configuration
+- Node.js Version: 18.17.0 (Alpine-based)
+- Package Manager: npm with --legacy-peer-deps support
+- Build Command: `npm run build`
+- Development Command: `npm run dev`
+- Environment Variables:
+  - `NEXT_PUBLIC_API_URL`
+  - `NEXT_PUBLIC_SITE_URL`
+
+### Docker Implementation
+
+#### Project Containerization
+The project uses a multi-container setup orchestrated by Docker Compose, with three main services:
+1. Backend Research Service (`gpt-researcher`)
+2. Frontend Service (`gptr-nextjs`)
+3. Testing Service (`gpt-researcher-tests`)
+
+#### Backend Dockerfile
+Multi-stage build process for optimized image size and security:
+
+##### Stage 1: Browser Installation
+- Base: `python:3.11.4-slim-bullseye`
+- Installs Chromium, Firefox, and drivers
+- Sets up web scraping capabilities
+- Optimizes layer caching
+
+##### Stage 2: Dependencies Installation
+- Installs Python requirements
+- Handles multi-agent dependencies
+- Optimizes pip caching
+- Manages package versions
+
+##### Stage 3: Final Application
+- Creates non-root user for security
+- Sets up working directory
+- Configures application ownership
+- Exposes port 8000
+- Runs FastAPI with uvicorn
+
+#### Frontend Dockerfile
+Multi-stage build for NextJS application:
+
+##### Development Version
+- Base: `node:18.17.0-alpine`
+- Supports hot-reloading
+- Mounts source code as volume
+- Enables development features
+
+##### Production Version
+- Multi-stage build with Node.js and Nginx
+- Optimizes build artifacts
+- Configures Nginx for static serving
+- Handles WebSocket proxying
+
+#### Docker Compose Configuration
+##### Services Configuration
+1. `gpt-researcher`:
+   - Builds backend service
+   - Manages API keys via environment
+   - Exposes port 8000
+   - Implements automatic restart
+
+2. `gptr-nextjs`:
+   - Builds frontend service
+   - Enables hot-reloading
+   - Mounts development volumes
+   - Exposes port 3000
+
+3. `gpt-researcher-tests`:
+   - Dedicated testing environment
+   - Runs pytest suites
+   - Handles test dependencies
+   - Configures test profiles
+
+##### Environment Management
+- Uses `.env` file for secrets
+- Manages API keys:
+  - `OPENAI_API_KEY`
+  - `TAVILY_API_KEY`
+  - `LANGCHAIN_API_KEY`
+- Configures development settings
+
+##### Volume Management
+- Node modules persistence
+- Source code mounting
+- Development hot-reloading
+- Build artifact handling
+
+##### Networking
+- Port mappings:
+  - Backend: 8000:8000
+  - Frontend: 3000:3000
+- Internal service communication
+- WebSocket support
+- CORS configuration
+
+#### Development Workflow
+1. Build services:
+   ```bash
+   docker-compose build
+   ```
+
+2. Start development environment:
+   ```bash
+   docker-compose up
+   ```
+
+3. Run tests:
+   ```bash
+   docker-compose --profile test up gpt-researcher-tests
+   ```
+
+4. Production deployment:
+   ```bash
+   docker-compose -f docker-compose.prod.yml up
+   ```
+
+#### Best Practices
+- Multi-stage builds for optimization
+- Non-root user for security
+- Layer caching for efficiency
+- Volume mounting for development
+- Environment isolation
+- Automatic container restart
+- Proper secret management
+- Optimized build context
+
+### CSS Structure and Styling
+
+#### Overview
+The project uses three distinct CSS files for different purposes:
+1. Static Frontend Styles (`frontend/styles.css`)
+2. PDF Report Styles (`frontend/pdf_styles.css`)
+3. NextJS Global Styles (`frontend/nextjs/app/globals.css`)
+
+#### Static Frontend Styles (`styles.css`)
+Main stylesheet for the HTML/JS frontend implementation:
+- **Core Features**:
+  - Responsive layout with flexbox
+  - Gradient background animations
+  - Interactive UI elements
+  - RTL (Right-to-Left) text support
+  - Custom scrollbars
+- **Key Components**:
+  - Landing page styling
+  - Container animations and hover effects
+  - Form input styling
+  - Button gradients and transitions
+  - Research output formatting
+  - Image gallery and dialog styling
+- **Typography**:
+  - Montserrat font for general text
+  - Noto Sans Hebrew for RTL content
+  - Responsive font sizing
+
+#### PDF Report Styles (`pdf_styles.css`)
+Dedicated stylesheet for generated PDF reports:
+- **Core Features**:
+  - Academic paper formatting
+  - Print-optimized layout
+  - RTL text support
+  - Consistent typography
+- **Key Components**:
+  - Header hierarchy (h1-h6)
+  - Table formatting
+  - Blockquote styling
+  - Citation and reference formatting
+- **Typography**:
+  - 12pt base font size
+  - 1.6 line height for readability
+  - Noto Sans Hebrew as primary font
+  - Montserrat as fallback font
+
+#### NextJS Global Styles (`globals.css`)
+Modern styling system for the React frontend:
+- **Core Features**:
+  - Tailwind CSS integration
+  - Custom utility classes
+  - RTL layout support
+  - Responsive design
+- **Key Components**:
+  - Custom animations
+  - Loading indicators
+  - Scrollbar customization
+  - Text wrapping utilities
+- **Special Features**:
+  - Gradient background
+  - Custom loader animations
+  - RTL/LTR text handling
+  - Unicode bidirectional text support
+
+#### Common Design Elements
+- **Color Scheme**:
+  - Dark theme with light text
+  - Gradient backgrounds
+  - Semi-transparent containers
+  - Consistent accent colors
+- **Typography System**:
+  - Shared font families
+  - Consistent heading hierarchy
+  - RTL text support across all files
+- **Interactive Elements**:
+  - Hover animations
+  - Transition effects
+  - Consistent button styling
+- **Responsive Design**:
+  - Mobile-first approach
+  - Flexible layouts
+  - Adaptive typography
+  - Dynamic spacing
+
+### HTML, CSS, and Responsive Design Best Practices
+
+#### Key Principles
+- Write semantic HTML for improved accessibility and SEO
+- Use external CSS files for styling, avoiding inline styles
+- Implement responsive design with media queries and flexible layouts
+- Prioritize accessibility using ARIA roles and attributes
+- Follow BEM methodology for CSS class naming
+
+#### HTML Guidelines
+##### Semantic Structure
+- Use semantic elements:
+  - `<header>` for page headers
+  - `<main>` for main content
+  - `<footer>` for page footers
+  - `<article>` for self-contained content
+  - `<section>` for thematic grouping
+  - `<nav>` for navigation menus
+  - `<aside>` for complementary content
+
+##### Interactive Elements
+- Use `<button>` for clickable elements, not `<div>` or `<span>`
+- Use `<a>` for links with proper `href` attributes
+- Use `<form>` with appropriate input types and labels
+- Implement proper keyboard navigation
+- Ensure touch targets are at least 44x44px
+
+##### Media Elements
+- Use `<img>` with descriptive `alt` attributes
+- Implement responsive images using `srcset` and `sizes`
+- Use `<picture>` element for art direction
+- Apply lazy loading for performance optimization
+
+#### CSS Architecture
+##### Methodology
+- Follow BEM (Block Element Modifier) naming:
+  ```css
+  .block {}
+  .block__element {}
+  .block--modifier {}
+  ```
+- Use class selectors over ID selectors
+- Avoid `!important` declarations
+- Implement CSS variables for theming
+
+##### Layout Patterns
+- Use Flexbox for one-dimensional layouts:
+  ```css
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  ```
+- Use Grid for two-dimensional layouts:
+  ```css
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  ```
+
+##### Typography
+- Use relative units:
+  - `rem` for font sizes
+  - `em` for spacing related to font size
+  - `%` for fluid layouts
+- Implement modular scale for type hierarchy
+- Ensure minimum font size of 16px
+
+#### Responsive Design Implementation
+##### Mobile-First Approach
+```css
+/* Base styles (mobile) */
+.element {
+  width: 100%;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .element {
+    width: 50%;
+  }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+  .element {
+    width: 33.333%;
+  }
+}
+```
+
+##### Breakpoints
+- Small devices: 0-640px
+- Medium devices: 641-768px
+- Large devices: 769-1024px
+- Extra large devices: 1025px+
+
+##### Responsive Images
+```html
+<img
+  srcset="small.jpg 300w, medium.jpg 600w, large.jpg 900w"
+  sizes="(max-width: 640px) 300px, (max-width: 768px) 600px, 900px"
+  src="fallback.jpg"
+  alt="Description"
+>
+```
+
+#### Accessibility Features
+##### ARIA Implementation
+- Use proper roles and landmarks
+- Implement descriptive labels
+- Ensure keyboard navigation
+- Maintain focus management
+
+##### Color and Contrast
+- Maintain minimum contrast ratio of 4.5:1
+- Don't rely solely on color for information
+- Provide focus indicators
+- Support high contrast modes
+
+##### Screen Reader Support
+- Use proper heading hierarchy
+- Implement skip links
+- Provide alternative text
+- Use ARIA live regions for dynamic content
+
+#### Performance Optimization
+##### CSS Optimization
+- Minify CSS files
+- Implement critical CSS
+- Use CSS compression
+- Avoid redundant rules
+
+##### Media Optimization
+- Compress images appropriately
+- Use modern image formats (WebP)
+- Implement lazy loading
+- Optimize animation performance
+
+#### Testing and Validation
+##### Cross-Browser Testing
+- Test in major browsers:
+  - Chrome
+  - Firefox
+  - Safari
+  - Edge
+
+##### Device Testing
+- Test on various devices:
+  - Mobile phones
+  - Tablets
+  - Desktops
+  - Different screen sizes
+
+##### Validation Tools
+- W3C HTML Validator
+- W3C CSS Validator
+- Lighthouse audits
+- WAVE accessibility tool
+
+#### Documentation Requirements
+- Comment complex CSS rules
+- Document responsive breakpoints
+- Maintain consistent naming conventions
+- Document design decisions and patterns
+```
+
+### Modern Frontend Development Guidelines
+
+#### Core Development Principles
+- Write clean, readable code over performance optimizations
+- Follow DRY (Don't Repeat Yourself) principles
+- Implement early returns for better readability
+- Use descriptive naming conventions
+- Ensure complete implementation with no TODOs
+- Verify code thoroughly before completion
+- Include all necessary imports
+- Focus on accessibility and user experience
+
+#### React/Next.js Best Practices
+##### Component Structure
+```typescript
+// Preferred component structure
+import { type FC } from 'react'
+import { cn } from '@/lib/utils'
+
+interface ButtonProps {
+  variant?: 'primary' | 'secondary'
+  onClick?: () => void
+  children: React.ReactNode
+}
+
+const Button: FC<ButtonProps> = ({
+  variant = 'primary',
+  onClick,
+  children
+}) => {
+  const handleClick = () => {
+    if (onClick) onClick()
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      if (onClick) onClick()
+    }
+  }
+
+  return (
+    <button
+      className={cn(
+        'rounded-md px-4 py-2 focus:outline-none focus:ring-2',
+        {
+          'bg-blue-500 text-white hover:bg-blue-600': variant === 'primary',
+          'bg-gray-200 text-gray-800 hover:bg-gray-300': variant === 'secondary'
+        }
+      )}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      aria-label="Button"
+      role="button"
+    >
+      {children}
+    </button>
+  )
+}
+
+export default Button
+```
+
+##### Event Handling
+- Prefix event handlers with "handle":
+  ```typescript
+  const handleClick = () => {}
+  const handleKeyDown = (e: KeyboardEvent) => {}
+  const handleSubmit = async (e: FormEvent) => {}
+  ```
+
+##### State Management
+- Use const for function declarations:
+  ```typescript
+  const toggleMenu = () => setIsOpen(!isOpen)
+  const updateUser = (userData: UserData) => setUser(userData)
+  ```
+
+##### Styling Patterns
+- Prefer Tailwind classes over CSS:
+  ```typescript
+  // Good
+  <div className="flex items-center justify-between p-4">
+
+  // Avoid
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+  ```
+
+- Use cn utility for conditional classes:
+  ```typescript
+  import { cn } from '@/lib/utils'
+
+  <div className={cn(
+    'base-classes',
+    {
+      'active-classes': isActive,
+      'disabled-classes': isDisabled
+    }
+  )}>
+  ```
+
+##### Type Safety
+- Define explicit types/interfaces:
+  ```typescript
+  interface User {
+    id: string
+    name: string
+    email: string
+  }
+
+  type ButtonVariant = 'primary' | 'secondary' | 'tertiary'
+
+  interface Props {
+    user: User
+    variant: ButtonVariant
+    onUpdate: (user: User) => void
+  }
+  ```
+
+##### Accessibility Implementation
+- Required ARIA attributes:
+  ```typescript
+  <button
+    role="button"
+    aria-label="Menu"
+    aria-expanded={isOpen}
+    aria-controls="menu-content"
+    tabIndex={0}
+  >
+  ```
+
+##### Performance Optimization
+- Implement proper memoization:
+  ```typescript
+  const MemoizedComponent = memo(Component, (prev, next) => {
+    return prev.id === next.id
+  })
+  ```
+
+- Use proper hooks for performance:
+  ```typescript
+  const memoizedValue = useMemo(() => computeValue(deps), [deps])
+  const memoizedCallback = useCallback(() => handleEvent(deps), [deps])
+  ```
+
+##### Error Handling
+- Implement proper error boundaries:
+  ```typescript
+  const ErrorBoundary: FC<PropsWithChildren> = ({ children }) => {
+    const [hasError, setHasError] = useState(false)
+
+    if (hasError) {
+      return <div role="alert">Something went wrong</div>
+    }
+
+    return <>{children}</>
+  }
+  ```
+
+##### Form Handling
+- Use controlled components with proper validation:
+  ```typescript
+  const [value, setValue] = useState('')
+  const [error, setError] = useState<string | null>(null)
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value)
+    validateInput(e.target.value)
+  }
+  ```
+
+##### Data Fetching
+- Implement proper loading and error states:
+  ```typescript
+  const { data, error, isLoading } = useSWR<Data>(
+    '/api/data',
+    fetcher
+  )
+
+  if (isLoading) return <LoadingSpinner />
+  if (error) return <ErrorMessage error={error} />
+  if (!data) return null
+  ```
+
+##### Code Organization
+- Next.js App Directory Structure:
+  ```
+  frontend/nextjs/
+  ├── app/                    # Next.js 13+ App Directory
+  │   ├── page.tsx           # Main application page
+  │   │   - Research state management
+  │   │   - WebSocket connection handling
+  │   │   - Research flow control
+  │   ├── layout.tsx         # Root layout with meta configuration
+  │   │   - Font loading (Lexend)
+  │   │   - Analytics (Plausible)
+  │   │   - RTL support
+  │   └── globals.css        # Global styles
+  │
+  ├── components/            # Reusable React components
+  │   ├── Header.tsx        # Application header
+  │   ├── Footer.tsx        # Application footer
+  │   ├── Hero.tsx          # Landing page hero section
+  │   ├── ResearchResults.tsx # Results display
+  │   ├── ResearchBlocks/   # Research-specific components
+  │   │   ├── AccessReport.tsx
+  │   │   ├── LogsSection.tsx
+  │   │   ├── Question.tsx
+  │   │   ├── Answer.tsx
+  │   │   ├── Sources.tsx
+  │   │   └── ImageSection.tsx
+  │   ├── Task/            # Task-specific components
+  │   │   ├── Accordion.tsx
+  │   │   ├── Report.tsx
+  │   │   └── ImagesCarousel.tsx
+  │   └── elements/        # Reusable elements
+  │       ├── InputArea.tsx
+  │       └── SubQuestions.tsx
+  │
+  ├── actions/             # Server actions
+  ├── config/             # Frontend configuration
+  ├── helpers/            # Helper utilities
+  ├── hooks/              # Custom React hooks
+  ├── public/             # Public assets
+  ├── styles/             # CSS and styling
+  │   ├── globals.css     # Global styles
+  │   └── markdown.css    # Markdown styling
+  ├── types/              # TypeScript type definitions
+  └── utils/              # Frontend utility functions
+
+  frontend/static/         # Static HTML/JS Frontend
+  ├── index.html          # Main entry point
+  ├── scripts.js          # WebSocket and UI interactions
+  ├── styles.css          # Core styling
+  └── pdf_styles.css      # PDF report styling
+  ```
+
+- Component Organization Rules:
+  1. Place shared components in `components/`
+  2. Group feature-specific components in dedicated folders
+  3. Keep page components in `app/` directory
+  4. Maintain shared hooks in `hooks/` directory
+  5. Store type definitions in `types/` directory
+  6. Keep utilities in `utils/` directory
+  7. Place server actions in `actions/` directory
+  8. Store configuration in `config/` directory
+
+- File Naming Conventions:
+  1. React Components: PascalCase (e.g., `Header.tsx`)
+  2. Utilities: camelCase (e.g., `webSocket.ts`)
+  3. Constants: UPPER_SNAKE_CASE
+  4. Types/Interfaces: PascalCase with I prefix for interfaces
+  5. Hooks: camelCase with use prefix (e.g., `useWebSocket.ts`)
+  6. Configuration: camelCase (e.g., `tailwind.config.ts`)
+
+- Import Organization:
+  ```typescript
+  // External dependencies
+  import { useState, useEffect } from 'react'
+  import { useRouter } from 'next/router'
+
+  // Internal utilities and types
+  import { type ResearchState } from '@/types'
+  import { initializeWebSocket } from '@/utils'
+
+  // Components
+  import { Header, Footer } from '@/components'
+  import { ResearchResults } from '@/components/ResearchBlocks'
+
+  // Styles and assets
+  import '@/styles/globals.css'
+  ```
+```
+
+### Development Process and Planning Guidelines
+
+#### Thought Process Articulation
+When asked to write or modify code:
+1. Clearly articulate the thought process
+2. Outline the approach and planned algorithms
+3. List specific features and technologies to be used
+4. Document potential challenges and solutions
+5. Consider integration points and dependencies
+
+#### Step-by-Step Planning
+1. Pre-Development Analysis
+   - Review all requirements thoroughly
+   - Analyze existing codebase context
+   - List assumptions and constraints
+   - Identify potential edge cases
+   - Document unclear requirements
+
+2. Solution Architecture
+   - Break down tasks into manageable components
+   - Define interfaces and data structures
+   - Plan error handling strategies
+   - Consider security implications
+   - Document expected behavior
+
+3. Implementation Strategy
+   - Create detailed step-by-step execution plan
+   - Identify affected files and components
+   - Plan testing approach
+   - Consider rollback strategies
+   - Document configuration changes
+
+#### Development Process
+1. Pre-Implementation
+   ```
+   - Review codebase context
+   - Check similar implementations
+   - Verify dependencies
+   - Prepare development environment
+   ```
+
+2. Implementation
+   ```
+   - Follow planned steps sequentially
+   - Document progress and changes
+   - Add inline comments
+   - Maintain code style
+   - Handle errors properly
+   ```
+
+3. Post-Implementation
+   ```
+   - Verify against requirements
+   - Test edge cases
+   - Document changes
+   - Update documentation
+   - Plan improvements
+   ```
+
+#### Context Maintenance
+- Always reference:
+  ```
+  - Complete instruction set
+  - Development stack details
+  - Package dependencies
+  - Code structure
+  - Previous implementations
+  ```
+
+#### Memory Management
+- Track and maintain:
+  ```
+  - Generated functions
+  - Created files
+  - Configuration values
+  - Previous code changes
+  - API endpoints
+  - State patterns
+  ```
+
+#### Progress Communication
+1. Status Updates
+   - Explain completed steps
+   - Document current progress
+   - Highlight challenges
+   - Propose solutions
+   - Request feedback
+
+2. Plan Recaps
+   - Summarize changes
+   - List remaining tasks
+   - Update estimates
+   - Address concerns
+   - Confirm next steps
+
+3. Documentation
+   - Update comments
+   - Maintain README
+   - Document changes
+   - Update guides
+   - Record solutions
+
+#### Iteration Process
+1. Feedback Loop
+   ```
+   - Collect feedback
+   - Analyze improvements
+   - Plan changes
+   - Document updates
+   ```
+
+2. Implementation
+   ```
+   - Apply changes
+   - Test modifications
+   - Update documentation
+   - Verify improvements
+   ```
+
+3. Validation
+   ```
+   - Test changes
+   - Collect feedback
+   - Plan next steps
+   - Document results
+   ```
+
+#### Best Practices
+1. Code Implementation
+   - Write clean, readable code
+   - Follow DRY principles
+   - Use early returns
+   - Implement complete solutions
+   - Avoid TODOs
+   - Include all imports
+
+2. Quality Control
+   - Verify implementation
+   - Test edge cases
+   - Check error handling
+   - Validate types
+   - Ensure accessibility
+
+3. Documentation
+   - Comment complex logic
+   - Update README files
+   - Document API changes
+   - Maintain guides
+   - Record solutions
+```
+
+### Dependency Relationships
+
+1. **Frontend Dependencies:**
+   - The frontend depends on the backend for:
+     - Research task initiation and management
+     - Real-time progress updates
+     - Report generation and delivery
+     - User session management
+
+2. **Backend Dependencies:**
+   - The backend depends on the research engine for:
+     - Executing research operations
+     - Processing and analyzing content
+     - Managing research state
+     - Generating research reports
+
+3. **Research Engine Dependencies:**
+   - The research engine depends on:
+     - External APIs for data retrieval
+     - Web scraping tools for content extraction
+     - Vector store for similarity search
+     - Configuration settings for operation
+
+4. **Cross-Component Dependencies:**
+   - Memory management spans across:
+     - Backend state tracking
+     - Research engine context
+     - Frontend session state
+   - Configuration management affects:
+     - API endpoints and keys
+     - Research parameters
+     - System behavior settings
+
+5. **External Dependencies:**
+   - Web APIs for data retrieval
+   - Language models for analysis
+   - Database systems for storage
+   - Authentication services
+   - Monitoring and logging systems
+
+6. **Development Dependencies:**
+   - Build tools and compilers
+   - Testing frameworks
+   - Development servers
+   - Code quality tools
+   - Documentation generators

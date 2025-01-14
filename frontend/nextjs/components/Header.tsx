@@ -11,41 +11,44 @@ interface HeaderProps {
 const Header = ({ loading, isStopped, showResult, onStop, onNewResearch }: HeaderProps) => {
   return (
     <div className="fixed top-0 left-0 right-0 z-50">
-      {/* Original gradient background with blur effect */}
-      <div className="absolute inset-0 backdrop-blur-sm bg-gradient-to-b to-transparent"></div>
+      {/* Gradient background without blur effect */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/80 to-transparent"></div>
       
-      {/* Header container */}
-      <div className="container relative h-[60px] px-4 lg:h-[80px] lg:px-0 pt-4 pb-4">
+      {/* Header container with proper spacing */}
+      <div className="container relative mx-auto px-4 py-4">
         <div className="flex flex-col items-center">
-          {/* Logo/Home link */}
-          <a href="/">
+          {/* Logo with proper spacing */}
+          <a href="/" className="relative z-10 mb-2">
             <Image
-              src="/img/gptr-logo.png"
+              src="/img/logo.png"
               alt="logo"
-              width={60}
-              height={60}
-              className="lg:h-16 lg:w-16"
+              width={40}
+              height={40}
+              className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px]"
+              priority
             />
           </a>
           
           {/* Action buttons container */}
-          <div className="flex gap-2 mt-2 transition-all duration-300 ease-in-out">
-            {/* Stop button - shown only during active research */}
+          <div className="flex gap-2 transition-all duration-300 ease-in-out">
             {loading && !isStopped && (
               <button
                 onClick={onStop}
-                className="flex items-center justify-center px-6 h-8 text-sm text-white bg-red-500 rounded-full hover:bg-red-600 transform hover:scale-105 transition-all duration-200 shadow-lg whitespace-nowrap"
+                className="flex items-center justify-center px-4 sm:px-6 h-8 text-xs sm:text-sm text-white 
+                bg-red-500 rounded-full hover:bg-red-600 transform hover:scale-105 transition-all 
+                duration-200 shadow-lg whitespace-nowrap"
               >
-                Stop
+                עצור
               </button>
             )}
-            {/* New Research button - shown after stopping or completing research */}
             {(isStopped || !loading) && showResult && (
               <button
                 onClick={onNewResearch}
-                className="flex items-center justify-center px-6 h-8 text-sm text-white bg-[rgb(168,85,247)] rounded-full hover:bg-[rgb(147,51,234)] transform hover:scale-105 transition-all duration-200 shadow-lg whitespace-nowrap"
+                className="flex items-center justify-center px-4 sm:px-6 h-8 text-xs sm:text-sm text-white 
+                bg-[rgb(168,85,247)] rounded-full hover:bg-[rgb(147,51,234)] transform hover:scale-105 
+                transition-all duration-200 shadow-lg whitespace-nowrap"
               >
-                New Research
+                מחקר חדש
               </button>
             )}
           </div>
